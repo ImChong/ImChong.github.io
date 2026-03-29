@@ -156,9 +156,10 @@ ul { list-style: none; }
 }
 .lang-toggle:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* Language display modes — show/hide en vs zh content */
+/* Language display modes */
 [data-lang-mode="en"] [data-lang="zh"] { display: none !important; }
 [data-lang-mode="zh"] [data-lang="en"] { display: none !important; }
+/* both: show all (default — no rule needed) */
 
 /* ── Hero ───────────────────────────────────────────────── */
 .hero {
