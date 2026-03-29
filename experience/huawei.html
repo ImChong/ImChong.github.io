@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-lang-mode="both">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,8 +12,8 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="site-title" href="../index.html">← Chong Liu</a>
-      <button class="lang-toggle" id="langToggle" aria-label="Toggle language">
-        <span class="lang-label">中·EN</span>
+      <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+        <span class="lang-label">中文</span>
       </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode (Ctrl+Shift+L)">
         <span class="icon-sun">☀️</span>
@@ -22,143 +22,181 @@
     </div>
   </header>
 
-  <main>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">
-          <a href="https://www.huawei.com" target="_blank" rel="noopener noreferrer">Huawei Technologies Co., Ltd.</a>
-          <span class="card-zh">华为技术有限公司</span>
-        </h1>
-        <p class="hero-role-zh" style="margin-top:-8px;">嵌入式软件开发工程师</p>
+  <!-- ─── EN Content ─────────────────────────────────────── -->
+  <div id="lang-en">
 
-        <div class="detail-meta">
-          <p><strong>Role:</strong> Embedded Software Engineer</p>
-          <p><strong>岗位：</strong>嵌入式软件开发工程师</p>
+    <main>
+      <section class="section">
+        <div class="container">
+          <h1 class="section-title"><a href="https://www.huawei.com" target="_blank" rel="noopener noreferrer">Huawei Technologies Co., Ltd.</a></h1>
 
-          <p><strong>Department:</strong> Central Hardware Engineering Institute — 2012 Lab, Electromechanical Engineering Dept.</p>
-          <p><strong>部门：</strong>中央硬件工程院 — 2012实验室 — 机电工程部</p>
-
-          <p><strong>Period:</strong> December 2021 – January 2024</p>
-          <p><strong>时间：</strong>2021年12月 – 2024年1月</p>
-
-          <p><strong>Location:</strong> Shenzhen, Guangdong, China</p>
-          <p><strong>地点：</strong>中国广东省深圳市</p>
-        </div>
-
-        <!-- STAR 1 -->
-        <div class="card" style="margin-top:24px;">
-          <div class="card-body">
-            <h3>🎯 UniMOP Core Business Program Development <span class="card-zh">UniMOP 核心业务程序开发与维护</span></h3>
-            <ul class="card-bullets">
-              <li><strong>Situation:</strong> Wireless and optical access product lines had 10+ types of fan box components sharing the core UniMOP program (three-layer architecture: App — board-level tasks, Adapter — common driver layer, Port — unified MCU SDK interfaces). The codebase was large and required continuous development and maintenance to support multi-product delivery.</li>
-              <li class="bio-zh"><strong>情境：</strong>无线与光接入产品线拥有 10+ 种类风机盒组件，各组件共用核心业务程序 UniMOP（三层架构：App层—单板任务、Adapter层—公共驱动层、Port层—统一 MCU SDK 接口），代码库规模庞大，需持续开发维护以支撑多产品线交付。</li>
-
-              <li><strong>Task:</strong> Responsible for UniMOP framework-based development, system maintenance and version delivery, ensuring efficient coordination between products, hardware and host systems with stable performance.</li>
-              <li class="bio-zh"><strong>任务：</strong>负责 UniMOP 框架下的功能开发、系统维护与版本交付，确保产品与硬件及主控系统间的高效配合与稳定性能。</li>
-
-              <li><strong>Action:</strong> Developed modularly under the UniMOP three-layer architecture with strict code standards; covered the full lifecycle from code construction, integration testing to system maintenance and version delivery, ensuring reliability of each delivery.</li>
-              <li class="bio-zh"><strong>行动：</strong>基于 UniMOP 三层架构进行模块化开发，严格遵循代码规范编写高质量代码；覆盖从代码构建、集成测试到系统维护和版本交付的全生命周期，确保每次交付的可靠性。</li>
-
-              <li><strong>Result:</strong> Contributed over <strong>10,000+ lines</strong> of high-quality code, ensuring stable operation and on-time delivery of 10+ product types. Product and hardware system coordination efficiency significantly improved.</li>
-              <li class="bio-zh"><strong>成果：</strong>累计贡献超过 <strong>10,000+ 行</strong>高质量代码，确保了 10+ 种类产品的稳定运行与按时交付，产品与硬件系统的配合效率显著提升。</li>
-            </ul>
+          <div class="detail-meta">
+            <p><strong>Role:</strong> Embedded Software Engineer</p>
+            <p><strong>Department:</strong> Central Hardware Engineering Institute — 2012 Lab, Electromechanical Engineering Dept.</p>
+            <p><strong>Period:</strong> December 2021 – January 2024</p>
+            <p><strong>Location:</strong> Shenzhen, Guangdong, China</p>
           </div>
-        </div>
 
-        <!-- STAR 2 -->
-        <div class="card" style="margin-top:16px;">
-          <div class="card-body">
-            <h3>🎯 Galileo Fan Box Flagship Product Full-Process Development <span class="card-zh">伽利略风机盒旗舰产品全流程开发</span></h3>
-            <ul class="card-bullets">
-              <li><strong>Situation:</strong> The Galileo fan box — flagship product of the optical access line — needed an upgrade from standard to high-spec version. The standard version used unified control of 8 fans, which couldn't meet high-load local heat dissipation requirements. The new fan box must be compatible with existing slots.</li>
-              <li class="bio-zh"><strong>情境：</strong>光接入产品线旗舰产品伽利略风机盒需要从标配版升级到高配版，但标配版采用 8 个风扇统一控制策略，无法满足高负荷场景下局部散热需求，且新风机盒必须兼容现有插槽。</li>
-
-              <li><strong>Task:</strong> Lead full-process software development of the high-spec Galileo fan box, achieving independently controlled partitioned control while maintaining hardware slot compatibility, adding power adjustment and fan linkage speed control.</li>
-              <li class="bio-zh"><strong>任务：</strong>领导高配版风机盒的软件全流程开发，实现分区独立控制，在兼容现有硬件插槽的前提下增加功率调整与风扇联动调速功能。</li>
-
-              <li><strong>Action:</strong> Restructured the 8-fan unified control strategy into <strong>4 independent modules with pairwise separate control</strong>; designed and implemented power adjustment and fan linkage speed control algorithms; introduced partitioned temperature control technology to specifically address local overheating.</li>
-              <li class="bio-zh"><strong>行动：</strong>将 8 风扇统一控制策略重新架构为 <strong>4 个独立模块两两单独控制</strong>的分区策略；设计并实现功率调整与风扇联动调速算法；引入分区温控技术，针对性解决局部过热问题。</li>
-
-              <li><strong>Result:</strong> New fan box successfully maintained slot compatibility. Partitioned temperature control effectively solved local overheating issues, high-load stability significantly improved. The project substantially enhanced product performance and market competitiveness.</li>
-              <li class="bio-zh"><strong>成果：</strong>新风机盒成功兼容现有插槽，分区温控有效解决局部温度过高问题，高负荷稳定性显著提升；该项目使产品性能和市场竞争力大幅提高。</li>
-            </ul>
+          <div class="card" style="margin-top:24px;">
+            <div class="card-body">
+              <h3>🎯 UniMOP Core Business Program Development</h3>
+              <ul class="card-bullets">
+                <li><strong>Situation:</strong> Wireless and optical access product lines had 10+ types of fan box components sharing the core UniMOP program (three-layer architecture: App — board-level tasks, Adapter — common driver layer, Port — unified MCU SDK interfaces). The codebase was large and required continuous development and maintenance to support multi-product delivery.</li>
+                <li><strong>Task:</strong> Responsible for UniMOP framework-based development, system maintenance and version delivery, ensuring efficient coordination between products, hardware and host systems with stable performance.</li>
+                <li><strong>Action:</strong> Developed modularly under the UniMOP three-layer architecture with strict code standards; covered the full lifecycle from code construction, integration testing to system maintenance and version delivery, ensuring reliability of each delivery.</li>
+                <li><strong>Result:</strong> Contributed over <strong>10,000+ lines</strong> of high-quality code, ensuring stable operation and on-time delivery of 10+ product types. Product and hardware system coordination efficiency significantly improved.</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <!-- STAR 3 -->
-        <div class="card" style="margin-top:16px;">
-          <div class="card-body">
-            <h3>🎯 Cross-Department Collaboration <span class="card-zh">跨部门协作与技术问题攻关</span></h3>
-            <ul class="card-bullets">
-              <li><strong>Situation:</strong> Product development involved multiple departments with different technical domains. Cross-department issue investigation was time-consuming, affecting product quality and delivery schedules.</li>
-              <li class="bio-zh"><strong>情境：</strong>产品开发涉及多部门协作，部门间技术领域差异大，跨部门问题排查耗时长，影响产品质量和交付进度。</li>
-
-              <li><strong>Task:</strong> Break through cross-department technical barriers and establish a fast issue identification and resolution mechanism to improve overall product quality.</li>
-              <li class="bio-zh"><strong>任务：</strong>需打通跨部门技术壁垒，建立快速问题定位和解决机制，提升整体产品质量。</li>
-
-              <li><strong>Action:</strong> Proactively learned other departments' domain knowledge and established cross-department communication channels; quickly identified and assisted in resolving technical issues through precise communication.</li>
-              <li class="bio-zh"><strong>行动：</strong>主动学习其他部门领域知识，建立跨部门沟通渠道；通过精准沟通快速定位其他部门的常见问题，及时识别并协助解决技术难点。</li>
-
-              <li><strong>Result:</strong> Cross-department issue response speed significantly improved and product quality noticeably enhanced. Became a recognized bridge for cross-department collaboration within the team.</li>
-              <li class="bio-zh"><strong>成果：</strong>跨部门问题响应速度大幅提升，产品质量显著改善，成为团队内公认的跨部门协作桥梁。</li>
-            </ul>
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 Galileo Fan Box Flagship Product Full-Process Development</h3>
+              <ul class="card-bullets">
+                <li><strong>Situation:</strong> The Galileo fan box — flagship product of the optical access line — needed an upgrade from standard to high-spec version. The standard version used unified control of 8 fans, which couldn't meet high-load local heat dissipation requirements. The new fan box must be compatible with existing slots.</li>
+                <li><strong>Task:</strong> Lead full-process software development of the high-spec Galileo fan box, achieving independently controlled partitioned control while maintaining hardware slot compatibility, adding power adjustment and fan linkage speed control.</li>
+                <li><strong>Action:</strong> Restructured the 8-fan unified control strategy into <strong>4 independent modules with pairwise separate control</strong>; designed and implemented power adjustment and fan linkage speed control algorithms; introduced partitioned temperature control technology to specifically address local overheating.</li>
+                <li><strong>Result:</strong> New fan box successfully maintained slot compatibility. Partitioned temperature control effectively solved local overheating issues, high-load stability significantly improved. The project substantially enhanced product performance and market competitiveness.</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <!-- STAR 4 -->
-        <div class="card" style="margin-top:16px;">
-          <div class="card-body">
-            <h3>🎯 Documentation System Built from Scratch <span class="card-zh">工作文档体系从零建设</span></h3>
-            <ul class="card-bullets">
-              <li><strong>Situation:</strong> The team relied on oral communication for technical information and project progress for a long time, lacking a systematic documentation system. Knowledge was hard to retain, new members struggled to get up to speed, and project traceability was poor.</li>
-              <li class="bio-zh"><strong>情境：</strong>团队长期依赖口头交流传递技术信息和项目进展，缺乏系统化文档，导致知识难以沉淀，新成员上手慢，项目可追溯性差。</li>
-
-              <li><strong>Task:</strong> Build a complete work documentation system from zero and achieve standardized recording and knowledge retention of development activities.</li>
-              <li class="bio-zh"><strong>任务：</strong>需从零搭建完整的工作文档体系，实现开发活动的标准化记录与知识沉淀。</li>
-
-              <li><strong>Action:</strong> Proactively planned and established a documentation framework covering technical solutions, development processes, and issue records; continuously output high-quality documentation and promoted the team's transition from oral to documentation-guided work style.</li>
-              <li class="bio-zh"><strong>行动：</strong>主动规划并建立文档框架，覆盖技术方案、开发流程、问题记录等维度；持续输出高质量文档，推动团队工作模式从口头交流逐步转向文档引导。</li>
-
-              <li><strong>Result:</strong> Output <strong>70+ documents</strong>. Team development efficiency and traceability greatly improved; laid a solid foundation for project management and knowledge sharing.</li>
-              <li class="bio-zh"><strong>成果：</strong>累计输出文档 <strong>70+ 篇</strong>，团队开发效率和可追溯性极大提升；为项目管理和知识共享奠定了坚实基础。</li>
-            </ul>
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 Cross-Department Collaboration</h3>
+              <ul class="card-bullets">
+                <li><strong>Situation:</strong> Product development involved multiple departments with different technical domains. Cross-department issue investigation was time-consuming, affecting product quality and delivery schedules.</li>
+                <li><strong>Task:</strong> Break through cross-department technical barriers and establish a fast issue identification and resolution mechanism to improve overall product quality.</li>
+                <li><strong>Action:</strong> Proactively learned other departments' domain knowledge and established cross-department communication channels; quickly identified and assisted in resolving technical issues through precise communication.</li>
+                <li><strong>Result:</strong> Cross-department issue response speed significantly improved and product quality noticeably enhanced. Became a recognized bridge for cross-department collaboration within the team.</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <!-- STAR 5 -->
-        <div class="card" style="margin-top:16px;">
-          <div class="card-body">
-            <h3>🎯 Team Documentation Integration <span class="card-zh">团队资料整合与集中管理</span></h3>
-            <ul class="card-bullets">
-              <li><strong>Situation:</strong> Each team member independently managed files and materials, lacking unified storage and version control. Frequent version confusion and data loss seriously affected project delivery punctuality.</li>
-              <li class="bio-zh"><strong>情境：</strong>团队内各成员独立管理文件和资料，缺乏统一的存储和版本管理，频繁出现版本混乱和资料缺失，严重影响项目交付准时性。</li>
-
-              <li><strong>Task:</strong> Establish a unified team material management solution to achieve centralized file management and version control.</li>
-              <li class="bio-zh"><strong>任务：</strong>需建立统一的团队资料管理方案，实现文件集中管理与版本控制。</li>
-
-              <li><strong>Action:</strong> Led comprehensive team documentation integration, designed and implemented a centralized team space management solution, formulated file naming and version specifications, migrated existing materials and established a continuous maintenance mechanism.</li>
-              <li class="bio-zh"><strong>行动：</strong>引领团队进行全面资料整合，设计并实施团队空间集中管理方案，制定文件命名和版本规范，迁移存量资料并建立持续维护机制。</li>
-
-              <li><strong>Result:</strong> Thoroughly resolved version confusion and project delay issues. Team work efficiency and project delivery punctuality significantly improved.</li>
-              <li class="bio-zh"><strong>成果：</strong>彻底解决版本混乱和项目延误问题，团队工作效率和项目交付准时性显著提高。</li>
-            </ul>
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 Documentation System Built from Scratch</h3>
+              <ul class="card-bullets">
+                <li><strong>Situation:</strong> The team relied on oral communication for technical information and project progress for a long time, lacking a systematic documentation system. Knowledge was hard to retain, new members struggled to get up to speed, and project traceability was poor.</li>
+                <li><strong>Task:</strong> Build a complete work documentation system from zero and achieve standardized recording and knowledge retention of development activities.</li>
+                <li><strong>Action:</strong> Proactively planned and established a documentation framework covering technical solutions, development processes, and issue records; continuously output high quality documentation and promoted the team's transition from oral to documentation-guided work style.</li>
+                <li><strong>Result:</strong> Output <strong>70+ documents</strong>. Team development efficiency and traceability greatly improved; laid a solid foundation for project management and knowledge sharing.</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <p style="margin-top:32px;">
-          <a href="../index.html#experience" class="project-link">← Back to Homepage</a>
-          <a href="../index.html#experience" class="project-link">← 返回主页</a>
-        </p>
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 Team Documentation Integration</h3>
+              <ul class="card-bullets">
+                <li><strong>Situation:</strong> Each team member independently managed files and materials, lacking unified storage and version control. Frequent version confusion and data loss seriously affected project delivery punctuality.</li>
+                <li><strong>Task:</strong> Establish a unified team material management solution to achieve centralized file management and version control.</li>
+                <li><strong>Action:</strong> Led comprehensive team documentation integration, designed and implemented a centralized team space management solution, formulated file naming and version specifications, migrated existing materials and established a continuous maintenance mechanism.</li>
+                <li><strong>Result:</strong> Thoroughly resolved version confusion and project delay issues. Team work efficiency and project delivery punctuality significantly improved.</li>
+              </ul>
+            </div>
+          </div>
+
+          <p style="margin-top:32px;"><a href="../index.html#experience" class="project-link">← Back to Homepage</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="footer-copy">&copy; Chong Liu 2026</p>
       </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p class="footer-copy">&copy; Chong Liu 2026</p>
-      <p class="footer-copy">© 刘冲 2026</p>
-    </div>
-  </footer>
+  </div><!-- /lang-en -->
+
+  <!-- ─── ZH Content ─────────────────────────────────────── -->
+  <div id="lang-zh" style="display:none;">
+
+    <main>
+      <section class="section">
+        <div class="container">
+          <h1 class="section-title"><a href="https://www.huawei.com" target="_blank" rel="noopener noreferrer">华为技术有限公司</a></h1>
+
+          <div class="detail-meta">
+            <p><strong>岗位：</strong>嵌入式软件开发工程师</p>
+            <p><strong>部门：</strong>中央硬件工程院 — 2012实验室 — 机电工程部</p>
+            <p><strong>时间：</strong>2021年12月 – 2024年1月</p>
+            <p><strong>地点：</strong>中国广东省深圳市</p>
+          </div>
+
+          <div class="card" style="margin-top:24px;">
+            <div class="card-body">
+              <h3>🎯 UniMOP 核心业务程序开发与维护</h3>
+              <ul class="card-bullets">
+                <li><strong>情境：</strong>无线与光接入产品线拥有 10+ 种类风机盒组件，各组件共用核心业务程序 UniMOP（三层架构：App层—单板任务、Adapter层—公共驱动层、Port层—统一 MCU SDK 接口），代码库规模庞大，需持续开发维护以支撑多产品线交付。</li>
+                <li><strong>任务：</strong>负责 UniMOP 框架下的功能开发、系统维护与版本交付，确保产品与硬件及主控系统间的高效配合与稳定性能。</li>
+                <li><strong>行动：</strong>基于 UniMOP 三层架构进行模块化开发，严格遵循代码规范编写高质量代码；覆盖从代码构建、集成测试到系统维护和版本交付的全生命周期，确保每次交付的可靠性。</li>
+                <li><strong>成果：</strong>累计贡献超过 <strong>10,000+ 行</strong>高质量代码，确保了 10+ 种类产品的稳定运行与按时交付，产品与硬件系统的配合效率显著提升。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 伽利略风机盒旗舰产品全流程开发</h3>
+              <ul class="card-bullets">
+                <li><strong>情境：</strong>光接入产品线旗舰产品伽利略风机盒需要从标配版升级到高配版，但标配版采用 8 个风扇统一控制策略，无法满足高负荷场景下局部散热需求，且新风机盒必须兼容现有插槽。</li>
+                <li><strong>任务：</strong>领导高配版风机盒的软件全流程开发，实现分区独立控制，在兼容现有硬件插槽的前提下增加功率调整与风扇联动调速功能。</li>
+                <li><strong>行动：</strong>将 8 风扇统一控制策略重新架构为 <strong>4 个独立模块两两单独控制</strong>的分区策略；设计并实现功率调整与风扇联动调速算法；引入分区温控技术，针对性解决局部过热问题。</li>
+                <li><strong>成果：</strong>新风机盒成功兼容现有插槽，分区温控有效解决局部温度过高问题，高负荷稳定性显著提升；该项目使产品性能和市场竞争力大幅提高。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 跨部门协作与技术问题攻关</h3>
+              <ul class="card-bullets">
+                <li><strong>情境：</strong>产品开发涉及多部门协作，部门间技术领域差异大，跨部门问题排查耗时长，影响产品质量和交付进度。</li>
+                <li><strong>任务：</strong>需打通跨部门技术壁垒，建立快速问题定位和解决机制，提升整体产品质量。</li>
+                <li><strong>行动：</strong>主动学习其他部门领域知识，建立跨部门沟通渠道；通过精准沟通快速定位其他部门的常见问题，及时识别并协助解决技术难点。</li>
+                <li><strong>成果：</strong>跨部门问题响应速度大幅提升，产品质量显著改善，成为团队内公认的跨部门协作桥梁。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 工作文档体系从零建设</h3>
+              <ul class="card-bullets">
+                <li><strong>情境：</strong>团队长期依赖口头交流传递技术信息和项目进展，缺乏系统化文档，导致知识难以沉淀，新成员上手慢，项目可追溯性差。</li>
+                <li><strong>任务：</strong>需从零搭建完整的工作文档体系，实现开发活动的标准化记录与知识沉淀。</li>
+                <li><strong>行动：</strong>主动规划并建立文档框架，覆盖技术方案、开发流程、问题记录等维度；持续输出高质量文档，推动团队工作模式从口头交流逐步转向文档引导。</li>
+                <li><strong>成果：</strong>累计输出文档 <strong>70+ 篇</strong>，团队开发效率和可追溯性极大提升；为项目管理和知识共享奠定了坚实基础。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px;">
+            <div class="card-body">
+              <h3>🎯 团队资料整合与集中管理</h3>
+              <ul class="card-bullets">
+                <li><strong>情境：</strong>团队内各成员独立管理文件和资料，缺乏统一的存储和版本管理，频繁出现版本混乱和资料缺失，严重影响项目交付准时性。</li>
+                <li><strong>任务：</strong>需建立统一的团队资料管理方案，实现文件集中管理与版本控制。</li>
+                <li><strong>行动：</strong>引领团队进行全面资料整合，设计并实施团队空间集中管理方案，制定文件命名和版本规范，迁移存量资料并建立持续维护机制。</li>
+                <li><strong>成果：</strong>彻底解决版本混乱和项目延误问题，团队工作效率和项目交付准时性显著提高。</li>
+              </ul>
+            </div>
+          </div>
+
+          <p style="margin-top:32px;"><a href="../index.html#experience" class="project-link">← 返回主页</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="footer-copy">© 刘冲 2026</p>
+      </div>
+    </footer>
+
+  </div><!-- /lang-zh -->
 
   <script src="../js/main.js"></script>
 </body>
