@@ -215,28 +215,23 @@ ul { list-style: none; }
   border-left: 2px solid var(--border);
 }
 
-/* ── Photo Placeholder ──────────────────────────────────── */
+/* ── Profile Photo ─────────────────────────────────────── */
 .hero-photo { display: flex; justify-content: center; }
 
-.photo-placeholder {
+.photo-img {
   width: 240px;
   height: 300px;
   border-radius: var(--radius);
-  background: var(--bg-alt);
-  border: 2px dashed var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--transition), border-color var(--transition);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
 }
-
-.photo-inner {
-  text-align: center;
-  color: var(--text-muted);
+.photo-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
 }
-.photo-icon { font-size: 3rem; display: block; margin-bottom: 12px; }
-.photo-inner p { font-size: .9rem; font-weight: 600; margin-bottom: 4px; }
-.photo-sub { font-size: .78rem !important; font-weight: 400 !important; color: var(--text-muted); }
 
 /* ── Sections ───────────────────────────────────────────── */
 .section { padding: 56px 0; border-bottom: 1px solid var(--border); }
@@ -418,8 +413,7 @@ ul { list-style: none; }
     grid-template-columns: 1fr;
   }
   .hero-photo { order: -1; }
-  .photo-placeholder { width: 160px; height: 200px; }
-  .photo-icon { font-size: 2rem; }
+  .photo-img { width: 160px; height: 200px; }
 
   .hero-name { font-size: 1.8rem; }
   .name-zh { font-size: 1.2rem; }
