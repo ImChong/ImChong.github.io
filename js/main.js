@@ -1,6 +1,6 @@
 /* ─── Theme (Dark / Light) ──────────────────────────────── */
-const THEME_KEY = 'cl-theme';
-const root = document.documentElement;
+var THEME_KEY = 'cl-theme';
+var root = document.documentElement;
 
 function applyTheme(theme) {
   root.setAttribute('data-theme', theme);
@@ -8,12 +8,12 @@ function applyTheme(theme) {
 }
 
 function toggleTheme() {
-  const current = root.getAttribute('data-theme');
+  var current = root.getAttribute('data-theme');
   applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
 (function () {
-  const saved = localStorage.getItem(THEME_KEY);
+  var saved = localStorage.getItem(THEME_KEY);
   if (saved) {
     applyTheme(saved);
   } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -33,7 +33,6 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fun
 });
 
 /* ─── Language Toggle ──────────────────────────────────── */
-var LANG_MODES = ['en', 'zh', 'both'];
 var langBtn = document.getElementById('langToggle');
 var langLabel = langBtn ? langBtn.querySelector('.lang-label') : null;
 
@@ -41,22 +40,22 @@ function applyLangMode(mode) {
   root.setAttribute('data-lang-mode', mode);
   localStorage.setItem('cl-lang', mode);
   if (langLabel) {
-    langLabel.textContent = mode === 'en' ? 'EN' : mode === 'zh' ? '中' : '中·EN';
+    langLabel.textContent = mode === 'zh' ? 'English' : '中文';
   }
 }
 
-function cycleLang() {
-  var cur = root.getAttribute('data-lang-mode') || 'both';
-  var idx = LANG_MODES.indexOf(cur);
-  applyLangMode(LANG_MODES[(idx + 1) % LANG_MODES.length]);
+function toggleLang() {
+  var cur = root.getAttribute('data-lang-mode') || 'en';
+  applyLangMode(cur === 'en' ? 'zh' : 'en');
 }
 
 (function () {
   var saved = localStorage.getItem('cl-lang');
-  applyLangMode(saved && LANG_MODES.indexOf(saved) !== -1 ? saved : 'both');
+  var initial = (saved === 'zh') ? 'zh' : 'en';
+  applyLangMode(initial);
 })();
 
-if (langBtn) langBtn.addEventListener('click', cycleLang);
+if (langBtn) langBtn.addEventListener('click', toggleLang);
 
 /* ─── Active Nav Highlight on Scroll ───────────────────── */
 var sections = document.querySelectorAll('section[id]');

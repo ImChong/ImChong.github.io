@@ -156,10 +156,10 @@ ul { list-style: none; }
 }
 .lang-toggle:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* Language display modes */
-[data-lang-mode="en"] [data-lang="zh"] { display: none !important; }
-[data-lang-mode="zh"] [data-lang="en"] { display: none !important; }
-/* both: show all (default — no rule needed) */
+/* Language version display — JS toggles #lang-zh display */
+#lang-zh { display: none; }
+[data-lang-mode="zh"] #lang-en { display: none; }
+[data-lang-mode="zh"] #lang-zh { display: block; }
 
 /* ── Hero ───────────────────────────────────────────────── */
 .hero {
