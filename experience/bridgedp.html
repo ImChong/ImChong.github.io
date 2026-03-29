@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en" data-lang-mode="both">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,10 @@
 
   <header class="site-header">
     <div class="header-inner">
-      <a class="site-title" href="../index.html">← Chong Liu</a>
+      <a class="site-title" href="../index.html" data-lang="both">← Chong Liu</a>
+      <button class="lang-toggle" id="langToggle" aria-label="Toggle language" title="EN / 中 · EN">
+        <span class="lang-label">中·EN</span>
+      </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode (Ctrl+Shift+L)">
         <span class="icon-sun">☀️</span>
         <span class="icon-moon">🌙</span>
@@ -22,23 +25,32 @@
   <main>
     <section class="section">
       <div class="container">
-        <h1 class="section-title"><a href="https://www.bridgedp.com/" target="_blank" rel="noopener noreferrer">BridgeDP Robotics Co., Ltd.</a></h1>
-        <p class="hero-role-zh" style="margin-top:-8px;">桥介数物（深圳）科技有限公司</p>
+        <h1 class="section-title">
+          <a href="https://www.bridgedp.com/" target="_blank" rel="noopener noreferrer" data-lang="en">BridgeDP Robotics Co., Ltd.</a>
+        </h1>
+        <p class="hero-role-zh" style="margin-top:-8px;" data-lang="zh">桥介数物（深圳）科技有限公司</p>
 
         <div class="detail-meta">
-          <p><strong>Role:</strong> Robot Control Engineer · 机器人运动控制算法工程师</p>
-          <p><strong>Period:</strong> February 2025 – Present</p>
-          <p><strong>Location:</strong> Shenzhen, Guangdong, China · 广东省深圳市</p>
-          <p><strong>Company:</strong> <a href="https://www.bridgedp.com/" target="_blank" rel="noopener noreferrer">bridgedp.com ↗</a></p>
+          <p data-lang="en"><strong>Role:</strong> Robot Control Engineer · <span data-lang="zh">机器人运动控制算法工程师</span></p>
+          <p data-lang="en"><strong>Period:</strong> February 2025 – Present</p>
+          <p data-lang="en"><strong>Location:</strong> Shenzhen, Guangdong, China · <span data-lang="zh">广东省深圳市</span></p>
+          <p data-lang="en"><strong>Company:</strong> <a href="https://www.bridgedp.com/" target="_blank" rel="noopener noreferrer">bridgedp.com ↗</a></p>
         </div>
 
         <div class="card" style="margin-top:24px;">
           <div class="card-body">
-            <h3>About BridgeDP <span class="card-zh">关于桥介数物</span></h3>
-            <p>
-              BridgeDP（桥介数物）是行业领先的通用机器人"小脑"（运动控制）研发商，致力于攻克人形、四足及轮足等机器人行为控制领域的关键技术难题，为客户提供精准、灵活、高效的运动控制解决方案。
+            <h3 data-lang="both">About BridgeDP <span class="card-zh" data-lang="zh">关于桥介数物</span></h3>
+            <p data-lang="en">
+              BridgeDP is a leading general-purpose robot "cerebellum" (motion control) developer, dedicated to solving key technical challenges in motion control for humanoid, quadruped, and wheeled robots, providing precise, flexible, and efficient motion control solutions for clients.
             </p>
-            <p>
+            <p class="bio-zh" data-lang="zh">
+              桥介数物是行业领先的通用机器人"小脑"（运动控制）研发商，致力于攻克人形、四足及轮足等机器人行为控制领域的关键技术难题，为客户提供精准、灵活、高效的运动控制解决方案。
+            </p>
+            <p data-lang="en" style="margin-top:12px;">
+              Core product: BridgeDP Engine — based on high-precision motion capture data and reinforcement learning algorithms,
+              enabling humanoid robots to achieve human-like motions, covering perception planning, legged motion control and more.
+            </p>
+            <p class="bio-zh" data-lang="zh">
               核心产品 BridgeDP Engine 桥介引擎：基于高精度动作捕捉数据与强化学习算法，赋能人形机器人实现拟人动作，涵盖感知规划、足式运动控制等核心场景。
             </p>
           </div>
@@ -46,24 +58,31 @@
 
         <div class="card" style="margin-top:16px;">
           <div class="card-body">
-            <h3>Role &amp; Responsibilities <span class="card-zh">职责与工作内容</span></h3>
+            <h3 data-lang="both">Role &amp; Responsibilities <span class="card-zh" data-lang="zh">职责与工作内容</span></h3>
             <ul class="card-bullets">
-              <li><strong>Situation:</strong> BridgeDP 为多家机器人厂商提供定制化运动控制算法，客户机器人形态多样（人形、双足、四足等），算法需适配不同硬件平台和场景需求。</li>
-              <li><strong>Task:</strong> 作为 Robot Control Engineer，负责为客户的人形机器人定制开发运动控制算法，涵盖从策略训练到实机部署的全流程。</li>
-              <li><strong>Action:</strong> 基于强化学习（RL）与模仿学习（IL）相结合的方法，针对客户机器人的具体形态和任务需求，设计并训练运动控制策略；通过 Sim2Real 迁移将仿真策略部署到实际机器人上；持续优化策略性能以满足客户场景要求。</li>
-              <li><strong>Result:</strong> Details coming soon — 正在参与多个客户项目，详情待补充。</li>
+              <li data-lang="en"><strong>Situation:</strong> BridgeDP provides customized motion control algorithms for multiple robot manufacturers. Robot forms vary (humanoid, bipedal, quadruped), and algorithms need to adapt to different hardware platforms and scenario requirements.</li>
+              <li class="bio-zh" data-lang="zh"><strong>情境：</strong>桥介数物为多家机器人厂商提供定制化运动控制算法，客户机器人形态多样（人形、双足、四足等），算法需适配不同硬件平台和场景需求。</li>
+
+              <li data-lang="en"><strong>Task:</strong> As Robot Control Engineer, responsible for customized development of motion control algorithms for client humanoid robots, covering the full process from strategy training to real-machine deployment.</li>
+              <li class="bio-zh" data-lang="zh"><strong>任务：</strong>作为机器人运动控制算法工程师，负责为客户的人形机器人定制开发运动控制算法，涵盖从策略训练到实机部署的全流程。</li>
+
+              <li data-lang="en"><strong>Action:</strong> Based on Reinforcement Learning (RL) and Imitation Learning (IL), design and train motion control strategies for specific robot forms and task requirements; deploy from simulation to real robot via Sim2Real transfer; continuously optimize strategy performance to meet client scenario requirements.</li>
+              <li class="bio-zh" data-lang="zh"><strong>行动：</strong>基于强化学习（RL）与模仿学习（IL）相结合的方法，针对客户机器人的具体形态和任务需求，设计并训练运动控制策略；通过 Sim2Real 迁移将仿真策略部署到实际机器人上；持续优化策略性能以满足客户场景要求。</li>
+
+              <li data-lang="en"><strong>Result:</strong> Details coming soon — actively involved in multiple client projects.</li>
+              <li class="bio-zh" data-lang="zh"><strong>成果：</strong>详情待补充——正在参与多个客户项目。</li>
             </ul>
           </div>
         </div>
 
-        <p style="margin-top:32px;"><a href="../index.html#experience" class="project-link">← Back to Homepage</a></p>
+        <p style="margin-top:32px;"><a href="../index.html#experience" class="project-link" data-lang="en">← Back to Homepage</a></p>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p class="footer-copy">&copy; Chong Liu 2026</p>
+      <p class="footer-copy" data-lang="en">&copy; Chong Liu 2026</p>
     </div>
   </footer>
 

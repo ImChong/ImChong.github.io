@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang-mode="both">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,7 +7,7 @@
   <meta name="keywords" content="Chong Liu, Robotics, Robot Control, Humanoid Robot, Reinforcement Learning, Motion Control, Columbia University, Mechanical Engineering" />
   <meta name="author" content="Chong Liu" />
   <meta property="og:title" content="Chong Liu | 刘冲" />
-  <meta property="og:description" content="Robot Control Engineer — Shenzhen, China" />
+  <meta property="og:description" content="Robot Control Engineer — Shenzhen, Guangdong, China" />
   <meta property="og:type" content="website" />
   <title>Chong Liu | 刘冲</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>" />
@@ -18,12 +18,15 @@
   <!-- ─── Top Nav ─────────────────────────────────────────── -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="site-title" href="#hero">Chong Liu</a>
-      <nav class="main-nav" aria-label="Main navigation">
+      <a class="site-title" href="#hero" data-lang="both">Chong Liu</a>
+      <nav class="main-nav" aria-label="Main navigation" data-lang="both">
         <a href="#education">Education / 教育背景</a>
         <a href="#experience">Experience / 工作经历</a>
         <a href="#projects">Projects / 项目经历</a>
       </nav>
+      <button class="lang-toggle" id="langToggle" aria-label="Toggle language" title="EN / 中 · EN">
+        <span class="lang-label">中·EN</span>
+      </button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode (Ctrl+Shift+L)">
         <span class="icon-sun">☀️</span>
         <span class="icon-moon">🌙</span>
@@ -37,42 +40,48 @@
       <div class="container hero-grid">
 
         <div class="hero-text">
-          <h1 class="hero-name">Chong Liu <span class="name-zh">刘冲</span></h1>
-          <div class="hero-links">
+          <h1 class="hero-name">
+            <span data-lang="en">Chong Liu</span>
+            <span class="name-zh" data-lang="zh">刘冲</span>
+          </h1>
+
+          <div class="hero-links" data-lang="en">
             <a href="https://github.com/ImChong" target="_blank" rel="noopener noreferrer">GitHub</a>
             <span class="hero-link-sep">·</span>
             <a href="mailto:chongliu2021@163.com">Email</a>
             <span class="hero-link-sep">·</span>
             <a href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra" target="_blank" rel="noopener noreferrer">Google Scholar</a>
           </div>
-          <p class="hero-role">Robot Control Engineer</p>
-          <p class="hero-role-zh">机器人运动控制算法工程师</p>
-          <p class="hero-location">📍 Shenzhen, Guangdong, China · 广东省深圳市</p>
+
+          <p class="hero-role" data-lang="en">Robot Control Engineer</p>
+          <p class="hero-role-zh" data-lang="zh">机器人运动控制算法工程师</p>
+          <p class="hero-location" data-lang="en">📍 Shenzhen, Guangdong, China · <span data-lang="zh">广东省深圳市</span></p>
 
           <div class="bio">
-            <p>
+            <p data-lang="en">
               Hi there! I'm Chong Liu, a Robot Control Engineer based in Shenzhen, China.
               I hold a master's degree in Mechanical Engineering from Columbia University, specializing in Robotics and Control.
             </p>
-            <p class="bio-zh">
+            <p class="bio-zh" data-lang="zh">
               你好呀！我是刘冲，现任职于广东深圳，从事机器人运动控制算法工程师工作。
               我毕业于哥伦比亚大学机械工程专业，专攻机器人与控制方向。
             </p>
 
-            <p>
+            <p data-lang="en">
               I'm currently focused on humanoid robot reinforcement learning and imitation learning for motion control,
               working at BridgeDP to deliver customized motion control solutions for client humanoid robots.
             </p>
-            <p class="bio-zh">
-              我目前就职于桥介数物（BridgeDP），专注于人形机器人的强化学习与模仿学习运动控制算法研究，为客户的人形机器人提供定制化运动控制算法解决方案。
+            <p class="bio-zh" data-lang="zh">
+              我目前就职于桥介数物（BridgeDP），专注于人形机器人的强化学习与模仿学习运动控制算法研究，
+              为客户的人形机器人提供定制化运动控制算法解决方案。
             </p>
 
-            <p>
+            <p data-lang="en">
               I'm fascinated by designing and building advanced, life-like robots, and applying robotics technology
               to help people in need. This webpage contains my project documentation and resources to start on
               robotics from scratch. Together, let's make the world a better place!
             </p>
-            <p class="bio-zh">
+            <p class="bio-zh" data-lang="zh">
               我着迷于设计、建造先进精妙逼真的机器人，并应用机器人技术来帮助有需要的人。
               该网页包含我创建项目的文档和学习资源，让所有人都可以从零开始研究机器人技术。让我们一起，让世界变得更美好！
             </p>
@@ -91,26 +100,37 @@
     <!-- ─── Education ─────────────────────────────────────── -->
     <section id="education" class="section">
       <div class="container">
-        <h2 class="section-title">🎓 Education <span class="title-zh">教育背景</span></h2>
+        <h2 class="section-title" data-lang="both">🎓 Education <span class="title-zh" data-lang="zh">教育背景</span></h2>
         <div class="card-list">
-          <article class="card">            <div class="card-body">
-              <h3><a href="https://www.me.columbia.edu/" target="_blank" rel="noopener noreferrer">Columbia University in the City of New York</a> <span class="card-zh">哥伦比亚大学</span></h3>
-              <p class="card-meta">M.S. in Mechanical Engineering · Robotics &amp; Control · GPA: 3.78/4.0</p>
-              <p class="card-meta">Fu Foundation School of Engineering and Applied Science</p>
-              <p class="card-meta">August 2019 – February 2021 · New York, NY, USA</p>
+          <article class="card">
+            <div class="card-body">
+              <h3>
+                <a href="https://www.me.columbia.edu/" target="_blank" rel="noopener noreferrer" data-lang="en">Columbia University in the City of New York</a>
+                <span class="card-zh" data-lang="zh">哥伦比亚大学</span>
+              </h3>
+              <p class="card-meta" data-lang="en">M.S. in Mechanical Engineering · Robotics &amp; Control · GPA: 3.78/4.0</p>
+              <p class="card-meta" data-lang="zh">Fu Foundation School of Engineering and Applied Science</p>
+              <p class="card-meta" data-lang="en">August 2019 – February 2021 · New York, NY, USA</p>
             </div>
           </article>
-          <article class="card">            <div class="card-body">
-              <h3><a href="https://hghelicopters.com/" target="_blank" rel="noopener noreferrer">Higher Ground Helicopters</a></h3>
-              <p class="card-meta">Airman Certification — Private Helicopter Pilot</p>
-              <p class="card-meta">March 2019 – May 2019 · Miamisburg, Ohio, USA</p>
+          <article class="card">
+            <div class="card-body">
+              <h3>
+                <a href="https://hghelicopters.com/" target="_blank" rel="noopener noreferrer" data-lang="en">Higher Ground Helicopters</a>
+              </h3>
+              <p class="card-meta" data-lang="en">Airman Certification — Private Helicopter Pilot</p>
+              <p class="card-meta" data-lang="en">March 2019 – May 2019 · Miamisburg, Ohio, USA</p>
             </div>
           </article>
-          <article class="card">            <div class="card-body">
-              <h3><a href="https://bulletin.miamioh.edu/engineering-computing/" target="_blank" rel="noopener noreferrer">Miami University, Oxford</a> <span class="card-zh">迈阿密大学牛津分校</span></h3>
-              <p class="card-meta">B.S. in Mechanical Engineering · GPA: 3.91/4.0</p>
-              <p class="card-meta">College of Engineering and Computing</p>
-              <p class="card-meta">August 2015 – May 2019 · Oxford, Ohio, USA</p>
+          <article class="card">
+            <div class="card-body">
+              <h3>
+                <a href="https://bulletin.miamioh.edu/engineering-computing/" target="_blank" rel="noopener noreferrer" data-lang="en">Miami University, Oxford</a>
+                <span class="card-zh" data-lang="zh">迈阿密大学牛津分校</span>
+              </h3>
+              <p class="card-meta" data-lang="en">B.S. in Mechanical Engineering · GPA: 3.91/4.0</p>
+              <p class="card-meta" data-lang="zh">College of Engineering and Computing</p>
+              <p class="card-meta" data-lang="en">August 2015 – May 2019 · Oxford, Ohio, USA</p>
             </div>
           </article>
         </div>
@@ -120,27 +140,39 @@
     <!-- ─── Work Experience ───────────────────────────────── -->
     <section id="experience" class="section section-alt">
       <div class="container">
-        <h2 class="section-title">💼 Work Experience <span class="title-zh">工作经历</span></h2>
+        <h2 class="section-title" data-lang="both">💼 Work Experience <span class="title-zh" data-lang="zh">工作经历</span></h2>
         <div class="card-list">
-          <article class="card">            <div class="card-body">
-              <h3><a href="experience/bridgedp.html">BridgeDP Robotics Co., Ltd.</a> <span class="card-zh">桥介数物（深圳）科技有限公司</span></h3>
-              <p class="card-meta">Robot Control Engineer · 机器人运动控制算法工程师</p>
-              <p class="card-meta">February 2025 – Present · Shenzhen, Guangdong, China</p>
-              <a class="project-link" href="experience/bridgedp.html">View Details →</a>
+          <article class="card">
+            <div class="card-body">
+              <h3>
+                <a href="experience/bridgedp.html" data-lang="en">BridgeDP Robotics Co., Ltd.</a>
+                <span class="card-zh" data-lang="zh">桥介数物（深圳）科技有限公司</span>
+              </h3>
+              <p class="card-meta" data-lang="en">Robot Control Engineer · <span data-lang="zh">机器人运动控制算法工程师</span></p>
+              <p class="card-meta" data-lang="en">February 2025 – Present · Shenzhen, Guangdong, China</p>
+              <a class="project-link" href="experience/bridgedp.html" data-lang="en">View Details →</a>
             </div>
           </article>
-          <article class="card">            <div class="card-body">
-              <h3><a href="experience/huikon.html">Shenzhen Huikon Electric Technology Co., Ltd.</a> <span class="card-zh">深圳市汇控电气技术有限公司</span></h3>
-              <p class="card-meta">Co-founder &amp; Technical Lead · 联合创始人 &amp; 技术负责人</p>
-              <p class="card-meta">January 2024 – January 2025 · Shenzhen, Guangdong, China</p>
-              <a class="project-link" href="experience/huikon.html">View Details →</a>
+          <article class="card">
+            <div class="card-body">
+              <h3>
+                <a href="experience/huikon.html" data-lang="en">Shenzhen Huikon Electric Technology Co., Ltd.</a>
+                <span class="card-zh" data-lang="zh">深圳市汇控电气技术有限公司</span>
+              </h3>
+              <p class="card-meta" data-lang="en">Co-founder &amp; Technical Lead · <span data-lang="zh">联合创始人 &amp; 技术负责人</span></p>
+              <p class="card-meta" data-lang="en">January 2024 – January 2025 · Shenzhen, Guangdong, China</p>
+              <a class="project-link" href="experience/huikon.html" data-lang="en">View Details →</a>
             </div>
           </article>
-          <article class="card">            <div class="card-body">
-              <h3><a href="experience/huawei.html">Huawei Technologies Co., Ltd.</a> <span class="card-zh">华为技术有限公司</span></h3>
-              <p class="card-meta">Embedded Software Engineer · 嵌入式软件开发工程师</p>
-              <p class="card-meta">December 2021 – January 2024 · Shenzhen, Guangdong, China</p>
-              <a class="project-link" href="experience/huawei.html">View Details →</a>
+          <article class="card">
+            <div class="card-body">
+              <h3>
+                <a href="experience/huawei.html" data-lang="en">Huawei Technologies Co., Ltd.</a>
+                <span class="card-zh" data-lang="zh">华为技术有限公司</span>
+              </h3>
+              <p class="card-meta" data-lang="en">Embedded Software Engineer · <span data-lang="zh">嵌入式软件开发工程师</span></p>
+              <p class="card-meta" data-lang="en">December 2021 – January 2024 · Shenzhen, Guangdong, China</p>
+              <a class="project-link" href="experience/huawei.html" data-lang="en">View Details →</a>
             </div>
           </article>
         </div>
@@ -150,49 +182,42 @@
     <!-- ─── Projects ──────────────────────────────────────── -->
     <section id="projects" class="section">
       <div class="container">
-        <h2 class="section-title">🛠️ Projects <span class="title-zh">项目经历</span></h2>
+        <h2 class="section-title" data-lang="both">🛠️ Projects <span class="title-zh" data-lang="zh">项目经历</span></h2>
         <div class="card-list card-grid">
-          <article class="card project-card">            <div class="card-body">
+          <article class="card project-card">
+            <div class="card-body">
               <h3>
-                <a href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer">
-                  Humanoid Robot Learning Paper Notebooks
-                </a>
-                <span class="card-zh">人形机器人学习论文笔记</span>
+                <a href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer" data-lang="en">Humanoid Robot Learning Paper Notebooks</a>
+                <span class="card-zh" data-lang="zh">人形机器人学习论文笔记</span>
               </h3>
-              <p class="card-meta">Reinforcement Learning · Imitation Learning · Motion Control · 强化学习 · 模仿学习 · 运动控制</p>
-              <p>
+              <p class="card-meta" data-lang="en">Reinforcement Learning · Imitation Learning · Motion Control · <span data-lang="zh">强化学习 · 模仿学习 · 运动控制</span></p>
+              <p data-lang="en">
                 A curated collection of paper reading notes on humanoid robot learning, covering reinforcement learning,
                 imitation learning, and motion control for bipedal locomotion and whole-body control.
               </p>
-              <p class="bio-zh">
+              <p class="bio-zh" data-lang="zh">
                 人形机器人学习领域的论文阅读笔记合集，涵盖强化学习、模仿学习以及双足运动和全身控制的运动控制算法。
               </p>
-              <a class="project-link" href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer">
-                View Project →
-              </a>
+              <a class="project-link" href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer" data-lang="en">View Project →</a>
             </div>
           </article>
           <article class="card project-card">
             <div class="card-body">
               <h3>
-                <a href="https://github.com/ImChong/Robotics_Notebooks" target="_blank" rel="noopener noreferrer">
-                  Robotics Notebooks
-                </a>
-                <span class="card-zh">机器人技术栈笔记</span>
+                <a href="https://github.com/ImChong/Robotics_Notebooks" target="_blank" rel="noopener noreferrer" data-lang="en">Robotics Notebooks</a>
+                <span class="card-zh" data-lang="zh">机器人技术栈笔记</span>
               </h3>
-              <p class="card-meta">Know-How · Theory · Train · 控制理论 · 训练实践</p>
-              <p>
+              <p class="card-meta" data-lang="en">Know-How · Theory · Train · <span data-lang="zh">控制理论 · 训练实践</span></p>
+              <p data-lang="en">
                 A comprehensive robotics knowledge base covering humanoid robot control fundamentals and advanced methods —
                 from traditional model-based approaches (LIP+ZMP, SLIP+VMC, WBC/TSID, Convex MPC) to deep reinforcement
                 learning (PPO, SAC, DRL-based locomotion) and imitation learning (DAgger, DeepMimic, AMP, BFM).
               </p>
-              <p class="bio-zh">
+              <p class="bio-zh" data-lang="zh">
                 机器人技术栈资料汇总，涵盖传统控制方法（建模、最优控制、模型预测控制）与深度强化学习运动控制方法，
                 以及人形机器人技术框架路线与学习路线规划。
               </p>
-              <a class="project-link" href="https://github.com/ImChong/Robotics_Notebooks" target="_blank" rel="noopener noreferrer">
-                View on GitHub →
-              </a>
+              <a class="project-link" href="https://github.com/ImChong/Robotics_Notebooks" target="_blank" rel="noopener noreferrer" data-lang="en">View on GitHub →</a>
             </div>
           </article>
         </div>
@@ -204,7 +229,7 @@
   <!-- ─── Footer ────────────────────────────────────────── -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p class="footer-copy">&copy; Chong Liu 2026</p>
+      <p class="footer-copy" data-lang="en">&copy; Chong Liu 2026</p>
     </div>
   </footer>
 
