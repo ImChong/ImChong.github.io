@@ -314,6 +314,17 @@ ul { list-style: none; }
 }
 .card-body h3 a:hover { color: var(--accent-hover); text-decoration: underline; }
 
+/* Detail page meta */
+.detail-meta {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  line-height: 1.8;
+}
+.detail-meta p { margin: 0; }
+
 /* Skill tags */
 .skill-tags {
   display: flex;
