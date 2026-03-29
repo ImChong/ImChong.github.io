@@ -156,10 +156,10 @@ ul { list-style: none; }
 }
 .lang-toggle:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* Language version display — JS toggles #lang-zh display */
-#lang-zh { display: none; }
-[data-lang-mode="zh"] #lang-en { display: none; }
-[data-lang-mode="zh"] #lang-zh { display: block; }
+/* Language version display */
+#lang-zh { display: none !important; }
+[data-lang-mode="zh"] #lang-en { display: none !important; }
+[data-lang-mode="zh"] #lang-zh { display: block !important; }
 
 /* ── Hero ───────────────────────────────────────────────── */
 .hero {
