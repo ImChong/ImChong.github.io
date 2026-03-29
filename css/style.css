@@ -297,6 +297,23 @@ ul { list-style: none; }
 
 .placeholder-card { opacity: .55; }
 
+.project-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color .2s;
+}
+.project-link:hover { color: var(--accent-hover); }
+
+.card-body h3 a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color .2s;
+}
+.card-body h3 a:hover { color: var(--accent-hover); text-decoration: underline; }
+
 /* ── Footer ─────────────────────────────────────────────── */
 .site-footer {
   padding: 40px 0 32px;
