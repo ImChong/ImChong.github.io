@@ -441,6 +441,7 @@ ul { list-style: none; }
   .name-zh { font-size: 1.2rem; }
 
   .main-nav { display: none; }
+  .site-title { flex: 1; }
 
   .card-grid { grid-template-columns: 1fr; }
 }
