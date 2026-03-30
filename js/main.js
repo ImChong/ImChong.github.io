@@ -42,6 +42,10 @@ function applyLangMode(mode) {
   if (langLabel) {
     langLabel.textContent = mode === 'zh' ? 'English' : '中文';
   }
+  var navLinks = document.querySelectorAll('.main-nav a');
+  for (var i = 0; i < navLinks.length; i++) {
+    navLinks[i].textContent = mode === 'zh' ? navLinks[i].getAttribute('data-zh') : navLinks[i].getAttribute('data-en');
+  }
   updateActiveNav();
 }
 
