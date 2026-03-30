@@ -3,15 +3,15 @@
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://imchong.github.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> 🤖 Humanoid Robot Motion Control Algorithm Engineer | 人形机器人运动控制算法工程师
+> 🤖 Robot Control Engineer | 机器人运动控制算法工程师
 
 🔗 **Live Site:** [https://imchong.github.io/](https://imchong.github.io/)
 
 ## 👤 About / 关于
 
-Hi! I'm **Chong Liu (刘冲)**, a Humanoid Robot Motion Control Algorithm Engineer based in Shenzhen, China. I hold an M.S. in Mechanical Engineering from Columbia University (Robotics & Control) and a B.S. from Miami University. I'm currently focused on humanoid robot reinforcement learning and imitation learning for motion control.
+Hi! I'm **Chong Liu (刘冲)**, a Robot Control Engineer based in Shenzhen, China. I hold an M.S. in Mechanical Engineering from Columbia University (Robotics & Control) and a B.S. from Miami University. I'm currently focused on humanoid robot reinforcement learning and imitation learning for motion control.
 
-你好！我是**刘冲**，人形机器人运动控制算法工程师，坐标广东深圳。硕士毕业于哥伦比亚大学机械工程专业（机器人与控制方向），本科毕业于迈阿密大学。目前专注于人形机器人强化学习与模仿学习运动控制算法研究。
+你好！我是**刘冲**，机器人运动控制算法工程师，坐标广东深圳。硕士毕业于哥伦比亚大学机械工程专业（机器人与控制方向），本科毕业于迈阿密大学。目前专注于人形机器人强化学习与模仿学习运动控制算法研究。
 
 ## 🎓 Education / 教育背景
 
