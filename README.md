@@ -13,18 +13,6 @@ Hi! I'm **Chong Liu (刘冲)**, a Robot Control Engineer based in Shenzhen, Chin
 
 你好！我是**刘冲**，机器人运动控制算法工程师，坐标广东深圳。硕士毕业于哥伦比亚大学机械工程专业（机器人与控制方向），本科毕业于迈阿密大学。目前专注于人形机器人强化学习与模仿学习运动控制算法研究。
 
-## 🎓 Education / 教育背景
-
-| Degree | Institution | GPA | Period |
-|--------|-----------|-----|--------|
-| M.S. Mechanical Engineering (Robotics & Control) | Columbia University | 3.78/4.0 | 2019 – 2021 |
-| Private Helicopter Pilot Certification | Higher Ground Helicopters | — | 2019 |
-| B.S. Mechanical Engineering | Miami University | 3.91/4.0 | 2015 – 2019 |
-
-## 🦾 Projects / 项目
-
-- **[Humanoid Robot Learning Paper Notebooks](https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/)** — 人形机器人学习论文笔记合集，涵盖强化学习、模仿学习与运动控制算法。
-
 ## ✨ Site Features / 网站特性
 
 - 🌓 Dark / Light mode toggle (button or `Ctrl+Shift+L`)
