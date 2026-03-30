@@ -42,6 +42,7 @@ function applyLangMode(mode) {
   if (langLabel) {
     langLabel.textContent = mode === 'zh' ? 'English' : '中文';
   }
+  updateActiveNav();
 }
 
 function toggleLang() {
@@ -58,10 +59,19 @@ function toggleLang() {
 if (langBtn) langBtn.addEventListener('click', toggleLang);
 
 /* ─── Active Nav Highlight on Scroll ───────────────────── */
-var sections = document.querySelectorAll('section[id]');
-var navLinks = document.querySelectorAll('.main-nav a');
+function getActiveSections() {
+  var mode = root.getAttribute('data-lang-mode') || 'en';
+  var container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+  return container ? container.querySelectorAll('section[id]') : [];
+}
+
+function getActiveNavLinks() {
+  return document.querySelectorAll('.main-nav a');
+}
 
 function updateActiveNav() {
+  var sections = getActiveSections();
+  var navLinks = getActiveNavLinks();
   var scrollY = window.scrollY + 80;
   var active = null;
   for (var i = 0; i < sections.length; i++) {
@@ -78,10 +88,18 @@ window.addEventListener('scroll', updateActiveNav, { passive: true });
 updateActiveNav();
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
-for (var k = 0; k < navLinks.length; k++) {
-  navLinks[k].addEventListener('click', function (e) {
-    var targetId = this.getAttribute('href').slice(1);
-    var target = document.getElementById(targetId);
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  });
+function bindNavClicks() {
+  var navLinks = getActiveNavLinks();
+  for (var k = 0; k < navLinks.length; k++) {
+    navLinks[k].addEventListener('click', function (e) {
+      var targetId = this.getAttribute('href').slice(1);
+      var sections = getActiveSections();
+      var target = null;
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].id === targetId) { target = sections[i]; break; }
+      }
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  }
 }
+bindNavClicks();
