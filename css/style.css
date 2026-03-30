@@ -451,3 +451,37 @@ ul { list-style: none; }
   .section { padding: 40px 0; }
   .footer-links { gap: 16px; }
 }
+
+/* ── Research / Publications ──────────────────────────── */
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: .95rem;
+  margin-top: -8px;
+  margin-bottom: 24px;
+}
+.section-subtitle a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.section-subtitle a:hover {
+  text-decoration: underline;
+}
+
+.publication-card .card-body h3 {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+.pub-authors {
+  font-size: .9rem;
+  color: var(--text);
+  margin-bottom: 2px !important;
+}
+.pub-authors strong {
+  color: var(--accent);
+}
+.pub-venue {
+  font-size: .85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
