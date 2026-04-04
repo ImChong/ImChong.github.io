@@ -107,3 +107,37 @@ function bindNavClicks() {
   }
 }
 bindNavClicks();
+
+/* ─── Publications Toggle ───────────────────────────────── */
+function setupPubToggle(btnId, lang) {
+  var btn = document.getElementById(btnId);
+  if (!btn) return;
+  var others = document.querySelectorAll(
+    lang === 'zh'
+      ? '#lang-zh .publication-card[data-related="other"]'
+      : '#lang-en .publication-card[data-related="other"]'
+  );
+
+  btn.addEventListener('click', function () {
+    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    expanded = !expanded;
+    btn.setAttribute('aria-expanded', String(expanded));
+
+    others.forEach(function (card) {
+      if (expanded) {
+        card.classList.remove('collapsed');
+      } else {
+        card.classList.add('collapsed');
+      }
+    });
+
+    if (lang === 'zh') {
+      btn.textContent = expanded ? '收起非机器人相关论文 ▴' : '展开 7 篇非机器人相关论文 ▾';
+    } else {
+      btn.textContent = expanded ? 'Hide non-robotics publications ▴' : 'Show 7 non-robotics publications ▾';
+    }
+  });
+}
+
+setupPubToggle('pubToggleBtn', 'en');
+setupPubToggle('pubToggleBtnZh', 'zh');
