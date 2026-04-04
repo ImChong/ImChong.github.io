@@ -517,22 +517,7 @@ ul { list-style: none; }
   color: #fff;
 }
 
-/* Collapsed state: hide abstract paragraph and Google Scholar link */
-.publication-card.collapsed > .card-body > p,
-.publication-card.collapsed > .card-body > a.project-link {
+/* Collapsed state: hide the entire card */
+.publication-card.collapsed {
   display: none;
-}
-
-/* Collapsed card gets a subtle indicator */
-.publication-card.collapsed > .card-body::after {
-  content: '🔒 非机器人相关 — 点击上方按钮展开';
-  display: block;
-  font-size: .78rem;
-  color: var(--text-muted);
-  margin-top: 6px;
-  font-style: italic;
-}
-
-[data-lang-mode="en"] .publication-card.collapsed > .card-body::after {
-  content: '🔒 Non-robotics — expand above to read more';
 }

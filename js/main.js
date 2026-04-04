@@ -122,6 +122,7 @@ function setupPubToggle(btnId, lang) {
     var expanded = btn.getAttribute('aria-expanded') === 'true';
     expanded = !expanded;
     btn.setAttribute('aria-expanded', String(expanded));
+    localStorage.setItem('cl-pubs-expanded', String(expanded));
 
     others.forEach(function (card) {
       if (expanded) {
@@ -141,3 +142,18 @@ function setupPubToggle(btnId, lang) {
 
 setupPubToggle('pubToggleBtn', 'en');
 setupPubToggle('pubToggleBtnZh', 'zh');
+
+/* Also show non-robotics cards on load if already expanded via localStorage */
+(function () {
+  var savedExpanded = localStorage.getItem('cl-pubs-expanded');
+  if (savedExpanded === 'true') {
+    var enBtn = document.getElementById('pubToggleBtn');
+    var zhBtn = document.getElementById('pubToggleBtnZh');
+    var enOthers = document.querySelectorAll('#non-robotics-pubs .publication-card[data-related="other"]');
+    var zhOthers = document.querySelectorAll('#non-robotics-pubs-zh .publication-card[data-related="other"]');
+    if (enBtn) { enBtn.setAttribute('aria-expanded', 'true'); enBtn.textContent = 'Hide non-robotics publications ▴'; }
+    if (zhBtn) { zhBtn.setAttribute('aria-expanded', 'true'); zhBtn.textContent = '收起非机器人相关论文 ▴'; }
+    enOthers.forEach(function (c) { c.classList.remove('collapsed'); });
+    zhOthers.forEach(function (c) { c.classList.remove('collapsed'); });
+  }
+})();
