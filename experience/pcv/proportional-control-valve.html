@@ -20,8 +20,13 @@
     /* Lightbox */
     #lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:9999; align-items:center; justify-content:center; }
     #lightbox.active { display:flex; }
-    #lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; cursor:zoom-out; transition:transform .2s; transform-origin:center; }
+    #lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; cursor:grab; transition:transform .2s; transform-origin:center; }
+    #lightbox img:active { cursor:grabbing; }
     #lightbox-close { position:fixed; top:18px; right:24px; font-size:2rem; color:#fff; cursor:pointer; line-height:1; user-select:none; }
+    #lb-controls { position:fixed; bottom:28px; left:50%; transform:translateX(-50%); display:flex; gap:12px; align-items:center; }
+    #lb-controls button { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.4); color:#fff; font-size:1.4rem; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+    #lb-controls button:hover { background:rgba(255,255,255,.3); }
+    #lb-zoom-label { color:#fff; font-size:.9rem; min-width:48px; text-align:center; }
   </style>
 </head>
 <body>
@@ -248,18 +253,46 @@
     // Lightbox
     const lb = document.createElement('div');
     lb.id = 'lightbox';
-    lb.innerHTML = '<span id="lightbox-close">&times;</span><img id="lb-img" src="" alt="" />';
+    lb.innerHTML = `
+      <span id="lightbox-close">&times;</span>
+      <img id="lb-img" src="" alt="" />
+      <div id="lb-controls">
+        <button id="lb-zoom-out" title="缩小 (-)">−</button>
+        <span id="lb-zoom-label">100%</span>
+        <button id="lb-zoom-in" title="放大 (+)">+</button>
+        <button id="lb-zoom-reset" title="重置 (0)" style="font-size:.85rem;width:auto;padding:0 12px;border-radius:20px;">重置</button>
+      </div>`;
     document.body.appendChild(lb);
     const lbImg = document.getElementById('lb-img');
+    const lbLabel = document.getElementById('lb-zoom-label');
+    let scale = 1;
+    const STEP = 0.25, MIN = 0.25, MAX = 5;
+    function setScale(s) {
+      scale = Math.min(MAX, Math.max(MIN, s));
+      lbImg.style.transform = `scale(${scale})`;
+      lbLabel.textContent = Math.round(scale * 100) + '%';
+    }
+    function openLb(src) {
+      lbImg.src = src; setScale(1);
+      lb.classList.add('active');
+    }
+    function closeLb() { lb.classList.remove('active'); }
     document.querySelectorAll('.section-img').forEach(img => {
-      img.addEventListener('click', () => {
-        lbImg.src = img.src;
-        lb.classList.add('active');
-      });
+      img.addEventListener('click', () => openLb(img.src));
     });
-    document.getElementById('lightbox-close').addEventListener('click', () => lb.classList.remove('active'));
-    lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('active'); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('active'); });
+    document.getElementById('lightbox-close').addEventListener('click', closeLb);
+    document.getElementById('lb-zoom-in').addEventListener('click', e => { e.stopPropagation(); setScale(scale + STEP); });
+    document.getElementById('lb-zoom-out').addEventListener('click', e => { e.stopPropagation(); setScale(scale - STEP); });
+    document.getElementById('lb-zoom-reset').addEventListener('click', e => { e.stopPropagation(); setScale(1); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+    lb.addEventListener('wheel', e => { e.preventDefault(); setScale(scale + (e.deltaY < 0 ? STEP : -STEP)); }, { passive: false });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === '+' || e.key === '=') setScale(scale + STEP);
+      if (e.key === '-') setScale(scale - STEP);
+      if (e.key === '0') setScale(1);
+    });
   </script>
 </body>
 </html>
