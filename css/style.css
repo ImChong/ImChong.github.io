@@ -500,16 +500,18 @@ ul { list-style: none; }
 
 /* ── Publication Toggle ────────────────────────────────── */
 .pub-toggle-btn {
-  display: inline-block;
+  display: block;
+  width: 100%;
   margin-bottom: 16px;
-  padding: 7px 16px;
-  font-size: .88rem;
+  padding: 10px 20px;
+  font-size: .9rem;
   font-family: var(--font-sans);
   color: var(--accent);
   background: transparent;
   border: 1px solid var(--accent);
-  border-radius: 20px;
+  border-radius: 8px;
   cursor: pointer;
+  text-align: center;
   transition: background var(--transition), color var(--transition);
 }
 .pub-toggle-btn:hover {
