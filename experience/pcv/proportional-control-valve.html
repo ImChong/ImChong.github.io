@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="../../css/style.css" />
   <style>
     .section-img { display: block; width: 100%; max-width: 800px; height: auto; border-radius: 8px; margin: 12px auto; }
-    .video-wrap { position: relative; height: 400px; overflow: hidden; margin: 12px 0; border-radius: 8px; width: 100%; }
+    .video-card { padding: 0 !important; overflow: hidden; }
+    .video-card h3 { padding: 16px 24px 8px; }
+    .video-wrap { position: relative; height: 400px; overflow: hidden; width: 100%; }
     .video-wrap video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
     .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 12px 0; }
     .img-grid img { width: 100%; height: auto; border-radius: 6px; }
@@ -67,9 +69,9 @@
             </div>
           </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Working Principle</h3>
+          <div class="card video-card" style="margin-top:16px;">
+            <div class="card-body" style="width:100%;padding:0;">
+              <h3 style="padding:16px 24px 8px;">Working Principle</h3>
               <div class="video-wrap">
                 <video controls>
                   <source src="Working_Principle.mp4" type="video/mp4" />
@@ -168,9 +170,9 @@
             </div>
           </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>工作原理</h3>
+          <div class="card video-card" style="margin-top:16px;">
+            <div class="card-body" style="width:100%;padding:0;">
+              <h3 style="padding:16px 24px 8px;">工作原理</h3>
               <div class="video-wrap">
                 <video controls>
                   <source src="Working_Principle.mp4" type="video/mp4" />
