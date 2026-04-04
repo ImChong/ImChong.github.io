@@ -502,8 +502,8 @@ ul { list-style: none; }
 .pub-toggle-btn {
   display: block;
   width: 100%;
-  margin-top: 24px;
-  margin-bottom: 16px;
+  margin-top: 16px;
+  margin-bottom: 0;
   padding: 10px 20px;
   font-size: .9rem;
   font-family: var(--font-sans);
