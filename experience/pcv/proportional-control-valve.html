@@ -16,6 +16,12 @@
     .img-grid img { width: 100%; height: auto; border-radius: 6px; }
     .pdf-link { display: inline-block; padding: 8px 16px; background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 500; margin: 8px 0; }
     .pdf-link:hover { opacity: 0.85; }
+    .section-img { cursor: zoom-in; }
+    /* Lightbox */
+    #lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:9999; align-items:center; justify-content:center; }
+    #lightbox.active { display:flex; }
+    #lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; cursor:zoom-out; transition:transform .2s; transform-origin:center; }
+    #lightbox-close { position:fixed; top:18px; right:24px; font-size:2rem; color:#fff; cursor:pointer; line-height:1; user-select:none; }
   </style>
 </head>
 <body>
@@ -238,5 +244,22 @@
   </div><!-- /lang-zh -->
 
   <script src="../../js/main.js"></script>
+  <script>
+    // Lightbox
+    const lb = document.createElement('div');
+    lb.id = 'lightbox';
+    lb.innerHTML = '<span id="lightbox-close">&times;</span><img id="lb-img" src="" alt="" />';
+    document.body.appendChild(lb);
+    const lbImg = document.getElementById('lb-img');
+    document.querySelectorAll('.section-img').forEach(img => {
+      img.addEventListener('click', () => {
+        lbImg.src = img.src;
+        lb.classList.add('active');
+      });
+    });
+    document.getElementById('lightbox-close').addEventListener('click', () => lb.classList.remove('active'));
+    lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('active'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('active'); });
+  </script>
 </body>
 </html>
