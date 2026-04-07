@@ -1,3 +1,19 @@
+/* ─── Reusable Footer ───────────────────────────────────── */
+function renderSiteFooters() {
+  var footers = document.querySelectorAll('.site-footer[data-footer-lang]');
+  footers.forEach(function (footer) {
+    var lang = footer.getAttribute('data-footer-lang');
+    var copy = lang === 'zh' ? '© 刘冲 2026' : '&copy; Chong Liu 2026';
+    footer.innerHTML = [
+      '<div class="container footer-inner">',
+      '  <p class="footer-copy">' + copy + '</p>',
+      '</div>'
+    ].join('');
+  });
+}
+
+renderSiteFooters();
+
 /* ─── Theme (Dark / Light) ──────────────────────────────── */
 var THEME_KEY = 'cl-theme';
 var root = document.documentElement;
