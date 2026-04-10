@@ -2,7 +2,6 @@
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://imchong.github.io/)
 [![Quality Checks](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml/badge.svg)](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml)
-[![Visual Regression](https://img.shields.io/badge/Visual%20Regression-Playwright-45ba4b?logo=playwright)](https://playwright.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > 🤖 Robot Control Engineer | 机器人运动控制算法工程师
@@ -32,8 +31,6 @@ Hi! I'm **Chong Liu (刘冲)**, a Robot Control Engineer based in Shenzhen, Chin
 │   └── style.css       # Styles with CSS custom properties for theming
 ├── js/
 │   └── main.js         # Dark mode, scroll highlight, smooth navigation
-├── tests/
-│   └── visual.spec.js  # Playwright visual regression tests
 └── README.md
 ```
 
@@ -41,10 +38,6 @@ Hi! I'm **Chong Liu (刘冲)**, a Robot Control Engineer based in Shenzhen, Chin
 
 - `npm run format`：自动格式化代码
 - `npm run check`：运行 Prettier + ESLint + Stylelint 检查
-- `npm run test:visual`：运行视觉回归对比
-- `npm run test:visual:update`：更新视觉基线截图
-
-视觉回归当前覆盖首页中英文视图，用于防止格式化或重构后页面样式被悄悄改坏。
 
 ## 📬 Contact / 联系方式
 
