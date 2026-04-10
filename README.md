@@ -1,6 +1,8 @@
 # 📄 Chong Liu | 刘冲 — Personal Homepage
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://imchong.github.io/)
+[![Quality Checks](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml/badge.svg)](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml)
+[![Visual Regression](https://img.shields.io/badge/Visual%20Regression-Playwright-45ba4b?logo=playwright)](https://playwright.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > 🤖 Robot Control Engineer | 机器人运动控制算法工程师
