@@ -1,277 +1,463 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💼 Proportional Control Valve — Project | Chong Liu</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>" />
-  <link rel="stylesheet" href="../../css/style.css" />
-  <style>
-    .section-img { display: block; width: 100%; height: auto; border-radius: 8px; margin: 12px 0; }
-    .video-card { padding: 0 !important; overflow: hidden; }
-    .video-card h3 { padding: 16px 24px 8px; }
-    .video-wrap { position: relative; height: 400px; overflow: hidden; width: 100%; }
-    .video-wrap video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
-    .img-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 12px 0; }
-    .img-grid img { width: 100%; height: auto; border-radius: 6px; }
-    .pdf-link { display: inline-block; padding: 8px 16px; background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 500; margin: 8px 0; }
-    .pdf-link:hover { opacity: 0.85; }
-    .section-img { cursor: zoom-in; }
-    /* Lightbox */
-    #lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:9999; align-items:center; justify-content:center; }
-    #lightbox.active { display:flex; }
-    #lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; cursor:grab; transition:transform .2s; transform-origin:center; }
-    #lightbox img:active { cursor:grabbing; }
-    #lightbox-close { position:fixed; top:18px; right:24px; font-size:2rem; color:#fff; cursor:pointer; line-height:1; user-select:none; }
-    #lb-controls { position:fixed; bottom:28px; left:50%; transform:translateX(-50%); display:flex; gap:12px; align-items:center; }
-    #lb-controls button { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.4); color:#fff; font-size:1.4rem; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s; }
-    #lb-controls button:hover { background:rgba(255,255,255,.3); }
-    #lb-zoom-label { color:#fff; font-size:.9rem; min-width:48px; text-align:center; }
-  </style>
-</head>
-<body>
-
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="site-title" href="../../index.html">← Chong Liu | 刘冲</a>
-      <div class="header-actions">
-        <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
-          <span class="lang-label">中文</span>
-        </button>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode (Ctrl+Shift+L)">
-          <span class="icon-sun">☀️</span>
-          <span class="icon-moon">🌙</span>
-        </button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>💼 Proportional Control Valve — Project | Chong Liu</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>"
+    />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <style>
+      .section-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 12px 0;
+      }
+      .video-card {
+        padding: 0 !important;
+        overflow: hidden;
+      }
+      .video-card h3 {
+        padding: 16px 24px 8px;
+      }
+      .video-wrap {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        width: 100%;
+      }
+      .video-wrap video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+      .img-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+        margin: 12px 0;
+      }
+      .img-grid img {
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+      }
+      .pdf-link {
+        display: inline-block;
+        padding: 8px 16px;
+        background: var(--accent);
+        color: #fff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        margin: 8px 0;
+      }
+      .pdf-link:hover {
+        opacity: 0.85;
+      }
+      .section-img {
+        cursor: zoom-in;
+      }
+      /* Lightbox */
+      #lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+      }
+      #lightbox.active {
+        display: flex;
+      }
+      #lightbox img {
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: 8px;
+        cursor: grab;
+        transition: transform 0.2s;
+        transform-origin: center;
+      }
+      #lightbox img:active {
+        cursor: grabbing;
+      }
+      #lightbox-close {
+        position: fixed;
+        top: 18px;
+        right: 24px;
+        font-size: 2rem;
+        color: #fff;
+        cursor: pointer;
+        line-height: 1;
+        user-select: none;
+      }
+      #lb-controls {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      #lb-controls button {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: #fff;
+        font-size: 1.4rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s;
+      }
+      #lb-controls button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      #lb-zoom-label {
+        color: #fff;
+        font-size: 0.9rem;
+        min-width: 48px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="../../index.html">← Chong Liu | 刘冲</a>
+        <div class="header-actions">
+          <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+            <span class="lang-label">中文</span>
+          </button>
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode (Ctrl+Shift+L)"
+          >
+            <span class="icon-sun">☀️</span>
+            <span class="icon-moon">🌙</span>
+          </button>
+        </div>
       </div>
+    </header>
+
+    <!-- ─── EN Content ─────────────────────────────────────── -->
+    <div id="lang-en">
+      <main>
+        <section class="section">
+          <div class="container">
+            <h1 class="section-title">Proportional Control Valve</h1>
+            <p class="card-meta">Mechanical Engineering Project · January 2024 – January 2025</p>
+
+            <div class="card" style="margin-top: 24px">
+              <div class="card-body">
+                <h3>What is a Proportional Control Valve?</h3>
+                <p>
+                  A <strong>proportional control valve</strong> is a type of pneumatic valve that
+                  controls air flow rate proportionally to an electrical input signal — unlike a
+                  simple on/off valve, it can continuously adjust flow, pressure, or direction based
+                  on a varying current or voltage input. By precisely regulating the spool position
+                  via an electromagnetic coil (solenoid), it achieves smooth, fine-grained control
+                  of pneumatic actuators (cylinders or grippers), enabling variables such as
+                  cylinder velocity, output force, and motion trajectory to be modulated with high
+                  accuracy.
+                </p>
+                <p style="margin-top: 12px">
+                  This project covers the complete product lifecycle: concept design, detailed CAD
+                  modeling, kinematic analysis, tolerance stack-up management, prototype testing,
+                  supply chain coordination, and production documentation — applying mechanical
+                  engineering fundamentals to a real-world industrial component.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>Design Overview</h3>
+                <img src="hero.png" alt="Proportional Control Valve Overview" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This assembled view highlights my ability to turn a valve concept into a complete
+                  product form, integrating the main body, brass base, electrical connector, and
+                  pneumatic ports into one manufacturable design.
+                </p>
+                <a href="valve_manual.pdf" target="_blank" class="pdf-link"
+                  >📄 Valve Manual (PDF)</a
+                >
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>Detailed CAD</h3>
+                <img src="overview.png" alt="Detailed CAD" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This 3D CAD model reflects detailed mechanical design work, with the housing, top
+                  cap, connector, brass base, and outlet features integrated into a coherent
+                  assembly.
+                </p>
+              </div>
+            </div>
+
+            <div class="card video-card" style="margin-top: 16px">
+              <div class="card-body" style="width: 100%; padding: 0">
+                <h3 style="padding: 16px 24px 8px">Working Principle</h3>
+                <div class="video-wrap">
+                  <video controls>
+                    <source src="Working_Principle.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.88rem; padding: 0 24px 16px">
+                  This sectional animation demonstrates my understanding of the internal actuation
+                  path, showing how the central spool moves inside the housing during valve
+                  operation.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>R&amp;D Process Management</h3>
+                <img src="rd_process.png" alt="R&D Process" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This schedule chart reflects hands-on project coordination across testing, drawing
+                  release, endurance validation, and assembly, with each task tracked over the 2024
+                  development cycle.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>Supply Chain Management</h3>
+                <img src="supply_chain.png" alt="Supply Chain" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This supplier database reflects practical supply-chain work, organizing machining,
+                  mold, and actuator vendors with contacts, ratings, pricing, and inspection status
+                  for sourcing decisions.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>Multi-functional Teams Collaboration</h3>
+                <img src="team_collab.png" alt="Team Collaboration" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This schematic sheet shows involvement beyond mechanics, covering the control-side
+                  circuit with chips, resistors, capacitors, transistors, and signal
+                  interconnections.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>Production Requirements</h3>
+                <img src="prod_req.png" alt="Production Requirements" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This manufacturing drawing demonstrates detail-oriented engineering output,
+                  defining the valve core through views, sections, dimensions, and material notes
+                  for production.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>Combined Tolerance Inspection</h3>
+                <img src="tolerance_insp.png" alt="Tolerance Inspection" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This tolerance analysis highlights inspection and quality-control work, using 3D
+                  and 2D scatter plots to compare measured valve-body and valve-core dimensions
+                  against limits.
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>Spring Force Testing</h3>
+                <img src="spring_force.png" alt="Spring Force Testing" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  This spring characteristic plot reflects test-driven design work, comparing
+                  force-length behavior across multiple spring materials or design variants.
+                </p>
+              </div>
+            </div>
+
+            <p style="margin-top: 32px">
+              <a href="../../index.html#projects" class="project-link">← Back to Homepage</a>
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <p class="footer-copy">&copy; Chong Liu 2026</p>
+        </div>
+      </footer>
     </div>
-  </header>
+    <!-- /lang-en -->
 
-  <!-- ─── EN Content ─────────────────────────────────────── -->
-  <div id="lang-en">
+    <!-- ─── ZH Content ─────────────────────────────────────── -->
+    <div id="lang-zh">
+      <main>
+        <section class="section">
+          <div class="container">
+            <h1 class="section-title">电气比例控制阀</h1>
+            <p class="card-meta">机械工程实训项目 · 2024年1月 – 2025年1月</p>
 
-    <main>
-      <section class="section">
-        <div class="container">
-
-          <h1 class="section-title">Proportional Control Valve</h1>
-          <p class="card-meta">Mechanical Engineering Project · January 2024 – January 2025</p>
-
-          <div class="card" style="margin-top:24px;">
-            <div class="card-body">
-              <h3>What is a Proportional Control Valve?</h3>
-              <p>A <strong>proportional control valve</strong> is a type of pneumatic valve that controls air flow rate proportionally to an electrical input signal — unlike a simple on/off valve, it can continuously adjust flow, pressure, or direction based on a varying current or voltage input. By precisely regulating the spool position via an electromagnetic coil (solenoid), it achieves smooth, fine-grained control of pneumatic actuators (cylinders or grippers), enabling variables such as cylinder velocity, output force, and motion trajectory to be modulated with high accuracy.</p>
-              <p style="margin-top:12px;">This project covers the complete product lifecycle: concept design, detailed CAD modeling, kinematic analysis, tolerance stack-up management, prototype testing, supply chain coordination, and production documentation — applying mechanical engineering fundamentals to a real-world industrial component.</p>
-
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Design Overview</h3>
-              <img src="hero.png" alt="Proportional Control Valve Overview" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This assembled view highlights my ability to turn a valve concept into a complete product form, integrating the main body, brass base, electrical connector, and pneumatic ports into one manufacturable design.</p>
-              <a href="valve_manual.pdf" target="_blank" class="pdf-link">📄 Valve Manual (PDF)</a>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Detailed CAD</h3>
-              <img src="overview.png" alt="Detailed CAD" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This 3D CAD model reflects detailed mechanical design work, with the housing, top cap, connector, brass base, and outlet features integrated into a coherent assembly.</p>
-            </div>
-          </div>
-
-          <div class="card video-card" style="margin-top:16px;">
-            <div class="card-body" style="width:100%;padding:0;">
-              <h3 style="padding:16px 24px 8px;">Working Principle</h3>
-              <div class="video-wrap">
-                <video controls>
-                  <source src="Working_Principle.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+            <div class="card" style="margin-top: 24px">
+              <div class="card-body">
+                <h3>什么是电气比例控制阀？</h3>
+                <p>
+                  <strong>电气比例控制阀</strong
+                  >是一种根据电信号（电流或电压）连续调节气压气体流量、压力或方向的阀门——与简单的开关阀不同，它能实现平滑、精细的气压执行器控制。通过电磁线圈通电产生的电磁力驱动阀芯移动，改变阀口开度，使输入信号与阀芯位移呈线性比例关系，从而精准控制气缸的速度、输出力和运动轨迹。
+                </p>
+                <p style="margin-top: 12px">
+                  本项目涵盖电气比例控制阀的完整产品生命周期：概念设计、详细 CAD
+                  建模、运动学分析、公差累积计算、原型测试、供应链协调与生产工艺文件编制，将机械工程基础知识应用于真实的工业零部件开发。
+                </p>
               </div>
-              <p style="color:var(--text-muted);font-size:0.88rem;padding:0 24px 16px;">This sectional animation demonstrates my understanding of the internal actuation path, showing how the central spool moves inside the housing during valve operation.</p>
             </div>
-          </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>R&amp;D Process Management</h3>
-              <img src="rd_process.png" alt="R&D Process" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This schedule chart reflects hands-on project coordination across testing, drawing release, endurance validation, and assembly, with each task tracked over the 2024 development cycle.</p>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Supply Chain Management</h3>
-              <img src="supply_chain.png" alt="Supply Chain" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This supplier database reflects practical supply-chain work, organizing machining, mold, and actuator vendors with contacts, ratings, pricing, and inspection status for sourcing decisions.</p>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Multi-functional Teams Collaboration</h3>
-              <img src="team_collab.png" alt="Team Collaboration" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This schematic sheet shows involvement beyond mechanics, covering the control-side circuit with chips, resistors, capacitors, transistors, and signal interconnections.</p>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Production Requirements</h3>
-              <img src="prod_req.png" alt="Production Requirements" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This manufacturing drawing demonstrates detail-oriented engineering output, defining the valve core through views, sections, dimensions, and material notes for production.</p>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Combined Tolerance Inspection</h3>
-              <img src="tolerance_insp.png" alt="Tolerance Inspection" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This tolerance analysis highlights inspection and quality-control work, using 3D and 2D scatter plots to compare measured valve-body and valve-core dimensions against limits.</p>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>Spring Force Testing</h3>
-              <img src="spring_force.png" alt="Spring Force Testing" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">This spring characteristic plot reflects test-driven design work, comparing force-length behavior across multiple spring materials or design variants.</p>
-            </div>
-          </div>
-
-          <p style="margin-top:32px;"><a href="../../index.html#projects" class="project-link">← Back to Homepage</a></p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <p class="footer-copy">&copy; Chong Liu 2026</p>
-      </div>
-    </footer>
-
-  </div><!-- /lang-en -->
-
-  <!-- ─── ZH Content ─────────────────────────────────────── -->
-  <div id="lang-zh">
-
-    <main>
-      <section class="section">
-        <div class="container">
-
-          <h1 class="section-title">电气比例控制阀</h1>
-          <p class="card-meta">机械工程实训项目 · 2024年1月 – 2025年1月</p>
-
-          <div class="card" style="margin-top:24px;">
-            <div class="card-body">
-              <h3>什么是电气比例控制阀？</h3>
-              <p><strong>电气比例控制阀</strong>是一种根据电信号（电流或电压）连续调节气压气体流量、压力或方向的阀门——与简单的开关阀不同，它能实现平滑、精细的气压执行器控制。通过电磁线圈通电产生的电磁力驱动阀芯移动，改变阀口开度，使输入信号与阀芯位移呈线性比例关系，从而精准控制气缸的速度、输出力和运动轨迹。</p>
-              <p style="margin-top:12px;">本项目涵盖电气比例控制阀的完整产品生命周期：概念设计、详细 CAD 建模、运动学分析、公差累积计算、原型测试、供应链协调与生产工艺文件编制，将机械工程基础知识应用于真实的工业零部件开发。</p>
-
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>整体设计</h3>
-              <img src="hero.png" alt="电气比例控制阀整体设计" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这张装配渲染图体现了我把比例阀从概念落实为完整产品形态的能力，把主体、黄铜底座、电连接器和气路接口整合进同一套可制造设计中。</p>
-              <a href="valve_manual.pdf" target="_blank" class="pdf-link">📄 阀门使用说明书 (PDF)</a>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>详细 CAD 模型</h3>
-              <img src="overview.png" alt="详细 CAD" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这张 CAD 图体现了细化机械设计能力，把壳体、上盖、连接器、黄铜底座和接口特征整合为一套完整三维模型。</p>
-            </div>
-          </div>
-
-          <div class="card video-card" style="margin-top:16px;">
-            <div class="card-body" style="width:100%;padding:0;">
-              <h3 style="padding:16px 24px 8px;">工作原理</h3>
-              <div class="video-wrap">
-                <video controls>
-                  <source src="Working_Principle.mp4" type="video/mp4" />
-                  您的浏览器不支持视频播放。
-                </video>
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>整体设计</h3>
+                <img src="hero.png" alt="电气比例控制阀整体设计" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这张装配渲染图体现了我把比例阀从概念落实为完整产品形态的能力，把主体、黄铜底座、电连接器和气路接口整合进同一套可制造设计中。
+                </p>
+                <a href="valve_manual.pdf" target="_blank" class="pdf-link"
+                  >📄 阀门使用说明书 (PDF)</a
+                >
               </div>
-              <p style="color:var(--text-muted);font-size:0.88rem;padding:0 24px 16px;">这个剖面动画体现了我对内部执行机理的理解，直观展示了中间阀芯组件在壳体内的运动过程。</p>
             </div>
-          </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>研发流程管理</h3>
-              <img src="rd_process.png" alt="研发流程管理" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这张进度甘特表体现了我对研发流程的统筹能力，覆盖电机测试、传感器测试、机加图纸、弹簧测试、耐久测试和装配等任务。</p>
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>详细 CAD 模型</h3>
+                <img src="overview.png" alt="详细 CAD" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这张 CAD
+                  图体现了细化机械设计能力，把壳体、上盖、连接器、黄铜底座和接口特征整合为一套完整三维模型。
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>供应链管理</h3>
-              <img src="supply_chain.png" alt="供应链管理" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这张供应商数据库体现了实际供应链管理工作，把机械加工、模具加工、执行器等供应商按类别整理，并补充联系方式、评分、价格和检测状态。</p>
+            <div class="card video-card" style="margin-top: 16px">
+              <div class="card-body" style="width: 100%; padding: 0">
+                <h3 style="padding: 16px 24px 8px">工作原理</h3>
+                <div class="video-wrap">
+                  <video controls>
+                    <source src="Working_Principle.mp4" type="video/mp4" />
+                    您的浏览器不支持视频播放。
+                  </video>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.88rem; padding: 0 24px 16px">
+                  这个剖面动画体现了我对内部执行机理的理解，直观展示了中间阀芯组件在壳体内的运动过程。
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>多职能团队协作</h3>
-              <img src="team_collab.png" alt="多职能团队协作" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这页电子原理图体现了我在机械之外对控制电路的理解，展示了芯片、电阻、电容、三极管等元器件之间的连接关系。</p>
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>研发流程管理</h3>
+                <img src="rd_process.png" alt="研发流程管理" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这张进度甘特表体现了我对研发流程的统筹能力，覆盖电机测试、传感器测试、机加图纸、弹簧测试、耐久测试和装配等任务。
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>生产要求</h3>
-              <img src="prod_req.png" alt="生产要求" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这张阀芯机械加工图体现了面向生产的工程输出能力，通过主视图、剖视图、局部放大图、尺寸和材料信息定义零件制造要求。</p>
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>供应链管理</h3>
+                <img src="supply_chain.png" alt="供应链管理" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这张供应商数据库体现了实际供应链管理工作，把机械加工、模具加工、执行器等供应商按类别整理，并补充联系方式、评分、价格和检测状态。
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>综合公差检测</h3>
-              <img src="tolerance_insp.png" alt="综合公差检测" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这张综合公差检测图体现了质量与检测能力，用 3D 和 2D 散点图对比阀体与阀芯组合的实测尺寸和公差边界。</p>
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>多职能团队协作</h3>
+                <img src="team_collab.png" alt="多职能团队协作" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这页电子原理图体现了我在机械之外对控制电路的理解，展示了芯片、电阻、电容、三极管等元器件之间的连接关系。
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="card" style="margin-top:16px;">
-            <div class="card-body">
-              <h3>弹簧力测试</h3>
-              <img src="spring_force.png" alt="弹簧力测试" class="section-img" />
-              <p style="color:var(--text-muted);font-size:0.88rem;margin-top:8px;">这张弹簧特性曲线图体现了测试驱动的设计思路，通过作用力—长度曲线对比不同材料或方案下的弹簧表现。</p>
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>生产要求</h3>
+                <img src="prod_req.png" alt="生产要求" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这张阀芯机械加工图体现了面向生产的工程输出能力，通过主视图、剖视图、局部放大图、尺寸和材料信息定义零件制造要求。
+                </p>
+              </div>
             </div>
-          </div>
 
-          <p style="margin-top:32px;"><a href="../../index.html#projects" class="project-link">← 返回首页</a></p>
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>综合公差检测</h3>
+                <img src="tolerance_insp.png" alt="综合公差检测" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这张综合公差检测图体现了质量与检测能力，用 3D 和 2D
+                  散点图对比阀体与阀芯组合的实测尺寸和公差边界。
+                </p>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+              <div class="card-body">
+                <h3>弹簧力测试</h3>
+                <img src="spring_force.png" alt="弹簧力测试" class="section-img" />
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
+                  这张弹簧特性曲线图体现了测试驱动的设计思路，通过作用力—长度曲线对比不同材料或方案下的弹簧表现。
+                </p>
+              </div>
+            </div>
+
+            <p style="margin-top: 32px">
+              <a href="../../index.html#projects" class="project-link">← 返回首页</a>
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <p class="footer-copy">&copy; Chong Liu 2026</p>
         </div>
-      </section>
-    </main>
+      </footer>
+    </div>
+    <!-- /lang-zh -->
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <p class="footer-copy">&copy; Chong Liu 2026</p>
-      </div>
-    </footer>
-
-  </div><!-- /lang-zh -->
-
-  <script src="../../js/main.js"></script>
-  <script>
-    // Lightbox
-    const lb = document.createElement('div');
-    lb.id = 'lightbox';
-    lb.innerHTML = `
+    <script src="../../js/main.js"></script>
+    <script>
+      // Lightbox
+      const lb = document.createElement('div');
+      lb.id = 'lightbox';
+      lb.innerHTML = `
       <span id="lightbox-close">&times;</span>
       <img id="lb-img" src="" alt="" />
       <div id="lb-controls">
@@ -280,37 +466,60 @@
         <button id="lb-zoom-in" title="放大 (+)">+</button>
         <button id="lb-zoom-reset" title="重置 (0)" style="font-size:.85rem;width:auto;padding:0 12px;border-radius:20px;">重置</button>
       </div>`;
-    document.body.appendChild(lb);
-    const lbImg = document.getElementById('lb-img');
-    const lbLabel = document.getElementById('lb-zoom-label');
-    let scale = 1;
-    const STEP = 0.25, MIN = 0.25, MAX = 5;
-    function setScale(s) {
-      scale = Math.min(MAX, Math.max(MIN, s));
-      lbImg.style.transform = `scale(${scale})`;
-      lbLabel.textContent = Math.round(scale * 100) + '%';
-    }
-    function openLb(src) {
-      lbImg.src = src; setScale(1);
-      lb.classList.add('active');
-    }
-    function closeLb() { lb.classList.remove('active'); }
-    document.querySelectorAll('.section-img').forEach(img => {
-      img.addEventListener('click', () => openLb(img.src));
-    });
-    document.getElementById('lightbox-close').addEventListener('click', closeLb);
-    document.getElementById('lb-zoom-in').addEventListener('click', e => { e.stopPropagation(); setScale(scale + STEP); });
-    document.getElementById('lb-zoom-out').addEventListener('click', e => { e.stopPropagation(); setScale(scale - STEP); });
-    document.getElementById('lb-zoom-reset').addEventListener('click', e => { e.stopPropagation(); setScale(1); });
-    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-    lb.addEventListener('wheel', e => { e.preventDefault(); setScale(scale + (e.deltaY < 0 ? STEP : -STEP)); }, { passive: false });
-    document.addEventListener('keydown', e => {
-      if (!lb.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLb();
-      if (e.key === '+' || e.key === '=') setScale(scale + STEP);
-      if (e.key === '-') setScale(scale - STEP);
-      if (e.key === '0') setScale(1);
-    });
-  </script>
-</body>
+      document.body.appendChild(lb);
+      const lbImg = document.getElementById('lb-img');
+      const lbLabel = document.getElementById('lb-zoom-label');
+      let scale = 1;
+      const STEP = 0.25,
+        MIN = 0.25,
+        MAX = 5;
+      function setScale(s) {
+        scale = Math.min(MAX, Math.max(MIN, s));
+        lbImg.style.transform = `scale(${scale})`;
+        lbLabel.textContent = Math.round(scale * 100) + '%';
+      }
+      function openLb(src) {
+        lbImg.src = src;
+        setScale(1);
+        lb.classList.add('active');
+      }
+      function closeLb() {
+        lb.classList.remove('active');
+      }
+      document.querySelectorAll('.section-img').forEach((img) => {
+        img.addEventListener('click', () => openLb(img.src));
+      });
+      document.getElementById('lightbox-close').addEventListener('click', closeLb);
+      document.getElementById('lb-zoom-in').addEventListener('click', (e) => {
+        e.stopPropagation();
+        setScale(scale + STEP);
+      });
+      document.getElementById('lb-zoom-out').addEventListener('click', (e) => {
+        e.stopPropagation();
+        setScale(scale - STEP);
+      });
+      document.getElementById('lb-zoom-reset').addEventListener('click', (e) => {
+        e.stopPropagation();
+        setScale(1);
+      });
+      lb.addEventListener('click', (e) => {
+        if (e.target === lb) closeLb();
+      });
+      lb.addEventListener(
+        'wheel',
+        (e) => {
+          e.preventDefault();
+          setScale(scale + (e.deltaY < 0 ? STEP : -STEP));
+        },
+        { passive: false }
+      );
+      document.addEventListener('keydown', (e) => {
+        if (!lb.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLb();
+        if (e.key === '+' || e.key === '=') setScale(scale + STEP);
+        if (e.key === '-') setScale(scale - STEP);
+        if (e.key === '0') setScale(1);
+      });
+    </script>
+  </body>
 </html>

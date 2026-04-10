@@ -1,0 +1,17 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "font-family-name-quotes": null,
+    "declaration-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "no-descending-specificity": null,
+    "media-feature-range-notation": null,
+    "color-hex-length": null,
+    "color-function-alias-notation": null,
+    "value-keyword-case": null
+  }
+}

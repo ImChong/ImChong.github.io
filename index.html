@@ -1,599 +1,1140 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Chong Liu - Robot Control Engineer. Personal academic homepage showcasing education, work experience, and robotics projects." />
-  <meta name="keywords" content="Chong Liu, Robotics, Robot Control, Humanoid Robot, Reinforcement Learning, Motion Control, Columbia University, Mechanical Engineering" />
-  <meta name="author" content="Chong Liu" />
-  <meta property="og:title" content="Chong Liu | 刘冲" />
-  <meta property="og:description" content="Robot Control Engineer — Shenzhen, Guangdong, China" />
-  <meta property="og:type" content="website" />
-  <title>Chong Liu | 刘冲</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Chong Liu - Robot Control Engineer. Personal academic homepage showcasing education, work experience, and robotics projects."
+    />
+    <meta
+      name="keywords"
+      content="Chong Liu, Robotics, Robot Control, Humanoid Robot, Reinforcement Learning, Motion Control, Columbia University, Mechanical Engineering"
+    />
+    <meta name="author" content="Chong Liu" />
+    <meta property="og:title" content="Chong Liu | 刘冲" />
+    <meta property="og:description" content="Robot Control Engineer — Shenzhen, Guangdong, China" />
+    <meta property="og:type" content="website" />
+    <title>Chong Liu | 刘冲</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ─── Top Nav ─────────────────────────────────────────── -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="#hero">Chong Liu | 刘冲</a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#education" data-en="Education" data-zh="教育背景">Education</a>
+          <a href="#experience" data-en="Experience" data-zh="工作经历">Experience</a>
+          <a href="#projects" data-en="Projects" data-zh="项目经历">Projects</a>
+          <a href="#research" data-en="Research" data-zh="科研经历">Research</a>
+          <a href="#awards" data-en="Awards" data-zh="荣誉奖项">Awards</a>
+        </nav>
+        <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+          <span class="lang-label">中文</span>
+        </button>
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode (Ctrl+Shift+L)"
+        >
+          <span class="icon-sun">☀️</span>
+          <span class="icon-moon">🌙</span>
+        </button>
+      </div>
+    </header>
 
-  <!-- ─── Top Nav ─────────────────────────────────────────── -->
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="site-title" href="#hero">Chong Liu | 刘冲</a>
-      <nav class="main-nav" aria-label="Main navigation">
-        <a href="#education" data-en="Education" data-zh="教育背景">Education</a>
-        <a href="#experience" data-en="Experience" data-zh="工作经历">Experience</a>
-        <a href="#projects" data-en="Projects" data-zh="项目经历">Projects</a>
-        <a href="#research" data-en="Research" data-zh="科研经历">Research</a>
-        <a href="#awards" data-en="Awards" data-zh="荣誉奖项">Awards</a>
-      </nav>
-      <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
-        <span class="lang-label">中文</span>
-      </button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode (Ctrl+Shift+L)">
-        <span class="icon-sun">☀️</span>
-        <span class="icon-moon">🌙</span>
-      </button>
+    <!-- ─── EN Content ─────────────────────────────────────── -->
+    <div id="lang-en">
+      <main>
+        <section id="hero" class="hero">
+          <div class="container hero-grid">
+            <div class="hero-text">
+              <h1 class="hero-name">Chong Liu</h1>
+              <div class="hero-links">
+                <a href="https://github.com/ImChong" target="_blank" rel="noopener noreferrer"
+                  >GitHub</a
+                >
+                <span class="hero-link-sep">·</span>
+                <a href="mailto:chongliu2021@163.com">Email</a>
+                <span class="hero-link-sep">·</span>
+                <a
+                  href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Google Scholar</a
+                >
+                <span class="hero-link-sep">·</span>
+                <a href="https://b23.tv/6cOsdY8" target="_blank" rel="noopener noreferrer"
+                  >Bilibili</a
+                >
+              </div>
+              <p class="hero-role">Robot Control Engineer</p>
+              <p class="hero-location">📍 Shenzhen, Guangdong, China</p>
+
+              <div class="bio">
+                <p>
+                  Hi there! I'm Chong Liu, a Robot Control Engineer based in Shenzhen, China. I hold
+                  a master's degree in Mechanical Engineering from Columbia University, specializing
+                  in Robotics and Control.
+                </p>
+                <p>
+                  I'm currently focused on humanoid robot reinforcement learning and imitation
+                  learning for motion control, working at BridgeDP Robotics Co., Ltd. to deliver
+                  customized motion control solutions for client humanoid robots.
+                </p>
+                <p>
+                  I'm fascinated by designing and building advanced, life-like robots, and applying
+                  robotics technology to help people in need. This webpage contains my project
+                  documentation and resources to start on robotics from scratch. Together, let's
+                  make the world a better place!
+                </p>
+              </div>
+            </div>
+            <div class="hero-photo">
+              <div class="photo-img">
+                <img src="img/profile.jpg" alt="Chong Liu at Columbia University" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="education" class="section">
+          <div class="container">
+            <h2 class="section-title">🎓 Education</h2>
+            <div class="card-list">
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a href="https://www.me.columbia.edu/" target="_blank" rel="noopener noreferrer"
+                      >Columbia University in the City of New York</a
+                    >
+                  </h3>
+                  <p class="card-meta">
+                    M.S. in Mechanical Engineering · Robotics &amp; Control · GPA: 3.78/4.0
+                  </p>
+                  <p class="card-meta">Fu Foundation School of Engineering and Applied Science</p>
+                  <p class="card-meta">August 2019 – February 2021 · New York, NY, USA</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a href="https://hghelicopters.com/" target="_blank" rel="noopener noreferrer"
+                      >Higher Ground Helicopters</a
+                    >
+                  </h3>
+                  <p class="card-meta">Airman Certification — Private Helicopter Pilot</p>
+                  <p class="card-meta">March 2019 – May 2019 · Miamisburg, Ohio, USA</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://bulletin.miamioh.edu/engineering-computing/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Miami University, Oxford</a
+                    >
+                  </h3>
+                  <p class="card-meta">B.S. in Mechanical Engineering · GPA: 3.91/4.0</p>
+                  <p class="card-meta">College of Engineering and Computing</p>
+                  <p class="card-meta">August 2015 – May 2019 · Oxford, Ohio, USA</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" class="section section-alt">
+          <div class="container">
+            <h2 class="section-title">💼 Work Experience</h2>
+            <div class="card-list">
+              <article class="card">
+                <div class="card-body">
+                  <h3><a href="experience/bridgedp.html">BridgeDP Robotics Co., Ltd.</a></h3>
+                  <p class="card-meta">Robot Control Engineer</p>
+                  <p class="card-meta">February 2025 – Present · Shenzhen, Guangdong, China</p>
+                  <a class="project-link" href="experience/bridgedp.html">View Details →</a>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a href="experience/huikon.html"
+                      >Shenzhen Huikon Electric Technology Co., Ltd.</a
+                    >
+                  </h3>
+                  <p class="card-meta">Co-founder &amp; Technical Lead</p>
+                  <p class="card-meta">January 2024 – January 2025 · Shenzhen, Guangdong, China</p>
+                  <a class="project-link" href="experience/huikon.html">View Details →</a>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3><a href="experience/huawei.html">Huawei Technologies Co., Ltd.</a></h3>
+                  <p class="card-meta">Embedded Software Engineer</p>
+                  <p class="card-meta">December 2021 – January 2024 · Shenzhen, Guangdong, China</p>
+                  <a class="project-link" href="experience/huawei.html">View Details →</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="section">
+          <div class="container">
+            <h2 class="section-title">🛠️ Projects</h2>
+            <div class="card-list card-grid">
+              <article class="card project-card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Humanoid Robot Learning Paper Notebooks</a
+                    >
+                  </h3>
+                  <p class="card-meta">
+                    Reinforcement Learning · Imitation Learning · Motion Control
+                  </p>
+                  <p>
+                    A curated collection of paper reading notes on humanoid robot learning, covering
+                    reinforcement learning, imitation learning, and motion control for bipedal
+                    locomotion and whole-body control.
+                  </p>
+                  <a
+                    class="project-link"
+                    href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >📚 View Notes →</a
+                  >
+                  <span style="display: inline-block; width: 10px"></span>
+                  <a
+                    class="project-link"
+                    href="https://github.com/ImChong/Humanoid_Robot_Learning_Paper_Notebooks"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View Source →</a
+                  >
+                </div>
+              </article>
+              <article class="card project-card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://imchong.github.io/Robotics_Notebooks/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Robotics Tech Stack</a
+                    >
+                  </h3>
+                  <p class="card-meta">Motion Control · RL · IL · Full-Stack Robotics</p>
+                  <p>
+                    A structured robotics knowledge navigation project that uses motion control as
+                    the entry point, focusing on reinforcement learning, imitation learning,
+                    humanoid robots, and gradually expanding toward perception, planning, software
+                    systems, deployment, and full-stack robotics engineering.
+                  </p>
+                  <a
+                    class="project-link"
+                    href="https://imchong.github.io/Robotics_Notebooks/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >🗺️ Visit Website →</a
+                  >
+                  <span style="display: inline-block; width: 10px"></span>
+                  <a
+                    class="project-link"
+                    href="https://github.com/ImChong/Robotics_Notebooks"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View Source →</a
+                  >
+                </div>
+              </article>
+              <article class="card project-card">
+                <div class="card-body">
+                  <h3>
+                    <a href="experience/pcv/proportional-control-valve.html"
+                      >Proportional Control Valve</a
+                    >
+                  </h3>
+                  <p class="card-meta">CAD · Mechatronics · Project Management</p>
+                  <p>
+                    Designed and manufactured a proportional control valve for pneumatic systems — a
+                    mechatronics project involving CAD modeling (Fusion 360), kinematic analysis,
+                    tolerance stack-up, spring characterization, and multi-disciplinary team
+                    coordination.
+                  </p>
+                  <a class="project-link" href="experience/pcv/proportional-control-valve.html"
+                    >View Project →</a
+                  >
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="research" class="section section-alt">
+          <div class="container">
+            <h2 class="section-title">📝 Research Experience</h2>
+            <p class="section-subtitle">
+              Publications listed in reverse chronological order. See
+              <a
+                href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Google Scholar</a
+              >
+              for citation details.
+            </p>
+            <div class="card-list">
+              <article class="card publication-card" data-related="robotics">
+                <div class="card-body">
+                  <h3>
+                    Fourier Analysis Guided Cable Actuator Design for Coordinated Walking Assistance
+                  </h3>
+                  <p class="card-meta pub-authors">
+                    <strong>Chong Liu</strong>, Rand Hidayah, Sunil Agrawal
+                  </p>
+                  <p class="card-meta pub-venue">
+                    International Design Engineering Technical Conferences and Computers and
+                    Information in Engineering Conference (IDETC/CIE), ASME · August 2021
+                  </p>
+                  <p>
+                    Cable-driven exoskeletons add minimal inertia and restrictions to the user's leg
+                    while still providing feedback and quantitative measures of the user's
+                    performance. This work proposes a Fourier analysis guided approach to reduce the
+                    number of actuated motors needed for cable-driven exoskeletons in walking
+                    assistance.
+                  </p>
+                  <a
+                    class="project-link"
+                    href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:UeHWp8X0CEIC"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Google Scholar →</a
+                  >
+                </div>
+              </article>
+
+              <button class="pub-toggle-btn" id="pubToggleBtn" aria-expanded="false">
+                Show 7 non-robotics publications ▾
+              </button>
+              <div class="card-list">
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Machining of High Aspect Ratio Micro-Holes on Titanium Alloy Using Silver Nano
+                      Powder Mixed Micro EDM Drilling
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      <strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma
+                    </p>
+                    <p class="card-meta pub-venue">
+                      ASME International Mechanical Engineering Congress and Exposition (IMECE) ·
+                      November 2019 · Cited by 11
+                    </p>
+                    <p>
+                      Investigates the feasibility of machining high aspect ratio micro-through
+                      holes in Ti-6Al-4V titanium alloy using micro-EDM with silver nanopowder mixed
+                      dielectric for aerospace turbine blade cooling applications.
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u5HHmVD_uO8C"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Investigating the Micro-EDM Machinability of Bulk Metallic Glass in Micro-EDM
+                      Drilling
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      <strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma
+                    </p>
+                    <p class="card-meta pub-venue">
+                      ASME International Mechanical Engineering Congress and Exposition (IMECE) ·
+                      November 2019 · Cited by 2
+                    </p>
+                    <p>
+                      Evaluates the micro-EDM machinability of Bulk Metallic Glass (BMG), assessing
+                      material removal rate, tool wear rate, surface quality, and dimensional
+                      accuracy for high aspect ratio micro-hole fabrication.
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:2osOgNQ5qMEC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Effect of Conductive Coatings on Micro-Electro-Discharge Machinability of
+                      Aluminum Nitride Ceramic Using On-Machine-Fabricated Microelectrodes
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      Asif Rashid, Azat Bilal, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier
+                      Talamona, Asma Perveen
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Materials, MDPI · Vol. 12, Issue 20, pp. 3316 · October 2019 · Cited by 35
+                    </p>
+                    <p>
+                      Investigates the feasibility of machining micro-holes on non-conductive
+                      Aluminum Nitride ceramics using the "Assistive Electrode" micro-EDM process
+                      with multi-layer conductive coatings.
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u-x6o8ySG0sC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Experimental Investigation and Numerical Simulation of Micro-EDM of Bulk
+                      Metallic Glass with Focus on Crater Sizes
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      <strong>Chong Liu</strong>, Nick Duong, Muhammad P. Jahan, Jianfeng Ma, Roan
+                      Kirwin
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Procedia Manufacturing, Elsevier · Vol. 34, pp. 275–286 · 2019 · Cited by 34
+                    </p>
+                    <p>
+                      Investigates the machinability of Bulk Metallic Glass using micro-EDM,
+                      evaluating crater sizes and overcut of micro-holes through experimental
+                      investigation and numerical simulation.
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:d1gkVwhDpl0C"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Powder Mixed Micro Electro Discharge Machining of Aluminium Nitride Ceramic
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      Azat Bilal, Asif Rashid, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier
+                      Talamona, Asma Perveen
+                    </p>
+                    <p class="card-meta pub-venue">
+                      MATEC Web of Conferences, EDP Sciences · Vol. 303, pp. 06002 · 2019 · Cited by
+                      5
+                    </p>
+                    <p>
+                      Explores the Assisting Electrode Method as a solution for machining
+                      non-conductive Aluminum Nitride ceramics using powder mixed micro-EDM process.
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:IjCSPb-OGe4C"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>Optimization of Electric Discharge Machining Based Processes</h3>
+                    <p class="card-meta pub-authors">
+                      Roan Kirwin, Aakash Niraula, <strong>Chong Liu</strong>, Landon Kovach,
+                      Muhammad Jahan
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Optimization of Manufacturing Processes, Springer · pp. 29–63 · June 2019 ·
+                      Cited by 2
+                    </p>
+                    <p>
+                      Comprehensively discusses optimization techniques — Taguchi robust design,
+                      grey relational analysis, genetic algorithm, and neural network — for Electric
+                      Discharge Machining based processes.
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:qjMakFHDy7sC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>Micro-Wire-EDM</h3>
+                    <p class="card-meta pub-authors">
+                      Taylor Daniel, <strong>Chong Liu</strong>, Junyu Mou, Muhammad P. Jahan
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Micro-Electrical Discharge Machining Processes: Technologies and Applications,
+                      Springer · pp. 67–92 · December 2018 · Cited by 9
+                    </p>
+                    <p>
+                      Provides a concise overview of the micro-wire-electro-discharge machining
+                      (micro-WEDM) process, covering process mechanism, system components,
+                      parameters, variants, and innovative applications.
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:9yKSN-GCB0IC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="awards" class="section">
+          <div class="container">
+            <h2 class="section-title">🥇 Honors &amp; Awards</h2>
+            <div class="card-list">
+              <article class="card">
+                <div class="card-body">
+                  <h3>HUAWEI Future Star</h3>
+                  <p class="card-meta">Huawei Technologies Co., Ltd. · March 2023</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://www.youtube.com/watch?v=DUDnddWaeck"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Featured on Columbia Engineering Official YouTube — Creature 2 Robot</a
+                    >
+                  </h3>
+                  <p class="card-meta">
+                    Columbia University Department of Mechanical Engineering · 2020
+                  </p>
+                  <a
+                    class="project-link"
+                    href="https://b23.tv/J67Qbwe"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Bilibili →</a
+                  >
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://meritpages.com/L_Chong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Summa Cum Laude</a
+                    >
+                  </h3>
+                  <p class="card-meta">Miami University · May 2019</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://miamioh.edu/cec/news/2018/11/dess-conference.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Best Presentation Award — Dayton Engineering Science Symposium (DESS)</a
+                    >
+                  </h3>
+                  <p class="card-meta">ASME Dayton Section · November 2018</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Featured Undergraduate Researcher — Micro-EDM of Bulk Metallic Glass</a
+                    >
+                  </h3>
+                  <p class="card-meta">
+                    Miami University College of Engineering and Computing · August 2018
+                  </p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://meritpages.com/L_Chong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Dean's List (7 semesters)</a
+                    >
+                  </h3>
+                  <p class="card-meta">Miami University · 2016 – 2018</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer" data-footer-lang="en"></footer>
     </div>
-  </header>
+    <!-- /lang-en -->
 
-  <!-- ─── EN Content ─────────────────────────────────────── -->
-  <div id="lang-en">
+    <!-- ─── ZH Content ─────────────────────────────────────── -->
+    <div id="lang-zh">
+      <main>
+        <section id="hero" class="hero">
+          <div class="container hero-grid">
+            <div class="hero-text">
+              <h1 class="hero-name">刘冲</h1>
+              <div class="hero-links">
+                <a href="https://github.com/ImChong" target="_blank" rel="noopener noreferrer"
+                  >GitHub</a
+                >
+                <span class="hero-link-sep">·</span>
+                <a href="mailto:chongliu2021@163.com">邮箱</a>
+                <span class="hero-link-sep">·</span>
+                <a
+                  href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Google Scholar</a
+                >
+                <span class="hero-link-sep">·</span>
+                <a href="https://b23.tv/6cOsdY8" target="_blank" rel="noopener noreferrer"
+                  >哔哩哔哩</a
+                >
+              </div>
+              <p class="hero-role">机器人运动控制算法工程师</p>
+              <p class="hero-location">📍 广东省深圳市</p>
 
-    <main>
-      <section id="hero" class="hero">
-        <div class="container hero-grid">
-          <div class="hero-text">
-            <h1 class="hero-name">Chong Liu</h1>
-            <div class="hero-links">
-              <a href="https://github.com/ImChong" target="_blank" rel="noopener noreferrer">GitHub</a>
-              <span class="hero-link-sep">·</span>
-              <a href="mailto:chongliu2021@163.com">Email</a>
-              <span class="hero-link-sep">·</span>
-              <a href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra" target="_blank" rel="noopener noreferrer">Google Scholar</a>
-              <span class="hero-link-sep">·</span>
-              <a href="https://b23.tv/6cOsdY8" target="_blank" rel="noopener noreferrer">Bilibili</a>
+              <div class="bio">
+                <p>
+                  你好呀！我是刘冲，现任职于广东深圳，从事机器人运动控制算法工程师工作。我毕业于哥伦比亚大学机械工程专业，专攻机器人与控制方向。
+                </p>
+                <p>
+                  我目前就职于桥介数物（深圳）科技有限公司，专注于人形机器人的强化学习与模仿学习运动控制算法研究，为客户的人形机器人提供定制化运动控制算法解决方案。
+                </p>
+                <p>
+                  我着迷于设计、建造先进精妙逼真的机器人，并应用机器人技术来帮助有需要的人。该网页包含我创建项目的文档和学习资源，让所有人都可以从零开始研究机器人技术。让我们一起，让世界变得更美好！
+                </p>
+              </div>
             </div>
-            <p class="hero-role">Robot Control Engineer</p>
-            <p class="hero-location">📍 Shenzhen, Guangdong, China</p>
-
-            <div class="bio">
-              <p>Hi there! I'm Chong Liu, a Robot Control Engineer based in Shenzhen, China. I hold a master's degree in Mechanical Engineering from Columbia University, specializing in Robotics and Control.</p>
-              <p>I'm currently focused on humanoid robot reinforcement learning and imitation learning for motion control, working at BridgeDP Robotics Co., Ltd. to deliver customized motion control solutions for client humanoid robots.</p>
-              <p>I'm fascinated by designing and building advanced, life-like robots, and applying robotics technology to help people in need. This webpage contains my project documentation and resources to start on robotics from scratch. Together, let's make the world a better place!</p>
+            <div class="hero-photo">
+              <div class="photo-img">
+                <img src="img/profile.jpg" alt="刘冲" />
+              </div>
             </div>
           </div>
-          <div class="hero-photo">
-            <div class="photo-img">
-              <img src="img/profile.jpg" alt="Chong Liu at Columbia University" />
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="education" class="section">
-        <div class="container">
-          <h2 class="section-title">🎓 Education</h2>
-          <div class="card-list">
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://www.me.columbia.edu/" target="_blank" rel="noopener noreferrer">Columbia University in the City of New York</a></h3>
-                <p class="card-meta">M.S. in Mechanical Engineering · Robotics &amp; Control · GPA: 3.78/4.0</p>
-                <p class="card-meta">Fu Foundation School of Engineering and Applied Science</p>
-                <p class="card-meta">August 2019 – February 2021 · New York, NY, USA</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://hghelicopters.com/" target="_blank" rel="noopener noreferrer">Higher Ground Helicopters</a></h3>
-                <p class="card-meta">Airman Certification — Private Helicopter Pilot</p>
-                <p class="card-meta">March 2019 – May 2019 · Miamisburg, Ohio, USA</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://bulletin.miamioh.edu/engineering-computing/" target="_blank" rel="noopener noreferrer">Miami University, Oxford</a></h3>
-                <p class="card-meta">B.S. in Mechanical Engineering · GPA: 3.91/4.0</p>
-                <p class="card-meta">College of Engineering and Computing</p>
-                <p class="card-meta">August 2015 – May 2019 · Oxford, Ohio, USA</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="experience" class="section section-alt">
-        <div class="container">
-          <h2 class="section-title">💼 Work Experience</h2>
-          <div class="card-list">
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="experience/bridgedp.html">BridgeDP Robotics Co., Ltd.</a></h3>
-                <p class="card-meta">Robot Control Engineer</p>
-                <p class="card-meta">February 2025 – Present · Shenzhen, Guangdong, China</p>
-                <a class="project-link" href="experience/bridgedp.html">View Details →</a>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="experience/huikon.html">Shenzhen Huikon Electric Technology Co., Ltd.</a></h3>
-                <p class="card-meta">Co-founder &amp; Technical Lead</p>
-                <p class="card-meta">January 2024 – January 2025 · Shenzhen, Guangdong, China</p>
-                <a class="project-link" href="experience/huikon.html">View Details →</a>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="experience/huawei.html">Huawei Technologies Co., Ltd.</a></h3>
-                <p class="card-meta">Embedded Software Engineer</p>
-                <p class="card-meta">December 2021 – January 2024 · Shenzhen, Guangdong, China</p>
-                <a class="project-link" href="experience/huawei.html">View Details →</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" class="section">
-        <div class="container">
-          <h2 class="section-title">🛠️ Projects</h2>
-          <div class="card-list card-grid">
-            <article class="card project-card">
-              <div class="card-body">
-                <h3><a href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer">Humanoid Robot Learning Paper Notebooks</a></h3>
-                <p class="card-meta">Reinforcement Learning · Imitation Learning · Motion Control</p>
-                <p>A curated collection of paper reading notes on humanoid robot learning, covering reinforcement learning, imitation learning, and motion control for bipedal locomotion and whole-body control.</p>
-                <a class="project-link" href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer">📚 View Notes →</a>
-                <span style="display:inline-block;width:10px"></span>
-                <a class="project-link" href="https://github.com/ImChong/Humanoid_Robot_Learning_Paper_Notebooks" target="_blank" rel="noopener noreferrer">View Source →</a>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="card-body">
-                <h3><a href="https://imchong.github.io/Robotics_Notebooks/" target="_blank" rel="noopener noreferrer">Robotics Tech Stack</a></h3>
-                <p class="card-meta">Motion Control · RL · IL · Full-Stack Robotics</p>
-                <p>A structured robotics knowledge navigation project that uses motion control as the entry point, focusing on reinforcement learning, imitation learning, humanoid robots, and gradually expanding toward perception, planning, software systems, deployment, and full-stack robotics engineering.</p>
-                <a class="project-link" href="https://imchong.github.io/Robotics_Notebooks/" target="_blank" rel="noopener noreferrer">🗺️ Visit Website →</a>
-                <span style="display:inline-block;width:10px"></span>
-                <a class="project-link" href="https://github.com/ImChong/Robotics_Notebooks" target="_blank" rel="noopener noreferrer">View Source →</a>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="card-body">
-                <h3><a href="experience/pcv/proportional-control-valve.html">Proportional Control Valve</a></h3>
-                <p class="card-meta">CAD · Mechatronics · Project Management</p>
-                <p>Designed and manufactured a proportional control valve for pneumatic systems — a mechatronics project involving CAD modeling (Fusion 360), kinematic analysis, tolerance stack-up, spring characterization, and multi-disciplinary team coordination.</p>
-                <a class="project-link" href="experience/pcv/proportional-control-valve.html">View Project →</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="research" class="section section-alt">
-        <div class="container">
-          <h2 class="section-title">📝 Research Experience</h2>
-          <p class="section-subtitle">Publications listed in reverse chronological order. See <a href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra" target="_blank" rel="noopener noreferrer">Google Scholar</a> for citation details.</p>
-          <div class="card-list">
-
-            <article class="card publication-card" data-related="robotics">
-              <div class="card-body">
-                <h3>Fourier Analysis Guided Cable Actuator Design for Coordinated Walking Assistance</h3>
-                <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Rand Hidayah, Sunil Agrawal</p>
-                <p class="card-meta pub-venue">International Design Engineering Technical Conferences and Computers and Information in Engineering Conference (IDETC/CIE), ASME · August 2021</p>
-                <p>Cable-driven exoskeletons add minimal inertia and restrictions to the user's leg while still providing feedback and quantitative measures of the user's performance. This work proposes a Fourier analysis guided approach to reduce the number of actuated motors needed for cable-driven exoskeletons in walking assistance.</p>
-                <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:UeHWp8X0CEIC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-              </div>
-            </article>
-
-            <button class="pub-toggle-btn" id="pubToggleBtn" aria-expanded="false">
-              Show 7 non-robotics publications ▾
-            </button>
+        <section id="education" class="section">
+          <div class="container">
+            <h2 class="section-title">🎓 教育背景</h2>
             <div class="card-list">
-
-              <article class="card publication-card collapsed" data-related="other">
+              <article class="card">
                 <div class="card-body">
-                  <h3>Machining of High Aspect Ratio Micro-Holes on Titanium Alloy Using Silver Nano Powder Mixed Micro EDM Drilling</h3>
-                  <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma</p>
-                  <p class="card-meta pub-venue">ASME International Mechanical Engineering Congress and Exposition (IMECE) · November 2019 · Cited by 11</p>
-                  <p>Investigates the feasibility of machining high aspect ratio micro-through holes in Ti-6Al-4V titanium alloy using micro-EDM with silver nanopowder mixed dielectric for aerospace turbine blade cooling applications.</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u5HHmVD_uO8C" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
+                  <h3>
+                    <a href="https://www.me.columbia.edu/" target="_blank" rel="noopener noreferrer"
+                      >哥伦比亚大学</a
+                    >
+                  </h3>
+                  <p class="card-meta">机械工程硕士 · 机器人与控制方向 · GPA: 3.78/4.0</p>
+                  <p class="card-meta">Fu Foundation 工程与应用科学学院</p>
+                  <p class="card-meta">2019年8月 – 2021年2月 · 美国纽约</p>
                 </div>
               </article>
-
-              <article class="card publication-card collapsed" data-related="other">
+              <article class="card">
                 <div class="card-body">
-                  <h3>Investigating the Micro-EDM Machinability of Bulk Metallic Glass in Micro-EDM Drilling</h3>
-                  <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma</p>
-                  <p class="card-meta pub-venue">ASME International Mechanical Engineering Congress and Exposition (IMECE) · November 2019 · Cited by 2</p>
-                  <p>Evaluates the micro-EDM machinability of Bulk Metallic Glass (BMG), assessing material removal rate, tool wear rate, surface quality, and dimensional accuracy for high aspect ratio micro-hole fabrication.</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:2osOgNQ5qMEC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
+                  <h3>
+                    <a href="https://hghelicopters.com/" target="_blank" rel="noopener noreferrer"
+                      >更高点直升机</a
+                    >
+                  </h3>
+                  <p class="card-meta">航空人员认证 — 私人直升机飞行员</p>
+                  <p class="card-meta">2019年3月 – 2019年5月 · 美国俄亥俄州 Miamisburg</p>
                 </div>
               </article>
-
-              <article class="card publication-card collapsed" data-related="other">
+              <article class="card">
                 <div class="card-body">
-                  <h3>Effect of Conductive Coatings on Micro-Electro-Discharge Machinability of Aluminum Nitride Ceramic Using On-Machine-Fabricated Microelectrodes</h3>
-                  <p class="card-meta pub-authors">Asif Rashid, Azat Bilal, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier Talamona, Asma Perveen</p>
-                  <p class="card-meta pub-venue">Materials, MDPI · Vol. 12, Issue 20, pp. 3316 · October 2019 · Cited by 35</p>
-                  <p>Investigates the feasibility of machining micro-holes on non-conductive Aluminum Nitride ceramics using the "Assistive Electrode" micro-EDM process with multi-layer conductive coatings.</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u-x6o8ySG0sC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
+                  <h3>
+                    <a
+                      href="https://bulletin.miamioh.edu/engineering-computing/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >迈阿密大学牛津分校</a
+                    >
+                  </h3>
+                  <p class="card-meta">机械工程学士 · GPA: 3.91/4.0</p>
+                  <p class="card-meta">工程与计算机学院</p>
+                  <p class="card-meta">2015年8月 – 2019年5月 · 美国俄亥俄州牛津</p>
                 </div>
               </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Experimental Investigation and Numerical Simulation of Micro-EDM of Bulk Metallic Glass with Focus on Crater Sizes</h3>
-                  <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Nick Duong, Muhammad P. Jahan, Jianfeng Ma, Roan Kirwin</p>
-                  <p class="card-meta pub-venue">Procedia Manufacturing, Elsevier · Vol. 34, pp. 275–286 · 2019 · Cited by 34</p>
-                  <p>Investigates the machinability of Bulk Metallic Glass using micro-EDM, evaluating crater sizes and overcut of micro-holes through experimental investigation and numerical simulation.</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:d1gkVwhDpl0C" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Powder Mixed Micro Electro Discharge Machining of Aluminium Nitride Ceramic</h3>
-                  <p class="card-meta pub-authors">Azat Bilal, Asif Rashid, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier Talamona, Asma Perveen</p>
-                  <p class="card-meta pub-venue">MATEC Web of Conferences, EDP Sciences · Vol. 303, pp. 06002 · 2019 · Cited by 5</p>
-                  <p>Explores the Assisting Electrode Method as a solution for machining non-conductive Aluminum Nitride ceramics using powder mixed micro-EDM process.</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:IjCSPb-OGe4C" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Optimization of Electric Discharge Machining Based Processes</h3>
-                  <p class="card-meta pub-authors">Roan Kirwin, Aakash Niraula, <strong>Chong Liu</strong>, Landon Kovach, Muhammad Jahan</p>
-                  <p class="card-meta pub-venue">Optimization of Manufacturing Processes, Springer · pp. 29–63 · June 2019 · Cited by 2</p>
-                  <p>Comprehensively discusses optimization techniques — Taguchi robust design, grey relational analysis, genetic algorithm, and neural network — for Electric Discharge Machining based processes.</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:qjMakFHDy7sC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Micro-Wire-EDM</h3>
-                  <p class="card-meta pub-authors">Taylor Daniel, <strong>Chong Liu</strong>, Junyu Mou, Muhammad P. Jahan</p>
-                  <p class="card-meta pub-venue">Micro-Electrical Discharge Machining Processes: Technologies and Applications, Springer · pp. 67–92 · December 2018 · Cited by 9</p>
-                  <p>Provides a concise overview of the micro-wire-electro-discharge machining (micro-WEDM) process, covering process mechanism, system components, parameters, variants, and innovative applications.</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:9yKSN-GCB0IC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="awards" class="section">
-        <div class="container">
-          <h2 class="section-title">🥇 Honors &amp; Awards</h2>
-          <div class="card-list">
-            <article class="card">
-              <div class="card-body">
-                <h3>HUAWEI Future Star</h3>
-                <p class="card-meta">Huawei Technologies Co., Ltd. · March 2023</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://www.youtube.com/watch?v=DUDnddWaeck" target="_blank" rel="noopener noreferrer">Featured on Columbia Engineering Official YouTube — Creature 2 Robot</a></h3>
-                <p class="card-meta">Columbia University Department of Mechanical Engineering · 2020</p>
-                <a class="project-link" href="https://b23.tv/J67Qbwe" target="_blank" rel="noopener noreferrer">Bilibili →</a>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://meritpages.com/L_Chong" target="_blank" rel="noopener noreferrer">Summa Cum Laude</a></h3>
-                <p class="card-meta">Miami University · May 2019</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://miamioh.edu/cec/news/2018/11/dess-conference.html" target="_blank" rel="noopener noreferrer">Best Presentation Award — Dayton Engineering Science Symposium (DESS)</a></h3>
-                <p class="card-meta">ASME Dayton Section · November 2018</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html" target="_blank" rel="noopener noreferrer">Featured Undergraduate Researcher — Micro-EDM of Bulk Metallic Glass</a></h3>
-                <p class="card-meta">Miami University College of Engineering and Computing · August 2018</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://meritpages.com/L_Chong" target="_blank" rel="noopener noreferrer">Dean's List (7 semesters)</a></h3>
-                <p class="card-meta">Miami University · 2016 – 2018</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer" data-footer-lang="en"></footer>
-
-  </div><!-- /lang-en -->
-
-  <!-- ─── ZH Content ─────────────────────────────────────── -->
-  <div id="lang-zh">
-
-    <main>
-      <section id="hero" class="hero">
-        <div class="container hero-grid">
-          <div class="hero-text">
-            <h1 class="hero-name">刘冲</h1>
-            <div class="hero-links">
-              <a href="https://github.com/ImChong" target="_blank" rel="noopener noreferrer">GitHub</a>
-              <span class="hero-link-sep">·</span>
-              <a href="mailto:chongliu2021@163.com">邮箱</a>
-              <span class="hero-link-sep">·</span>
-              <a href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra" target="_blank" rel="noopener noreferrer">Google Scholar</a>
-              <span class="hero-link-sep">·</span>
-              <a href="https://b23.tv/6cOsdY8" target="_blank" rel="noopener noreferrer">哔哩哔哩</a>
-            </div>
-            <p class="hero-role">机器人运动控制算法工程师</p>
-            <p class="hero-location">📍 广东省深圳市</p>
-
-            <div class="bio">
-              <p>你好呀！我是刘冲，现任职于广东深圳，从事机器人运动控制算法工程师工作。我毕业于哥伦比亚大学机械工程专业，专攻机器人与控制方向。</p>
-              <p>我目前就职于桥介数物（深圳）科技有限公司，专注于人形机器人的强化学习与模仿学习运动控制算法研究，为客户的人形机器人提供定制化运动控制算法解决方案。</p>
-              <p>我着迷于设计、建造先进精妙逼真的机器人，并应用机器人技术来帮助有需要的人。该网页包含我创建项目的文档和学习资源，让所有人都可以从零开始研究机器人技术。让我们一起，让世界变得更美好！</p>
-            </div>
-          </div>
-          <div class="hero-photo">
-            <div class="photo-img">
-              <img src="img/profile.jpg" alt="刘冲" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="education" class="section">
-        <div class="container">
-          <h2 class="section-title">🎓 教育背景</h2>
-          <div class="card-list">
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://www.me.columbia.edu/" target="_blank" rel="noopener noreferrer">哥伦比亚大学</a></h3>
-                <p class="card-meta">机械工程硕士 · 机器人与控制方向 · GPA: 3.78/4.0</p>
-                <p class="card-meta">Fu Foundation 工程与应用科学学院</p>
-                <p class="card-meta">2019年8月 – 2021年2月 · 美国纽约</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://hghelicopters.com/" target="_blank" rel="noopener noreferrer">更高点直升机</a></h3>
-                <p class="card-meta">航空人员认证 — 私人直升机飞行员</p>
-                <p class="card-meta">2019年3月 – 2019年5月 · 美国俄亥俄州 Miamisburg</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://bulletin.miamioh.edu/engineering-computing/" target="_blank" rel="noopener noreferrer">迈阿密大学牛津分校</a></h3>
-                <p class="card-meta">机械工程学士 · GPA: 3.91/4.0</p>
-                <p class="card-meta">工程与计算机学院</p>
-                <p class="card-meta">2015年8月 – 2019年5月 · 美国俄亥俄州牛津</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="experience" class="section section-alt">
-        <div class="container">
-          <h2 class="section-title">💼 工作经历</h2>
-          <div class="card-list">
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="experience/bridgedp.html">桥介数物（深圳）科技有限公司</a></h3>
-                <p class="card-meta">机器人运动控制算法工程师</p>
-                <p class="card-meta">2025年2月 – 至今 · 中国广东省深圳市</p>
-                <a class="project-link" href="experience/bridgedp.html">查看详情 →</a>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="experience/huikon.html">深圳市汇控电气技术有限公司</a></h3>
-                <p class="card-meta">联合创始人 &amp; 技术负责人</p>
-                <p class="card-meta">2024年1月 – 2025年1月 · 中国广东省深圳市</p>
-                <a class="project-link" href="experience/huikon.html">查看详情 →</a>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="experience/huawei.html">华为技术有限公司</a></h3>
-                <p class="card-meta">嵌入式软件开发工程师</p>
-                <p class="card-meta">2021年12月 – 2024年1月 · 中国广东省深圳市</p>
-                <a class="project-link" href="experience/huawei.html">查看详情 →</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" class="section">
-        <div class="container">
-          <h2 class="section-title">🛠️ 项目经历</h2>
-          <div class="card-list card-grid">
-            <article class="card project-card">
-              <div class="card-body">
-                <h3><a href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer">人形机器人学习论文笔记</a></h3>
-                <p class="card-meta">强化学习 · 模仿学习 · 运动控制</p>
-                <p>人形机器人学习领域的论文阅读笔记合集，涵盖强化学习、模仿学习以及双足运动和全身控制的运动控制算法。</p>
-                <a class="project-link" href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/" target="_blank" rel="noopener noreferrer">📚 查看笔记 →</a>
-                <span style="display:inline-block;width:10px"></span>
-                <a class="project-link" href="https://github.com/ImChong/Humanoid_Robot_Learning_Paper_Notebooks" target="_blank" rel="noopener noreferrer">查看项目源码 →</a>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="card-body">
-                <h3><a href="https://imchong.github.io/Robotics_Notebooks/" target="_blank" rel="noopener noreferrer">机器人技术栈网站</a></h3>
-                <p class="card-meta">运动控制 · 强化学习 · 模仿学习 · 机器人全栈</p>
-                <p>一个以机器人运动控制为切入口的技术栈导航项目，重点覆盖强化学习、模仿学习、人形机器人，并逐步扩展到感知、规划、软件系统、部署与整机集成，目标是构建通向全栈机器人工程师的成长地图。</p>
-                <a class="project-link" href="https://imchong.github.io/Robotics_Notebooks/" target="_blank" rel="noopener noreferrer">🗺️ 查看网站 →</a>
-                <span style="display:inline-block;width:10px"></span>
-                <a class="project-link" href="https://github.com/ImChong/Robotics_Notebooks" target="_blank" rel="noopener noreferrer">查看项目源码 →</a>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="card-body">
-                <h3><a href="experience/pcv/proportional-control-valve.html">电气比例控制阀</a></h3>
-                <p class="card-meta">CAD · 机电一体化 · 项目管理</p>
-                <p>为气压系统设计并制造了一款电气比例控制阀——涉及 CAD 三维建模（Fusion 360）、运动学分析、公差累积计算、弹簧力学测试，以及多职能团队协作的机电一体化项目。</p>
-                <a class="project-link" href="experience/pcv/proportional-control-valve.html">查看项目 →</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="research" class="section section-alt">
-        <div class="container">
-          <h2 class="section-title">📝 科研经历</h2>
-          <p class="section-subtitle">论文按时间倒序排列，引用详情见 <a href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra" target="_blank" rel="noopener noreferrer">Google Scholar</a>。</p>
-          <div class="card-list">
-
-            <article class="card publication-card" data-related="robotics">
-              <div class="card-body">
-                <h3>Fourier Analysis Guided Cable Actuator Design for Coordinated Walking Assistance</h3>
-                <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Rand Hidayah, Sunil Agrawal</p>
-                <p class="card-meta pub-venue">IDETC/CIE, ASME · 2021年8月</p>
-                <p>提出基于傅里叶分析的绳驱外骨骼执行器设计方法，以减少行走辅助所需的驱动电机数量，降低穿戴设备的复杂度。</p>
-                <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:UeHWp8X0CEIC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-              </div>
-            </article>
-
-            <button class="pub-toggle-btn" id="pubToggleBtnZh" aria-expanded="false">
-              展开 7 篇非机器人相关论文 ▾
-            </button>
+        <section id="experience" class="section section-alt">
+          <div class="container">
+            <h2 class="section-title">💼 工作经历</h2>
             <div class="card-list">
-
-              <article class="card publication-card collapsed" data-related="other">
+              <article class="card">
                 <div class="card-body">
-                  <h3>Machining of High Aspect Ratio Micro-Holes on Titanium Alloy Using Silver Nano Powder Mixed Micro EDM Drilling</h3>
-                  <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma</p>
-                  <p class="card-meta pub-venue">ASME IMECE · 2019年11月 · 被引 11 次</p>
-                  <p>研究使用银纳米粉末混合微电火花加工在钛合金 Ti-6Al-4V 上加工高深宽比微孔的可行性，应用于航空涡轮叶片冷却孔制造。</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u5HHmVD_uO8C" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
+                  <h3><a href="experience/bridgedp.html">桥介数物（深圳）科技有限公司</a></h3>
+                  <p class="card-meta">机器人运动控制算法工程师</p>
+                  <p class="card-meta">2025年2月 – 至今 · 中国广东省深圳市</p>
+                  <a class="project-link" href="experience/bridgedp.html">查看详情 →</a>
                 </div>
               </article>
-
-              <article class="card publication-card collapsed" data-related="other">
+              <article class="card">
                 <div class="card-body">
-                  <h3>Investigating the Micro-EDM Machinability of Bulk Metallic Glass in Micro-EDM Drilling</h3>
-                  <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma</p>
-                  <p class="card-meta pub-venue">ASME IMECE · 2019年11月 · 被引 2 次</p>
-                  <p>评估块体金属玻璃（BMG）的微电火花可加工性，考察材料去除率、刀具磨损率、表面质量和尺寸精度。</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:2osOgNQ5qMEC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
+                  <h3><a href="experience/huikon.html">深圳市汇控电气技术有限公司</a></h3>
+                  <p class="card-meta">联合创始人 &amp; 技术负责人</p>
+                  <p class="card-meta">2024年1月 – 2025年1月 · 中国广东省深圳市</p>
+                  <a class="project-link" href="experience/huikon.html">查看详情 →</a>
                 </div>
               </article>
-
-              <article class="card publication-card collapsed" data-related="other">
+              <article class="card">
                 <div class="card-body">
-                  <h3>Effect of Conductive Coatings on Micro-Electro-Discharge Machinability of Aluminum Nitride Ceramic</h3>
-                  <p class="card-meta pub-authors">Asif Rashid, Azat Bilal, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier Talamona, Asma Perveen</p>
-                  <p class="card-meta pub-venue">Materials, MDPI · Vol. 12(20), pp. 3316 · 2019年10月 · 被引 35 次</p>
-                  <p>研究利用辅助电极微电火花工艺在非导电氮化铝陶瓷上加工微孔的可行性，采用多层导电涂层实现高深宽比微孔加工。</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u-x6o8ySG0sC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
+                  <h3><a href="experience/huawei.html">华为技术有限公司</a></h3>
+                  <p class="card-meta">嵌入式软件开发工程师</p>
+                  <p class="card-meta">2021年12月 – 2024年1月 · 中国广东省深圳市</p>
+                  <a class="project-link" href="experience/huawei.html">查看详情 →</a>
                 </div>
               </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Experimental Investigation and Numerical Simulation of Micro-EDM of Bulk Metallic Glass with Focus on Crater Sizes</h3>
-                  <p class="card-meta pub-authors"><strong>Chong Liu</strong>, Nick Duong, Muhammad P. Jahan, Jianfeng Ma, Roan Kirwin</p>
-                  <p class="card-meta pub-venue">Procedia Manufacturing, Elsevier · Vol. 34, pp. 275–286 · 2019 · 被引 34 次</p>
-                  <p>通过实验与数值模拟研究块体金属玻璃的微电火花可加工性，重点评估微孔的弧坑尺寸和过切量。</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:d1gkVwhDpl0C" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Powder Mixed Micro Electro Discharge Machining of Aluminium Nitride Ceramic</h3>
-                  <p class="card-meta pub-authors">Azat Bilal, Asif Rashid, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier Talamona, Asma Perveen</p>
-                  <p class="card-meta pub-venue">MATEC Web of Conferences, EDP Sciences · Vol. 303, pp. 06002 · 2019 · 被引 5 次</p>
-                  <p>探索辅助电极方法用于粉末混合微电火花加工非导电氮化铝陶瓷的方案。</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:IjCSPb-OGe4C" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Optimization of Electric Discharge Machining Based Processes</h3>
-                  <p class="card-meta pub-authors">Roan Kirwin, Aakash Niraula, <strong>Chong Liu</strong>, Landon Kovach, Muhammad Jahan</p>
-                  <p class="card-meta pub-venue">Optimization of Manufacturing Processes, Springer · pp. 29–63 · 2019年6月 · 被引 2 次</p>
-                  <p>综合讨论田口稳健设计、灰色关联分析、遗传算法和神经网络等优化技术在电火花加工中的应用。</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:qjMakFHDy7sC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
-              <article class="card publication-card collapsed" data-related="other">
-                <div class="card-body">
-                  <h3>Micro-Wire-EDM</h3>
-                  <p class="card-meta pub-authors">Taylor Daniel, <strong>Chong Liu</strong>, Junyu Mou, Muhammad P. Jahan</p>
-                  <p class="card-meta pub-venue">Micro-EDM Processes: Technologies and Applications, Springer · pp. 67–92 · 2018年12月 · 被引 9 次</p>
-                  <p>综述微线切割电火花加工（micro-WEDM）工艺，涵盖加工机理、系统组件、参数与创新应用。</p>
-                  <a class="project-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:9yKSN-GCB0IC" target="_blank" rel="noopener noreferrer">Google Scholar →</a>
-                </div>
-              </article>
-
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="awards" class="section">
-        <div class="container">
-          <h2 class="section-title">🥇 荣誉奖项</h2>
-          <div class="card-list">
-            <article class="card">
-              <div class="card-body">
-                <h3>华为"明日之星"</h3>
-                <p class="card-meta">华为技术有限公司 · 2023年3月</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://www.youtube.com/watch?v=DUDnddWaeck" target="_blank" rel="noopener noreferrer">哥伦比亚工程官方YouTube专题介绍 — Creature 2 机器人</a></h3>
-                <p class="card-meta">哥伦比亚大学机械工程系 · 2020年</p>
-                <a class="project-link" href="https://b23.tv/J67Qbwe" target="_blank" rel="noopener noreferrer">B站视频 →</a>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://meritpages.com/L_Chong" target="_blank" rel="noopener noreferrer">最优等荣誉毕业 (Summa Cum Laude)</a></h3>
-                <p class="card-meta">迈阿密大学 · 2019年5月</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://miamioh.edu/cec/news/2018/11/dess-conference.html" target="_blank" rel="noopener noreferrer">最佳演讲奖 — 代顿工程科学研讨会 (DESS)</a></h3>
-                <p class="card-meta">ASME 代顿分部 · 2018年11月</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html" target="_blank" rel="noopener noreferrer">本科生科研专题报道 — 块体金属玻璃微电火花加工</a></h3>
-                <p class="card-meta">迈阿密大学工程与计算机学院 · 2018年8月</p>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-body">
-                <h3><a href="https://meritpages.com/L_Chong" target="_blank" rel="noopener noreferrer">院长荣誉名单（连续7学期）</a></h3>
-                <p class="card-meta">迈阿密大学 · 2016 – 2018</p>
-              </div>
-            </article>
+        <section id="projects" class="section">
+          <div class="container">
+            <h2 class="section-title">🛠️ 项目经历</h2>
+            <div class="card-list card-grid">
+              <article class="card project-card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >人形机器人学习论文笔记</a
+                    >
+                  </h3>
+                  <p class="card-meta">强化学习 · 模仿学习 · 运动控制</p>
+                  <p>
+                    人形机器人学习领域的论文阅读笔记合集，涵盖强化学习、模仿学习以及双足运动和全身控制的运动控制算法。
+                  </p>
+                  <a
+                    class="project-link"
+                    href="https://imchong.github.io/Humanoid_Robot_Learning_Paper_Notebooks/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >📚 查看笔记 →</a
+                  >
+                  <span style="display: inline-block; width: 10px"></span>
+                  <a
+                    class="project-link"
+                    href="https://github.com/ImChong/Humanoid_Robot_Learning_Paper_Notebooks"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >查看项目源码 →</a
+                  >
+                </div>
+              </article>
+              <article class="card project-card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://imchong.github.io/Robotics_Notebooks/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >机器人技术栈网站</a
+                    >
+                  </h3>
+                  <p class="card-meta">运动控制 · 强化学习 · 模仿学习 · 机器人全栈</p>
+                  <p>
+                    一个以机器人运动控制为切入口的技术栈导航项目，重点覆盖强化学习、模仿学习、人形机器人，并逐步扩展到感知、规划、软件系统、部署与整机集成，目标是构建通向全栈机器人工程师的成长地图。
+                  </p>
+                  <a
+                    class="project-link"
+                    href="https://imchong.github.io/Robotics_Notebooks/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >🗺️ 查看网站 →</a
+                  >
+                  <span style="display: inline-block; width: 10px"></span>
+                  <a
+                    class="project-link"
+                    href="https://github.com/ImChong/Robotics_Notebooks"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >查看项目源码 →</a
+                  >
+                </div>
+              </article>
+              <article class="card project-card">
+                <div class="card-body">
+                  <h3>
+                    <a href="experience/pcv/proportional-control-valve.html">电气比例控制阀</a>
+                  </h3>
+                  <p class="card-meta">CAD · 机电一体化 · 项目管理</p>
+                  <p>
+                    为气压系统设计并制造了一款电气比例控制阀——涉及 CAD 三维建模（Fusion
+                    360）、运动学分析、公差累积计算、弹簧力学测试，以及多职能团队协作的机电一体化项目。
+                  </p>
+                  <a class="project-link" href="experience/pcv/proportional-control-valve.html"
+                    >查看项目 →</a
+                  >
+                </div>
+              </article>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
 
-    <footer class="site-footer" data-footer-lang="zh"></footer>
+        <section id="research" class="section section-alt">
+          <div class="container">
+            <h2 class="section-title">📝 科研经历</h2>
+            <p class="section-subtitle">
+              论文按时间倒序排列，引用详情见
+              <a
+                href="https://scholar.google.com/citations?user=-VDCGIwAAAAJ&hl=en&oi=sra"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Google Scholar</a
+              >。
+            </p>
+            <div class="card-list">
+              <article class="card publication-card" data-related="robotics">
+                <div class="card-body">
+                  <h3>
+                    Fourier Analysis Guided Cable Actuator Design for Coordinated Walking Assistance
+                  </h3>
+                  <p class="card-meta pub-authors">
+                    <strong>Chong Liu</strong>, Rand Hidayah, Sunil Agrawal
+                  </p>
+                  <p class="card-meta pub-venue">IDETC/CIE, ASME · 2021年8月</p>
+                  <p>
+                    提出基于傅里叶分析的绳驱外骨骼执行器设计方法，以减少行走辅助所需的驱动电机数量，降低穿戴设备的复杂度。
+                  </p>
+                  <a
+                    class="project-link"
+                    href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:UeHWp8X0CEIC"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Google Scholar →</a
+                  >
+                </div>
+              </article>
 
-  </div><!-- /lang-zh -->
+              <button class="pub-toggle-btn" id="pubToggleBtnZh" aria-expanded="false">
+                展开 7 篇非机器人相关论文 ▾
+              </button>
+              <div class="card-list">
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Machining of High Aspect Ratio Micro-Holes on Titanium Alloy Using Silver Nano
+                      Powder Mixed Micro EDM Drilling
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      <strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma
+                    </p>
+                    <p class="card-meta pub-venue">ASME IMECE · 2019年11月 · 被引 11 次</p>
+                    <p>
+                      研究使用银纳米粉末混合微电火花加工在钛合金 Ti-6Al-4V
+                      上加工高深宽比微孔的可行性，应用于航空涡轮叶片冷却孔制造。
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u5HHmVD_uO8C"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
 
-  <script src="js/main.js"></script>
-</body>
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Investigating the Micro-EDM Machinability of Bulk Metallic Glass in Micro-EDM
+                      Drilling
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      <strong>Chong Liu</strong>, Asif Rashid, Muhammad P. Jahan, Jianfeng Ma
+                    </p>
+                    <p class="card-meta pub-venue">ASME IMECE · 2019年11月 · 被引 2 次</p>
+                    <p>
+                      评估块体金属玻璃（BMG）的微电火花可加工性，考察材料去除率、刀具磨损率、表面质量和尺寸精度。
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:2osOgNQ5qMEC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Effect of Conductive Coatings on Micro-Electro-Discharge Machinability of
+                      Aluminum Nitride Ceramic
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      Asif Rashid, Azat Bilal, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier
+                      Talamona, Asma Perveen
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Materials, MDPI · Vol. 12(20), pp. 3316 · 2019年10月 · 被引 35 次
+                    </p>
+                    <p>
+                      研究利用辅助电极微电火花工艺在非导电氮化铝陶瓷上加工微孔的可行性，采用多层导电涂层实现高深宽比微孔加工。
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:u-x6o8ySG0sC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Experimental Investigation and Numerical Simulation of Micro-EDM of Bulk
+                      Metallic Glass with Focus on Crater Sizes
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      <strong>Chong Liu</strong>, Nick Duong, Muhammad P. Jahan, Jianfeng Ma, Roan
+                      Kirwin
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Procedia Manufacturing, Elsevier · Vol. 34, pp. 275–286 · 2019 · 被引 34 次
+                    </p>
+                    <p>
+                      通过实验与数值模拟研究块体金属玻璃的微电火花可加工性，重点评估微孔的弧坑尺寸和过切量。
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:d1gkVwhDpl0C"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>
+                      Powder Mixed Micro Electro Discharge Machining of Aluminium Nitride Ceramic
+                    </h3>
+                    <p class="card-meta pub-authors">
+                      Azat Bilal, Asif Rashid, <strong>Chong Liu</strong>, Muhammad P. Jahan, Didier
+                      Talamona, Asma Perveen
+                    </p>
+                    <p class="card-meta pub-venue">
+                      MATEC Web of Conferences, EDP Sciences · Vol. 303, pp. 06002 · 2019 · 被引 5
+                      次
+                    </p>
+                    <p>探索辅助电极方法用于粉末混合微电火花加工非导电氮化铝陶瓷的方案。</p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:IjCSPb-OGe4C"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>Optimization of Electric Discharge Machining Based Processes</h3>
+                    <p class="card-meta pub-authors">
+                      Roan Kirwin, Aakash Niraula, <strong>Chong Liu</strong>, Landon Kovach,
+                      Muhammad Jahan
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Optimization of Manufacturing Processes, Springer · pp. 29–63 · 2019年6月 ·
+                      被引 2 次
+                    </p>
+                    <p>
+                      综合讨论田口稳健设计、灰色关联分析、遗传算法和神经网络等优化技术在电火花加工中的应用。
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:qjMakFHDy7sC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+
+                <article class="card publication-card collapsed" data-related="other">
+                  <div class="card-body">
+                    <h3>Micro-Wire-EDM</h3>
+                    <p class="card-meta pub-authors">
+                      Taylor Daniel, <strong>Chong Liu</strong>, Junyu Mou, Muhammad P. Jahan
+                    </p>
+                    <p class="card-meta pub-venue">
+                      Micro-EDM Processes: Technologies and Applications, Springer · pp. 67–92 ·
+                      2018年12月 · 被引 9 次
+                    </p>
+                    <p>
+                      综述微线切割电火花加工（micro-WEDM）工艺，涵盖加工机理、系统组件、参数与创新应用。
+                    </p>
+                    <a
+                      class="project-link"
+                      href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=-VDCGIwAAAAJ&citation_for_view=-VDCGIwAAAAJ:9yKSN-GCB0IC"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Google Scholar →</a
+                    >
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="awards" class="section">
+          <div class="container">
+            <h2 class="section-title">🥇 荣誉奖项</h2>
+            <div class="card-list">
+              <article class="card">
+                <div class="card-body">
+                  <h3>华为"明日之星"</h3>
+                  <p class="card-meta">华为技术有限公司 · 2023年3月</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://www.youtube.com/watch?v=DUDnddWaeck"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >哥伦比亚工程官方YouTube专题介绍 — Creature 2 机器人</a
+                    >
+                  </h3>
+                  <p class="card-meta">哥伦比亚大学机械工程系 · 2020年</p>
+                  <a
+                    class="project-link"
+                    href="https://b23.tv/J67Qbwe"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >B站视频 →</a
+                  >
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://meritpages.com/L_Chong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >最优等荣誉毕业 (Summa Cum Laude)</a
+                    >
+                  </h3>
+                  <p class="card-meta">迈阿密大学 · 2019年5月</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://miamioh.edu/cec/news/2018/11/dess-conference.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >最佳演讲奖 — 代顿工程科学研讨会 (DESS)</a
+                    >
+                  </h3>
+                  <p class="card-meta">ASME 代顿分部 · 2018年11月</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >本科生科研专题报道 — 块体金属玻璃微电火花加工</a
+                    >
+                  </h3>
+                  <p class="card-meta">迈阿密大学工程与计算机学院 · 2018年8月</p>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-body">
+                  <h3>
+                    <a
+                      href="https://meritpages.com/L_Chong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >院长荣誉名单（连续7学期）</a
+                    >
+                  </h3>
+                  <p class="card-meta">迈阿密大学 · 2016 – 2018</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer" data-footer-lang="zh"></footer>
+    </div>
+    <!-- /lang-zh -->
+
+    <script src="js/main.js"></script>
+  </body>
 </html>

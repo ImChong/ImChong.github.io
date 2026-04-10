@@ -7,7 +7,7 @@ function renderSiteFooters() {
     footer.innerHTML = [
       '<div class="container footer-inner">',
       '  <p class="footer-copy">' + copy + '</p>',
-      '</div>'
+      '</div>',
     ].join('');
   });
 }
@@ -42,7 +42,10 @@ function toggleTheme() {
 var themeBtn = document.getElementById('themeToggle');
 if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
 document.addEventListener('keydown', function (e) {
-  if (e.ctrlKey && e.shiftKey && e.key === 'L') { e.preventDefault(); toggleTheme(); }
+  if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+    e.preventDefault();
+    toggleTheme();
+  }
 });
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
   if (!localStorage.getItem(THEME_KEY)) applyTheme(e.matches ? 'dark' : 'light');
@@ -60,7 +63,8 @@ function applyLangMode(mode) {
   }
   var navLinks = document.querySelectorAll('.main-nav a');
   for (var i = 0; i < navLinks.length; i++) {
-    navLinks[i].textContent = mode === 'zh' ? navLinks[i].getAttribute('data-zh') : navLinks[i].getAttribute('data-en');
+    navLinks[i].textContent =
+      mode === 'zh' ? navLinks[i].getAttribute('data-zh') : navLinks[i].getAttribute('data-en');
   }
   updateActiveNav();
 }
@@ -72,7 +76,7 @@ function toggleLang() {
 
 (function () {
   var saved = localStorage.getItem('cl-lang');
-  var initial = (saved === 'zh') ? 'zh' : 'en';
+  var initial = saved === 'zh' ? 'zh' : 'en';
   applyLangMode(initial);
 })();
 
@@ -116,9 +120,15 @@ function bindNavClicks() {
       var sections = getActiveSections();
       var target = null;
       for (var i = 0; i < sections.length; i++) {
-        if (sections[i].id === targetId) { target = sections[i]; break; }
+        if (sections[i].id === targetId) {
+          target = sections[i];
+          break;
+        }
       }
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   }
 }
@@ -151,7 +161,9 @@ function setupPubToggle(btnId, lang) {
     if (lang === 'zh') {
       btn.textContent = expanded ? '收起非机器人相关论文 ▴' : '展开 7 篇非机器人相关论文 ▾';
     } else {
-      btn.textContent = expanded ? 'Hide non-robotics publications ▴' : 'Show 7 non-robotics publications ▾';
+      btn.textContent = expanded
+        ? 'Hide non-robotics publications ▴'
+        : 'Show 7 non-robotics publications ▾';
     }
   });
 }
@@ -165,11 +177,25 @@ setupPubToggle('pubToggleBtnZh', 'zh');
   if (savedExpanded === 'true') {
     var enBtn = document.getElementById('pubToggleBtn');
     var zhBtn = document.getElementById('pubToggleBtnZh');
-    var enOthers = document.querySelectorAll('#non-robotics-pubs .publication-card[data-related="other"]');
-    var zhOthers = document.querySelectorAll('#non-robotics-pubs-zh .publication-card[data-related="other"]');
-    if (enBtn) { enBtn.setAttribute('aria-expanded', 'true'); enBtn.textContent = 'Hide non-robotics publications ▴'; }
-    if (zhBtn) { zhBtn.setAttribute('aria-expanded', 'true'); zhBtn.textContent = '收起非机器人相关论文 ▴'; }
-    enOthers.forEach(function (c) { c.classList.remove('collapsed'); });
-    zhOthers.forEach(function (c) { c.classList.remove('collapsed'); });
+    var enOthers = document.querySelectorAll(
+      '#non-robotics-pubs .publication-card[data-related="other"]'
+    );
+    var zhOthers = document.querySelectorAll(
+      '#non-robotics-pubs-zh .publication-card[data-related="other"]'
+    );
+    if (enBtn) {
+      enBtn.setAttribute('aria-expanded', 'true');
+      enBtn.textContent = 'Hide non-robotics publications ▴';
+    }
+    if (zhBtn) {
+      zhBtn.setAttribute('aria-expanded', 'true');
+      zhBtn.textContent = '收起非机器人相关论文 ▴';
+    }
+    enOthers.forEach(function (c) {
+      c.classList.remove('collapsed');
+    });
+    zhOthers.forEach(function (c) {
+      c.classList.remove('collapsed');
+    });
   }
 })();
