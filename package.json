@@ -9,10 +9,13 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint . --ext .js",
     "lint:css": "stylelint \"css/**/*.css\"",
-    "check": "npm run format:check && npm run lint"
+    "check": "npm run format:check && npm run lint",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
+    "@playwright/test": "^1.52.0",
     "eslint": "^9.24.0",
     "globals": "^16.0.0",
     "prettier": "^3.5.3",

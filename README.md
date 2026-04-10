@@ -30,8 +30,19 @@ Hi! I'm **Chong Liu (刘冲)**, a Robot Control Engineer based in Shenzhen, Chin
 │   └── style.css       # Styles with CSS custom properties for theming
 ├── js/
 │   └── main.js         # Dark mode, scroll highlight, smooth navigation
+├── tests/
+│   └── visual.spec.js  # Playwright visual regression tests
 └── README.md
 ```
+
+## 🧪 Code Quality / 代码质量
+
+- `npm run format`：自动格式化代码
+- `npm run check`：运行 Prettier + ESLint + Stylelint 检查
+- `npm run test:visual`：运行视觉回归对比
+- `npm run test:visual:update`：更新视觉基线截图
+
+视觉回归当前覆盖首页中英文视图，用于防止格式化或重构后页面样式被悄悄改坏。
 
 ## 📬 Contact / 联系方式
 
