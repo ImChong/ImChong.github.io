@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://imchong.github.io/)
 [![Quality Checks](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml/badge.svg)](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > 🤖 Robot Control Engineer | 机器人运动控制算法工程师
 
