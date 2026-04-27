@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marriage Registration | Chong Liu</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      .marriage-gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 32px;
+      }
+      .marriage-img {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+      }
+      .marriage-img:hover {
+        transform: scale(1.02);
+      }
+      @media (max-width: 768px) {
+        .marriage-gallery {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="../index.html">← Chong Liu | 刘冲</a>
+        <div class="header-actions">
+          <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+            <span class="lang-label">中文</span>
+          </button>
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode (Ctrl+Shift+L)"
+          >
+            <span class="icon-sun">☀️</span>
+            <span class="icon-moon">🌙</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── EN Content ─────────────────────────────────────── -->
+    <div id="lang-en">
+      <main>
+        <section class="section">
+          <div class="container">
+            <h1 class="section-title">Marriage Registration</h1>
+            <div class="detail-meta">
+              <p><strong>Date:</strong> February 13, 2026</p>
+              <p><strong>Location:</strong> Marriage Registration Office, Nanshan District Civil Affairs Bureau, Shenzhen, China</p>
+            </div>
+            
+            <div class="marriage-gallery">
+              <img src="../img/family/marriage-1.jpg" alt="Marriage Registration 1" class="marriage-img">
+              <img src="../img/family/marriage-2.jpg" alt="Marriage Registration 2" class="marriage-img">
+            </div>
+
+            <p style="margin-top: 32px">
+              <a href="../index.html#family" class="project-link">← Back to Home</a>
+            </p>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-footer-lang="en"></footer>
+    </div>
+
+    <!-- ─── ZH Content ─────────────────────────────────────── -->
+    <div id="lang-zh">
+      <main>
+        <section class="section">
+          <div class="container">
+            <h1 class="section-title">结婚登记</h1>
+            <div class="detail-meta">
+              <p><strong>日期：</strong>2026年2月13日</p>
+              <p><strong>地点：</strong>中国广东省深圳市南山区民政局婚姻登记处</p>
+            </div>
+
+            <div class="marriage-gallery">
+              <img src="../img/family/marriage-1.jpg" alt="结婚登记 1" class="marriage-img">
+              <img src="../img/family/marriage-2.jpg" alt="结婚登记 2" class="marriage-img">
+            </div>
+
+            <p style="margin-top: 32px">
+              <a href="../index.html#family" class="project-link">← 返回主页</a>
+            </p>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-footer-lang="zh"></footer>
+    </div>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>
