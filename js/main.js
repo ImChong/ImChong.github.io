@@ -117,14 +117,10 @@ function bindNavClicks() {
   for (var k = 0; k < navLinks.length; k++) {
     navLinks[k].addEventListener('click', function (e) {
       var targetId = this.getAttribute('href').slice(1);
-      var sections = getActiveSections();
-      var target = null;
-      for (var i = 0; i < sections.length; i++) {
-        if (sections[i].id === targetId) {
-          target = sections[i];
-          break;
-        }
-      }
+      var mode = root.getAttribute('data-lang-mode') || 'en';
+      var container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+      var target = container ? container.querySelector('#' + CSS.escape(targetId)) : null;
+
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
