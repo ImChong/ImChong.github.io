@@ -66,6 +66,8 @@ function applyLangMode(mode) {
     navLinks[i].textContent =
       mode === 'zh' ? navLinks[i].getAttribute('data-zh') : navLinks[i].getAttribute('data-en');
   }
+  cachedSections = null;
+  cachedNavLinks = null;
   updateActiveNav();
 }
 
@@ -83,14 +85,22 @@ function toggleLang() {
 if (langBtn) langBtn.addEventListener('click', toggleLang);
 
 /* ─── Active Nav Highlight on Scroll ───────────────────── */
+// ⚡ Bolt Optimization: Cache DOM queries and throttle scroll event with requestAnimationFrame
+var cachedSections = null;
+var cachedNavLinks = null;
+
 function getActiveSections() {
+  if (cachedSections) return cachedSections;
   var mode = root.getAttribute('data-lang-mode') || 'en';
   var container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
-  return container ? container.querySelectorAll('section[id]') : [];
+  cachedSections = container ? container.querySelectorAll('section[id]') : [];
+  return cachedSections;
 }
 
 function getActiveNavLinks() {
-  return document.querySelectorAll('.main-nav a');
+  if (cachedNavLinks) return cachedNavLinks;
+  cachedNavLinks = document.querySelectorAll('.main-nav a');
+  return cachedNavLinks;
 }
 
 function updateActiveNav() {
@@ -108,7 +118,20 @@ function updateActiveNav() {
   }
 }
 
-window.addEventListener('scroll', updateActiveNav, { passive: true });
+var ticking = false;
+window.addEventListener(
+  'scroll',
+  function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        updateActiveNav();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  },
+  { passive: true }
+);
 updateActiveNav();
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
