@@ -1,7 +1,7 @@
 /* ─── Reusable Footer ───────────────────────────────────── */
 function renderSiteFooters() {
   var footers = document.querySelectorAll('.site-footer[data-footer-lang]');
-  footers.forEach(function (footer) {
+  footers.forEach((footer) => {
     var lang = footer.getAttribute('data-footer-lang');
     var copy = lang === 'zh' ? '© 刘冲 2026' : '&copy; Chong Liu 2026';
     footer.innerHTML = [
@@ -41,13 +41,13 @@ function toggleTheme() {
 
 var themeBtn = document.getElementById('themeToggle');
 if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-document.addEventListener('keydown', function (e) {
+document.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.shiftKey && e.key === 'L') {
     e.preventDefault();
     toggleTheme();
   }
 });
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
   if (!localStorage.getItem(THEME_KEY)) applyTheme(e.matches ? 'dark' : 'light');
 });
 
@@ -138,8 +138,8 @@ updateActiveNav();
 function bindNavClicks() {
   var navLinks = getActiveNavLinks();
   for (var k = 0; k < navLinks.length; k++) {
-    navLinks[k].addEventListener('click', function (e) {
-      var targetId = this.getAttribute('href').slice(1);
+    navLinks[k].addEventListener('click', (e) => {
+      var targetId = e.currentTarget.getAttribute('href').slice(1);
       var sections = getActiveSections();
       var target = null;
       for (var i = 0; i < sections.length; i++) {
@@ -167,13 +167,13 @@ function setupPubToggle(btnId, lang) {
       : '#lang-en .publication-card[data-related="other"]'
   );
 
-  btn.addEventListener('click', function () {
+  btn.addEventListener('click', () => {
     var expanded = btn.getAttribute('aria-expanded') === 'true';
     expanded = !expanded;
     btn.setAttribute('aria-expanded', String(expanded));
     localStorage.setItem('cl-pubs-expanded', String(expanded));
 
-    others.forEach(function (card) {
+    others.forEach((card) => {
       if (expanded) {
         card.classList.remove('collapsed');
       } else {
@@ -214,10 +214,10 @@ setupPubToggle('pubToggleBtnZh', 'zh');
       zhBtn.setAttribute('aria-expanded', 'true');
       zhBtn.textContent = '收起非机器人相关论文 ▴';
     }
-    enOthers.forEach(function (c) {
+    enOthers.forEach((c) => {
       c.classList.remove('collapsed');
     });
-    zhOthers.forEach(function (c) {
+    zhOthers.forEach((c) => {
       c.classList.remove('collapsed');
     });
   }
