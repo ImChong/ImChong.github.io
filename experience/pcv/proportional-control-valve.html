@@ -144,10 +144,11 @@
       <div class="header-inner">
         <a class="site-title" href="../../index.html">← Chong Liu | 刘冲</a>
         <div class="header-actions">
-          <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+          <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
             <span class="lang-label">中文</span>
           </button>
           <button
+            type="button"
             class="theme-toggle"
             id="themeToggle"
             aria-label="Toggle dark mode"
@@ -241,7 +242,7 @@
             <div class="card" style="margin-top: 16px">
               <div class="card-body">
                 <h3>R&amp;D Process Management</h3>
-                <img src="rd_process.png" alt="R&D Process" class="section-img" />
+                <img src="rd_process.png" alt="R&amp;D Process" class="section-img" />
                 <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 8px">
                   This schedule chart reflects hands-on project coordination across testing, drawing
                   release, endurance validation, and assembly, with each task tracked over the 2024
@@ -474,10 +475,10 @@
       <span id="lightbox-close">&times;</span>
       <img id="lb-img" src="" alt="" />
       <div id="lb-controls">
-        <button id="lb-zoom-out" title="缩小 (-)">−</button>
+        <button type="button" id="lb-zoom-out" title="缩小 (-)">−</button>
         <span id="lb-zoom-label">100%</span>
-        <button id="lb-zoom-in" title="放大 (+)">+</button>
-        <button id="lb-zoom-reset" title="重置 (0)" style="font-size:.85rem;width:auto;padding:0 12px;border-radius:20px;">重置</button>
+        <button type="button" id="lb-zoom-in" title="放大 (+)">+</button>
+        <button type="button" id="lb-zoom-reset" title="重置 (0)" style="font-size:.85rem;width:auto;padding:0 12px;border-radius:20px;">重置</button>
       </div>`;
       document.body.appendChild(lb);
       const lbImg = document.getElementById('lb-img');

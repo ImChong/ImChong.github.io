@@ -1,0 +1,18 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "void-style": "off",
+    "doctype-style": "off",
+    "no-inline-style": "warn",
+    "no-implicit-button-type": "warn",
+    "no-multiple-main": "off",
+    "unique-landmark": "off",
+    "no-dup-id": "off",
+    "long-title": "off",
+    "wcag/h32": "off",
+    "wcag/h36": "off",
+    "wcag/h37": "off",
+    "wcag/h67": "off",
+    "wcag/h71": "off"
+  }
+}

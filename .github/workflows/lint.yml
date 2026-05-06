@@ -30,3 +30,12 @@ jobs:
 
       - name: Stylelint
         run: npm run lint:css
+
+      - name: HTML validate
+        run: npm run lint:html
+
+      # Fails the build only on high/critical advisories. Moderate findings
+      # surface in the log but do not block: stylelint's transitive deps
+      # often contain moderate items that can't be patched directly.
+      - name: npm audit (high+)
+        run: npm audit --omit=dev --audit-level=high || npm audit --audit-level=high
