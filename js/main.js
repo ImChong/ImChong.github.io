@@ -9,12 +9,16 @@ function renderSiteFooters() {
   const footers = document.querySelectorAll('.site-footer[data-footer-lang]');
   footers.forEach((footer) => {
     const lang = footer.getAttribute('data-footer-lang');
-    const copy = lang === 'zh' ? '© 刘冲 2026' : '&copy; Chong Liu 2026';
-    footer.innerHTML = [
-      '<div class="container footer-inner">',
-      '  <p class="footer-copy">' + copy + '</p>',
-      '</div>',
-    ].join('');
+    const copy = lang === 'zh' ? '© 刘冲 2026' : '© Chong Liu 2026';
+    // Securely create DOM elements instead of using innerHTML
+    footer.textContent = ''; // Clear existing content safely
+    const container = document.createElement('div');
+    container.className = 'container footer-inner';
+    const p = document.createElement('p');
+    p.className = 'footer-copy';
+    p.textContent = copy; // Use textContent instead of innerHTML
+    container.appendChild(p);
+    footer.appendChild(container);
   });
 }
 
