@@ -66,9 +66,8 @@ function applyLangMode(mode) {
     navLinks[i].textContent =
       mode === 'zh' ? navLinks[i].getAttribute('data-zh') : navLinks[i].getAttribute('data-en');
   }
-  cachedSections = null;
   cachedNavLinks = null;
-  updateActiveNav();
+  setupNavObserver();
 }
 
 function toggleLang() {
@@ -84,18 +83,11 @@ function toggleLang() {
 
 if (langBtn) langBtn.addEventListener('click', toggleLang);
 
-/* ─── Active Nav Highlight on Scroll ───────────────────── */
-// ⚡ Bolt Optimization: Cache DOM queries and throttle scroll event with requestAnimationFrame
-var cachedSections = null;
+/* ─── Active Nav Highlight with IntersectionObserver ────── */
+// ⚡ Bolt Optimization: Replaced throttled scroll listener + offsetTop
+// with IntersectionObserver to completely eliminate main-thread layout thrashing.
 var cachedNavLinks = null;
-
-function getActiveSections() {
-  if (cachedSections) return cachedSections;
-  var mode = root.getAttribute('data-lang-mode') || 'en';
-  var container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
-  cachedSections = container ? container.querySelectorAll('section[id]') : [];
-  return cachedSections;
-}
+var navObserver = null;
 
 function getActiveNavLinks() {
   if (cachedNavLinks) return cachedNavLinks;
@@ -103,36 +95,35 @@ function getActiveNavLinks() {
   return cachedNavLinks;
 }
 
-function updateActiveNav() {
-  var sections = getActiveSections();
+function setupNavObserver() {
+  if (navObserver) navObserver.disconnect();
+  var mode = root.getAttribute('data-lang-mode') || 'en';
+  var container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+  if (!container) return;
+
+  var sections = container.querySelectorAll('section[id]');
   var navLinks = getActiveNavLinks();
-  var scrollY = window.scrollY + 80;
-  var active = null;
+
+  navObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          var activeId = entry.target.id;
+          for (var j = 0; j < navLinks.length; j++) {
+            var href = navLinks[j].getAttribute('href').slice(1);
+            if (href === activeId) navLinks[j].classList.add('active');
+            else navLinks[j].classList.remove('active');
+          }
+        }
+      });
+    },
+    { rootMargin: '-80px 0px -40% 0px' }
+  );
+
   for (var i = 0; i < sections.length; i++) {
-    if (sections[i].offsetTop <= scrollY) active = sections[i].id;
-  }
-  for (var j = 0; j < navLinks.length; j++) {
-    var href = navLinks[j].getAttribute('href').slice(1);
-    if (href === active) navLinks[j].classList.add('active');
-    else navLinks[j].classList.remove('active');
+    navObserver.observe(sections[i]);
   }
 }
-
-var ticking = false;
-window.addEventListener(
-  'scroll',
-  function () {
-    if (!ticking) {
-      window.requestAnimationFrame(function () {
-        updateActiveNav();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  },
-  { passive: true }
-);
-updateActiveNav();
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
 function bindNavClicks() {
