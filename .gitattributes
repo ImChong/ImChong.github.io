@@ -1,0 +1,9 @@
+# Append-only learning logs written by AI assistants (Bolt / Sentinel / Jules).
+# Multiple PRs frequently append entries to the same file at the same time,
+# which produces add/add conflicts at the end of file. The `union` merge
+# driver tells git to keep both sides' new lines instead of marking them as
+# a conflict, which is exactly the behaviour we want for these append-only
+# notes. Order is not guaranteed; re-sort by date manually if needed.
+#
+# Reference: gitattributes(5), section "Merging files".
+.jules/**.md merge=union
