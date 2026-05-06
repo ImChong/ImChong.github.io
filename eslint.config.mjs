@@ -16,9 +16,10 @@ export default [
       },
     },
     rules: {
-      'no-var': 'off',
-      'prefer-const': 'off',
+      'no-var': 'error',
+      'prefer-const': 'error',
       'no-unused-vars': ['warn', { args: 'none' }],
+      eqeqeq: ['error', 'smart'],
     },
   },
   {

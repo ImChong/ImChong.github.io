@@ -1,9 +1,15 @@
+/* ─── Constants ─────────────────────────────────────────── */
+const THEME_KEY = 'cl-theme';
+const LANG_KEY = 'cl-lang';
+const PUBS_EXPANDED_KEY = 'cl-pubs-expanded';
+const root = document.documentElement;
+
 /* ─── Reusable Footer ───────────────────────────────────── */
 function renderSiteFooters() {
-  var footers = document.querySelectorAll('.site-footer[data-footer-lang]');
+  const footers = document.querySelectorAll('.site-footer[data-footer-lang]');
   footers.forEach((footer) => {
-    var lang = footer.getAttribute('data-footer-lang');
-    var copy = lang === 'zh' ? '© 刘冲 2026' : '&copy; Chong Liu 2026';
+    const lang = footer.getAttribute('data-footer-lang');
+    const copy = lang === 'zh' ? '© 刘冲 2026' : '&copy; Chong Liu 2026';
     footer.innerHTML = [
       '<div class="container footer-inner">',
       '  <p class="footer-copy">' + copy + '</p>',
@@ -15,21 +21,18 @@ function renderSiteFooters() {
 renderSiteFooters();
 
 /* ─── Theme (Dark / Light) ──────────────────────────────── */
-var THEME_KEY = 'cl-theme';
-var root = document.documentElement;
-
 function applyTheme(theme) {
   root.setAttribute('data-theme', theme);
   localStorage.setItem(THEME_KEY, theme);
 }
 
 function toggleTheme() {
-  var current = root.getAttribute('data-theme');
+  const current = root.getAttribute('data-theme');
   applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
-(function () {
-  var saved = localStorage.getItem(THEME_KEY);
+(function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
   if (saved) {
     applyTheme(saved);
   } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -39,7 +42,7 @@ function toggleTheme() {
   }
 })();
 
-var themeBtn = document.getElementById('themeToggle');
+const themeBtn = document.getElementById('themeToggle');
 if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
 document.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.shiftKey && e.key === 'L') {
@@ -52,17 +55,38 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 });
 
 /* ─── Language Toggle ──────────────────────────────────── */
-var langBtn = document.getElementById('langToggle');
-var langLabel = langBtn ? langBtn.querySelector('.lang-label') : null;
+const langBtn = document.getElementById('langToggle');
+const langLabel = langBtn ? langBtn.querySelector('.lang-label') : null;
+
+// Cached collection of nav links. Invalidated whenever the language mode
+// flips, since the visible/hidden state of the two language containers
+// changes which link set IntersectionObserver should watch.
+let cachedNavLinks = null;
 
 function applyLangMode(mode) {
   root.setAttribute('data-lang-mode', mode);
-  localStorage.setItem('cl-lang', mode);
+  // Keep <html lang> in sync so screen readers, browser translation, and
+  // search engines see the correct language for the visible content.
+  root.setAttribute('lang', mode === 'zh' ? 'zh-CN' : 'en');
+  localStorage.setItem(LANG_KEY, mode);
+
+  // Use the `hidden` attribute (in addition to the existing CSS rule) on
+  // the inactive language container so its content is skipped by AT and
+  // not surfaced in plain-text scrapers.
+  const enContainer = document.getElementById('lang-en');
+  const zhContainer = document.getElementById('lang-zh');
+  if (enContainer) enContainer.hidden = mode === 'zh';
+  if (zhContainer) zhContainer.hidden = mode !== 'zh';
+
   if (langLabel) {
     langLabel.textContent = mode === 'zh' ? 'English' : '中文';
   }
-  var navLinks = document.querySelectorAll('.main-nav a');
-  for (var i = 0; i < navLinks.length; i++) {
+  if (langBtn) {
+    langBtn.setAttribute('aria-label', mode === 'zh' ? 'Switch to English' : 'Switch to Chinese');
+  }
+
+  const navLinks = document.querySelectorAll('.main-nav a');
+  for (let i = 0; i < navLinks.length; i++) {
     navLinks[i].textContent =
       mode === 'zh' ? navLinks[i].getAttribute('data-zh') : navLinks[i].getAttribute('data-en');
   }
@@ -71,23 +95,22 @@ function applyLangMode(mode) {
 }
 
 function toggleLang() {
-  var cur = root.getAttribute('data-lang-mode') || 'en';
+  const cur = root.getAttribute('data-lang-mode') || 'en';
   applyLangMode(cur === 'en' ? 'zh' : 'en');
 }
 
-(function () {
-  var saved = localStorage.getItem('cl-lang');
-  var initial = saved === 'zh' ? 'zh' : 'en';
+(function initLang() {
+  const saved = localStorage.getItem(LANG_KEY);
+  const initial = saved === 'zh' ? 'zh' : 'en';
   applyLangMode(initial);
 })();
 
 if (langBtn) langBtn.addEventListener('click', toggleLang);
 
 /* ─── Active Nav Highlight with IntersectionObserver ────── */
-// ⚡ Bolt Optimization: Replaced throttled scroll listener + offsetTop
-// with IntersectionObserver to completely eliminate main-thread layout thrashing.
-var cachedNavLinks = null;
-var navObserver = null;
+// Replaced throttled scroll listener + offsetTop with IntersectionObserver
+// to eliminate main-thread layout thrashing.
+let navObserver = null;
 
 function getActiveNavLinks() {
   if (cachedNavLinks) return cachedNavLinks;
@@ -97,20 +120,20 @@ function getActiveNavLinks() {
 
 function setupNavObserver() {
   if (navObserver) navObserver.disconnect();
-  var mode = root.getAttribute('data-lang-mode') || 'en';
-  var container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+  const mode = root.getAttribute('data-lang-mode') || 'en';
+  const container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
   if (!container) return;
 
-  var sections = container.querySelectorAll('section[id]');
-  var navLinks = getActiveNavLinks();
+  const sections = container.querySelectorAll('section[id]');
+  const navLinks = getActiveNavLinks();
 
   navObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          var activeId = entry.target.id;
-          for (var j = 0; j < navLinks.length; j++) {
-            var href = navLinks[j].getAttribute('href').slice(1);
+          const activeId = entry.target.id;
+          for (let j = 0; j < navLinks.length; j++) {
+            const href = navLinks[j].getAttribute('href').slice(1);
             if (href === activeId) navLinks[j].classList.add('active');
             else navLinks[j].classList.remove('active');
           }
@@ -120,20 +143,20 @@ function setupNavObserver() {
     { rootMargin: '-80px 0px -40% 0px' }
   );
 
-  for (var i = 0; i < sections.length; i++) {
+  for (let i = 0; i < sections.length; i++) {
     navObserver.observe(sections[i]);
   }
 }
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
 function bindNavClicks() {
-  var navLinks = getActiveNavLinks();
-  for (var k = 0; k < navLinks.length; k++) {
+  const navLinks = getActiveNavLinks();
+  for (let k = 0; k < navLinks.length; k++) {
     navLinks[k].addEventListener('click', (e) => {
-      var targetId = e.currentTarget.getAttribute('href').slice(1);
-      var mode = root.getAttribute('data-lang-mode') || 'en';
-      var container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
-      var target = container ? container.querySelector('#' + CSS.escape(targetId)) : null;
+      const targetId = e.currentTarget.getAttribute('href').slice(1);
+      const mode = root.getAttribute('data-lang-mode') || 'en';
+      const container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+      const target = container ? container.querySelector('#' + CSS.escape(targetId)) : null;
 
       if (target) {
         e.preventDefault();
@@ -146,19 +169,19 @@ bindNavClicks();
 
 /* ─── Publications Toggle ───────────────────────────────── */
 function setupPubToggle(btnId, lang) {
-  var btn = document.getElementById(btnId);
+  const btn = document.getElementById(btnId);
   if (!btn) return;
-  var others = document.querySelectorAll(
+  const others = document.querySelectorAll(
     lang === 'zh'
       ? '#lang-zh .publication-card[data-related="other"]'
       : '#lang-en .publication-card[data-related="other"]'
   );
 
   btn.addEventListener('click', () => {
-    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    let expanded = btn.getAttribute('aria-expanded') === 'true';
     expanded = !expanded;
     btn.setAttribute('aria-expanded', String(expanded));
-    localStorage.setItem('cl-pubs-expanded', String(expanded));
+    localStorage.setItem(PUBS_EXPANDED_KEY, String(expanded));
 
     others.forEach((card) => {
       if (expanded) {
@@ -182,15 +205,15 @@ setupPubToggle('pubToggleBtn', 'en');
 setupPubToggle('pubToggleBtnZh', 'zh');
 
 /* Also show non-robotics cards on load if already expanded via localStorage */
-(function () {
-  var savedExpanded = localStorage.getItem('cl-pubs-expanded');
+(function initPubsState() {
+  const savedExpanded = localStorage.getItem(PUBS_EXPANDED_KEY);
   if (savedExpanded === 'true') {
-    var enBtn = document.getElementById('pubToggleBtn');
-    var zhBtn = document.getElementById('pubToggleBtnZh');
-    var enOthers = document.querySelectorAll(
+    const enBtn = document.getElementById('pubToggleBtn');
+    const zhBtn = document.getElementById('pubToggleBtnZh');
+    const enOthers = document.querySelectorAll(
       '#non-robotics-pubs .publication-card[data-related="other"]'
     );
-    var zhOthers = document.querySelectorAll(
+    const zhOthers = document.querySelectorAll(
       '#non-robotics-pubs-zh .publication-card[data-related="other"]'
     );
     if (enBtn) {
@@ -201,11 +224,7 @@ setupPubToggle('pubToggleBtnZh', 'zh');
       zhBtn.setAttribute('aria-expanded', 'true');
       zhBtn.textContent = '收起非机器人相关论文 ▴';
     }
-    enOthers.forEach((c) => {
-      c.classList.remove('collapsed');
-    });
-    zhOthers.forEach((c) => {
-      c.classList.remove('collapsed');
-    });
+    enOthers.forEach((c) => c.classList.remove('collapsed'));
+    zhOthers.forEach((c) => c.classList.remove('collapsed'));
   }
 })();

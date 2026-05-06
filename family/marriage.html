@@ -114,10 +114,11 @@
       <div class="header-inner">
         <a class="site-title" href="../index.html">← Chong Liu | 刘冲</a>
         <div class="header-actions">
-          <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+          <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
             <span class="lang-label">中文</span>
           </button>
           <button
+            type="button"
             class="theme-toggle"
             id="themeToggle"
             aria-label="Toggle dark mode"
@@ -166,17 +167,23 @@
               </div>
             </div>
 
-            <p style="margin-top: 32px">
+            <p class="mt-xl">
               <a href="../index.html#family" class="project-link">← Back to Home</a>
             </p>
           </div>
         </section>
       </main>
-      <footer class="site-footer" data-footer-lang="en"></footer>
+      <footer class="site-footer" data-footer-lang="en">
+        <noscript
+          ><div class="container footer-inner">
+            <p class="footer-copy">&copy; Chong Liu 2026</p>
+          </div></noscript
+        >
+      </footer>
     </div>
 
     <!-- ─── ZH Content ─────────────────────────────────────── -->
-    <div id="lang-zh">
+    <div id="lang-zh" hidden>
       <main>
         <section class="section">
           <div class="container">
@@ -200,7 +207,7 @@
               </div>
             </div>
 
-            <p style="margin-top: 32px">
+            <p class="mt-xl">
               <a href="../index.html#family" class="project-link">← 返回主页</a>
             </p>
           </div>
@@ -218,10 +225,10 @@
       <span id="lightbox-close">&times;</span>
       <img id="lb-img" src="" alt="" />
       <div id="lb-controls">
-        <button id="lb-zoom-out" title="缩小 (-)">−</button>
+        <button type="button" id="lb-zoom-out" title="缩小 (-)">−</button>
         <span id="lb-zoom-label">100%</span>
-        <button id="lb-zoom-in" title="放大 (+)">+</button>
-        <button id="lb-zoom-reset" title="重置 (0)" style="font-size:.85rem;width:auto;padding:0 12px;border-radius:20px;">重置</button>
+        <button type="button" id="lb-zoom-in" title="放大 (+)">+</button>
+        <button type="button" id="lb-zoom-reset" title="重置 (0)" style="font-size:.85rem;width:auto;padding:0 12px;border-radius:20px;">重置</button>
       </div>`;
       document.body.appendChild(lb);
       const lbImg = document.getElementById('lb-img');
