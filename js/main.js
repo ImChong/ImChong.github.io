@@ -63,6 +63,11 @@ const langLabel = langBtn ? langBtn.querySelector('.lang-label') : null;
 // changes which link set IntersectionObserver should watch.
 let cachedNavLinks = null;
 
+// Declared up-front so that applyLangMode() — which is invoked by the
+// initLang IIFE below — can safely reach setupNavObserver() without
+// tripping the temporal dead zone on these `let` bindings.
+let navObserver = null;
+
 function applyLangMode(mode) {
   root.setAttribute('data-lang-mode', mode);
   // Keep <html lang> in sync so screen readers, browser translation, and
@@ -110,7 +115,9 @@ if (langBtn) langBtn.addEventListener('click', toggleLang);
 /* ─── Active Nav Highlight with IntersectionObserver ────── */
 // Replaced throttled scroll listener + offsetTop with IntersectionObserver
 // to eliminate main-thread layout thrashing.
-let navObserver = null;
+// (navObserver is declared near the top of the file so applyLangMode can
+// reach setupNavObserver() during the initial language bootstrap without
+// hitting a temporal-dead-zone ReferenceError.)
 
 function getActiveNavLinks() {
   if (cachedNavLinks) return cachedNavLinks;
