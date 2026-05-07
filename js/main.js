@@ -37,7 +37,7 @@ function toggleTheme() {
 
 (function initTheme() {
   const saved = localStorage.getItem(THEME_KEY);
-  if (saved) {
+  if (saved === 'dark' || saved === 'light') {
     applyTheme(saved);
   } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
     applyTheme('dark');
