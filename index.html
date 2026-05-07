@@ -15,6 +15,17 @@
     <meta property="og:title" content="Chong Liu | 刘冲" />
     <meta property="og:description" content="Robot Control Engineer — Shenzhen, Guangdong, China" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://imchong.github.io/" />
+    <meta property="og:image" content="https://imchong.github.io/img/profile.jpg" />
+    <meta property="og:image:alt" content="Chong Liu at Columbia University" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Chong Liu | 刘冲" />
+    <meta
+      name="twitter:description"
+      content="Robot Control Engineer — Shenzhen, Guangdong, China"
+    />
+    <meta name="twitter:image" content="https://imchong.github.io/img/profile.jpg" />
+    <link rel="canonical" href="https://imchong.github.io/" />
     <title>Chong Liu | 刘冲</title>
     <link
       rel="icon"
@@ -35,10 +46,11 @@
           <a href="#awards" data-en="Awards" data-zh="荣誉奖项">Awards</a>
           <a href="#family" data-en="Family" data-zh="家庭">Family</a>
         </nav>
-        <button class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+        <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
           <span class="lang-label">中文</span>
         </button>
         <button
+          type="button"
           class="theme-toggle"
           id="themeToggle"
           aria-label="Toggle dark mode"
@@ -339,7 +351,7 @@
                 </div>
               </article>
 
-              <button class="pub-toggle-btn" id="pubToggleBtn" aria-expanded="false">
+              <button type="button" class="pub-toggle-btn" id="pubToggleBtn" aria-expanded="false">
                 Show 7 non-robotics publications ▾
               </button>
               <div class="card-list">
@@ -648,12 +660,18 @@
         </section>
       </main>
 
-      <footer class="site-footer" data-footer-lang="en"></footer>
+      <footer class="site-footer" data-footer-lang="en">
+        <noscript>
+          <div class="container footer-inner">
+            <p class="footer-copy">&copy; Chong Liu 2026</p>
+          </div>
+        </noscript>
+      </footer>
     </div>
     <!-- /lang-en -->
 
     <!-- ─── ZH Content ─────────────────────────────────────── -->
-    <div id="lang-zh">
+    <div id="lang-zh" hidden>
       <main>
         <section id="hero" class="hero">
           <div class="container hero-grid">
@@ -912,7 +930,12 @@
                 </div>
               </article>
 
-              <button class="pub-toggle-btn" id="pubToggleBtnZh" aria-expanded="false">
+              <button
+                type="button"
+                class="pub-toggle-btn"
+                id="pubToggleBtnZh"
+                aria-expanded="false"
+              >
                 展开 7 篇非机器人相关论文 ▾
               </button>
               <div class="card-list">
