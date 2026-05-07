@@ -672,3 +672,181 @@ ul {
   font-size: 0.88rem;
   margin-top: 8px;
 }
+
+/* ── Lightbox (shared by marriage.html & pcv page) ──────── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+#lightbox.active {
+  display: flex;
+}
+#lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  cursor: grab;
+  transition: transform 0.2s;
+  transform-origin: center;
+}
+#lightbox img:active {
+  cursor: grabbing;
+}
+#lightbox-close {
+  position: fixed;
+  top: 18px;
+  right: 24px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  user-select: none;
+}
+#lb-controls {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+#lb-controls button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-size: 1.4rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+#lb-controls button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+#lb-controls button.lb-zoom-reset {
+  font-size: 0.85rem;
+  width: auto;
+  padding: 0 12px;
+  border-radius: 20px;
+}
+#lb-zoom-label {
+  color: #fff;
+  font-size: 0.9rem;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ── Marriage page ──────────────────────────────────────── */
+.marriage-gallery {
+  display: grid;
+  grid-template-columns: 0.91fr 1fr;
+  gap: 20px;
+  margin-top: 32px;
+}
+.marriage-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.marriage-img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+.marriage-img.fill {
+  height: 100%;
+  object-fit: cover;
+}
+.marriage-img:hover {
+  transform: scale(1.01);
+}
+
+@media (max-width: 768px) {
+  .marriage-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── PCV project page ───────────────────────────────────── */
+.section-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 12px auto;
+  cursor: zoom-in;
+}
+.video-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+.video-card h3 {
+  padding: 16px 24px 8px;
+}
+.video-wrap {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  width: 100%;
+}
+.video-wrap video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+.img-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 12px 0;
+}
+.img-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+.pdf-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  margin: 8px 0;
+}
+.pdf-link:hover {
+  opacity: 0.85;
+  color: #fff;
+}
+
+/* ── PCV video card inner layout ────────────────────────── */
+.video-card .card-body {
+  width: 100%;
+  padding: 0;
+}
+.video-card-title {
+  padding: 16px 24px 8px;
+}
+.video-card-caption {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  padding: 0 24px 16px;
+}

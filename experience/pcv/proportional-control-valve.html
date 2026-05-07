@@ -3,141 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self';"
+    />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    />
     <title>Proportional Control Valve — Project | Chong Liu</title>
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>"
     />
     <link rel="stylesheet" href="../../css/style.css" />
-    <style>
-      .section-img {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin: 12px auto;
-      }
-      .card-body {
-        width: 100%;
-        min-width: 0;
-      }
-      .video-card {
-        padding: 0 !important;
-        overflow: hidden;
-      }
-      .video-card h3 {
-        padding: 16px 24px 8px;
-      }
-      .video-wrap {
-        position: relative;
-        height: 400px;
-        overflow: hidden;
-        width: 100%;
-      }
-      .video-wrap video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        background: #000;
-      }
-      .img-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 16px;
-        margin: 12px 0;
-      }
-      .img-grid img {
-        width: 100%;
-        height: auto;
-        border-radius: 6px;
-      }
-      .pdf-link {
-        display: inline-block;
-        padding: 8px 16px;
-        background: var(--accent);
-        color: #fff;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: 500;
-        margin: 8px 0;
-      }
-      .pdf-link:hover {
-        opacity: 0.85;
-      }
-      .section-img {
-        cursor: zoom-in;
-      }
-      /* Lightbox */
-      #lightbox {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.85);
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-      }
-      #lightbox.active {
-        display: flex;
-      }
-      #lightbox img {
-        max-width: 90vw;
-        max-height: 90vh;
-        border-radius: 8px;
-        cursor: grab;
-        transition: transform 0.2s;
-        transform-origin: center;
-      }
-      #lightbox img:active {
-        cursor: grabbing;
-      }
-      #lightbox-close {
-        position: fixed;
-        top: 18px;
-        right: 24px;
-        font-size: 2rem;
-        color: #fff;
-        cursor: pointer;
-        line-height: 1;
-        user-select: none;
-      }
-      #lb-controls {
-        position: fixed;
-        bottom: 28px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 12px;
-        align-items: center;
-      }
-      #lb-controls button {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        color: #fff;
-        font-size: 1.4rem;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.15s;
-      }
-      #lb-controls button:hover {
-        background: rgba(255, 255, 255, 0.3);
-      }
-      #lb-zoom-label {
-        color: #fff;
-        font-size: 0.9rem;
-        min-width: 48px;
-        text-align: center;
-      }
-    </style>
   </head>
   <body>
     <header class="site-header">
@@ -194,7 +73,12 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>Design Overview</h3>
-                <img src="hero.png" alt="Proportional Control Valve Overview" class="section-img" />
+                <img
+                  src="hero.png"
+                  alt="Proportional Control Valve Overview"
+                  class="section-img"
+                  data-lightbox
+                />
                 <p class="caption">
                   This assembled view highlights my ability to turn a valve concept into a complete
                   product form, integrating the main body, brass base, electrical connector, and
@@ -213,7 +97,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>Detailed CAD</h3>
-                <img src="overview.png" alt="Detailed CAD" class="section-img" />
+                <img src="overview.png" alt="Detailed CAD" class="section-img" data-lightbox />
                 <p class="caption">
                   This 3D CAD model reflects detailed mechanical design work, with the housing, top
                   cap, connector, brass base, and outlet features integrated into a coherent
@@ -223,15 +107,15 @@
             </div>
 
             <div class="card video-card mt-md">
-              <div class="card-body" style="width: 100%; padding: 0">
-                <h3 style="padding: 16px 24px 8px">Working Principle</h3>
+              <div class="card-body">
+                <h3 class="video-card-title">Working Principle</h3>
                 <div class="video-wrap">
                   <video controls>
                     <source src="Working_Principle.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.88rem; padding: 0 24px 16px">
+                <p class="video-card-caption">
                   This sectional animation demonstrates my understanding of the internal actuation
                   path, showing how the central spool moves inside the housing during valve
                   operation.
@@ -242,7 +126,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>R&amp;D Process Management</h3>
-                <img src="rd_process.png" alt="R&amp;D Process" class="section-img" />
+                <img src="rd_process.png" alt="R&amp;D Process" class="section-img" data-lightbox />
                 <p class="caption">
                   This schedule chart reflects hands-on project coordination across testing, drawing
                   release, endurance validation, and assembly, with each task tracked over the 2024
@@ -254,7 +138,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>Supply Chain Management</h3>
-                <img src="supply_chain.png" alt="Supply Chain" class="section-img" />
+                <img src="supply_chain.png" alt="Supply Chain" class="section-img" data-lightbox />
                 <p class="caption">
                   This supplier database reflects practical supply-chain work, organizing machining,
                   mold, and actuator vendors with contacts, ratings, pricing, and inspection status
@@ -266,7 +150,12 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>Multi-functional Teams Collaboration</h3>
-                <img src="team_collab.png" alt="Team Collaboration" class="section-img" />
+                <img
+                  src="team_collab.png"
+                  alt="Team Collaboration"
+                  class="section-img"
+                  data-lightbox
+                />
                 <p class="caption">
                   This schematic sheet shows involvement beyond mechanics, covering the control-side
                   circuit with chips, resistors, capacitors, transistors, and signal
@@ -278,7 +167,12 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>Production Requirements</h3>
-                <img src="prod_req.png" alt="Production Requirements" class="section-img" />
+                <img
+                  src="prod_req.png"
+                  alt="Production Requirements"
+                  class="section-img"
+                  data-lightbox
+                />
                 <p class="caption">
                   This manufacturing drawing demonstrates detail-oriented engineering output,
                   defining the valve core through views, sections, dimensions, and material notes
@@ -290,7 +184,12 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>Combined Tolerance Inspection</h3>
-                <img src="tolerance_insp.png" alt="Tolerance Inspection" class="section-img" />
+                <img
+                  src="tolerance_insp.png"
+                  alt="Tolerance Inspection"
+                  class="section-img"
+                  data-lightbox
+                />
                 <p class="caption">
                   This tolerance analysis highlights inspection and quality-control work, using 3D
                   and 2D scatter plots to compare measured valve-body and valve-core dimensions
@@ -302,7 +201,12 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>Spring Force Testing</h3>
-                <img src="spring_force.png" alt="Spring Force Testing" class="section-img" />
+                <img
+                  src="spring_force.png"
+                  alt="Spring Force Testing"
+                  class="section-img"
+                  data-lightbox
+                />
                 <p class="caption">
                   This spring characteristic plot reflects test-driven design work, comparing
                   force-length behavior across multiple spring materials or design variants.
@@ -350,7 +254,12 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>整体设计</h3>
-                <img src="hero.png" alt="电气比例控制阀整体设计" class="section-img" />
+                <img
+                  src="hero.png"
+                  alt="电气比例控制阀整体设计"
+                  class="section-img"
+                  data-lightbox
+                />
                 <p class="caption">
                   这张装配渲染图体现了我把比例阀从概念落实为完整产品形态的能力，把主体、黄铜底座、电连接器和气路接口整合进同一套可制造设计中。
                 </p>
@@ -367,7 +276,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>详细 CAD 模型</h3>
-                <img src="overview.png" alt="详细 CAD" class="section-img" />
+                <img src="overview.png" alt="详细 CAD" class="section-img" data-lightbox />
                 <p class="caption">
                   这张 CAD
                   图体现了细化机械设计能力，把壳体、上盖、连接器、黄铜底座和接口特征整合为一套完整三维模型。
@@ -376,15 +285,15 @@
             </div>
 
             <div class="card video-card mt-md">
-              <div class="card-body" style="width: 100%; padding: 0">
-                <h3 style="padding: 16px 24px 8px">工作原理</h3>
+              <div class="card-body">
+                <h3 class="video-card-title">工作原理</h3>
                 <div class="video-wrap">
                   <video controls>
                     <source src="Working_Principle.mp4" type="video/mp4" />
                     您的浏览器不支持视频播放。
                   </video>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.88rem; padding: 0 24px 16px">
+                <p class="video-card-caption">
                   这个剖面动画体现了我对内部执行机理的理解，直观展示了中间阀芯组件在壳体内的运动过程。
                 </p>
               </div>
@@ -393,7 +302,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>研发流程管理</h3>
-                <img src="rd_process.png" alt="研发流程管理" class="section-img" />
+                <img src="rd_process.png" alt="研发流程管理" class="section-img" data-lightbox />
                 <p class="caption">
                   这张进度甘特表体现了我对研发流程的统筹能力，覆盖电机测试、传感器测试、机加图纸、弹簧测试、耐久测试和装配等任务。
                 </p>
@@ -403,7 +312,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>供应链管理</h3>
-                <img src="supply_chain.png" alt="供应链管理" class="section-img" />
+                <img src="supply_chain.png" alt="供应链管理" class="section-img" data-lightbox />
                 <p class="caption">
                   这张供应商数据库体现了实际供应链管理工作，把机械加工、模具加工、执行器等供应商按类别整理，并补充联系方式、评分、价格和检测状态。
                 </p>
@@ -413,7 +322,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>多职能团队协作</h3>
-                <img src="team_collab.png" alt="多职能团队协作" class="section-img" />
+                <img src="team_collab.png" alt="多职能团队协作" class="section-img" data-lightbox />
                 <p class="caption">
                   这页电子原理图体现了我在机械之外对控制电路的理解，展示了芯片、电阻、电容、三极管等元器件之间的连接关系。
                 </p>
@@ -423,7 +332,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>生产要求</h3>
-                <img src="prod_req.png" alt="生产要求" class="section-img" />
+                <img src="prod_req.png" alt="生产要求" class="section-img" data-lightbox />
                 <p class="caption">
                   这张阀芯机械加工图体现了面向生产的工程输出能力，通过主视图、剖视图、局部放大图、尺寸和材料信息定义零件制造要求。
                 </p>
@@ -433,7 +342,12 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>综合公差检测</h3>
-                <img src="tolerance_insp.png" alt="综合公差检测" class="section-img" />
+                <img
+                  src="tolerance_insp.png"
+                  alt="综合公差检测"
+                  class="section-img"
+                  data-lightbox
+                />
                 <p class="caption">
                   这张综合公差检测图体现了质量与检测能力，用 3D 和 2D
                   散点图对比阀体与阀芯组合的实测尺寸和公差边界。
@@ -444,7 +358,7 @@
             <div class="card mt-md">
               <div class="card-body">
                 <h3>弹簧力测试</h3>
-                <img src="spring_force.png" alt="弹簧力测试" class="section-img" />
+                <img src="spring_force.png" alt="弹簧力测试" class="section-img" data-lightbox />
                 <p class="caption">
                   这张弹簧特性曲线图体现了测试驱动的设计思路，通过作用力—长度曲线对比不同材料或方案下的弹簧表现。
                 </p>
@@ -467,110 +381,6 @@
     <!-- /lang-zh -->
 
     <script src="../../js/main.js"></script>
-    <script>
-      // Lightbox
-      const lb = document.createElement('div');
-      lb.id = 'lightbox';
-      // Securely create DOM elements instead of using innerHTML
-      lb.textContent = ''; // Clear just in case
-
-      const lbClose = document.createElement('span');
-      lbClose.id = 'lightbox-close';
-      lbClose.textContent = '×'; // Use literal times symbol instead of HTML entity
-
-      const lbImgElement = document.createElement('img');
-      lbImgElement.id = 'lb-img';
-      lbImgElement.src = '';
-      lbImgElement.alt = '';
-
-      const lbControls = document.createElement('div');
-      lbControls.id = 'lb-controls';
-
-      const btnZoomOut = document.createElement('button');
-      btnZoomOut.type = 'button';
-      btnZoomOut.id = 'lb-zoom-out';
-      btnZoomOut.title = '缩小 (-)';
-      btnZoomOut.textContent = '−';
-
-      const spanZoomLabel = document.createElement('span');
-      spanZoomLabel.id = 'lb-zoom-label';
-      spanZoomLabel.textContent = '100%';
-
-      const btnZoomIn = document.createElement('button');
-      btnZoomIn.type = 'button';
-      btnZoomIn.id = 'lb-zoom-in';
-      btnZoomIn.title = '放大 (+)';
-      btnZoomIn.textContent = '+';
-
-      const btnZoomReset = document.createElement('button');
-      btnZoomReset.type = 'button';
-      btnZoomReset.id = 'lb-zoom-reset';
-      btnZoomReset.title = '重置 (0)';
-      btnZoomReset.style.cssText = 'font-size:.85rem;width:auto;padding:0 12px;border-radius:20px;';
-      btnZoomReset.textContent = '重置';
-
-      lbControls.appendChild(btnZoomOut);
-      lbControls.appendChild(spanZoomLabel);
-      lbControls.appendChild(btnZoomIn);
-      lbControls.appendChild(btnZoomReset);
-
-      lb.appendChild(lbClose);
-      lb.appendChild(lbImgElement);
-      lb.appendChild(lbControls);
-      document.body.appendChild(lb);
-      const lbImg = document.getElementById('lb-img');
-      const lbLabel = document.getElementById('lb-zoom-label');
-      let scale = 1;
-      const STEP = 0.25,
-        MIN = 0.25,
-        MAX = 5;
-      function setScale(s) {
-        scale = Math.min(MAX, Math.max(MIN, s));
-        lbImg.style.transform = `scale(${scale})`;
-        lbLabel.textContent = Math.round(scale * 100) + '%';
-      }
-      function openLb(src) {
-        lbImg.src = src;
-        setScale(1);
-        lb.classList.add('active');
-      }
-      function closeLb() {
-        lb.classList.remove('active');
-      }
-      document.querySelectorAll('.section-img').forEach((img) => {
-        img.addEventListener('click', () => openLb(img.src));
-      });
-      document.getElementById('lightbox-close').addEventListener('click', closeLb);
-      document.getElementById('lb-zoom-in').addEventListener('click', (e) => {
-        e.stopPropagation();
-        setScale(scale + STEP);
-      });
-      document.getElementById('lb-zoom-out').addEventListener('click', (e) => {
-        e.stopPropagation();
-        setScale(scale - STEP);
-      });
-      document.getElementById('lb-zoom-reset').addEventListener('click', (e) => {
-        e.stopPropagation();
-        setScale(1);
-      });
-      lb.addEventListener('click', (e) => {
-        if (e.target === lb) closeLb();
-      });
-      lb.addEventListener(
-        'wheel',
-        (e) => {
-          e.preventDefault();
-          setScale(scale + (e.deltaY < 0 ? STEP : -STEP));
-        },
-        { passive: false }
-      );
-      document.addEventListener('keydown', (e) => {
-        if (!lb.classList.contains('active')) return;
-        if (e.key === 'Escape') closeLb();
-        if (e.key === '+' || e.key === '=') setScale(scale + STEP);
-        if (e.key === '-') setScale(scale - STEP);
-        if (e.key === '0') setScale(1);
-      });
-    </script>
+    <script src="../../js/lightbox.js"></script>
   </body>
 </html>
