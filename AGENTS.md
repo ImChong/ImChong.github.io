@@ -6,15 +6,15 @@ This is a **static website** (pure HTML, CSS, vanilla JS) with no build step, no
 
 ### Quick reference
 
-| Task | Command |
-|------|---------|
-| Install deps | `npm ci` |
-| Full quality check | `npm run check` |
-| Format code | `npm run format` |
-| Lint JS | `npm run lint:js` |
-| Lint CSS | `npm run lint:css` |
-| Lint HTML | `npm run lint:html` |
-| Serve locally | `python3 -m http.server 8080` (from repo root) |
+| Task               | Command                                        |
+| ------------------ | ---------------------------------------------- |
+| Install deps       | `npm ci`                                       |
+| Full quality check | `npm run check`                                |
+| Format code        | `npm run format`                               |
+| Lint JS            | `npm run lint:js`                              |
+| Lint CSS           | `npm run lint:css`                             |
+| Lint HTML          | `npm run lint:html`                            |
+| Serve locally      | `python3 -m http.server 8080` (from repo root) |
 
 ### Notes
 
