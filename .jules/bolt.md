@@ -13,3 +13,8 @@
 
 **Learning:** Combining scroll events with `offsetTop` and class toggles can cause severe layout thrashing. When `classList.add('active')` modifies properties that affect dimensions (like `font-weight: 600`), the layout becomes dirty. The subsequent scroll tick reading `offsetTop` forces the browser to perform a synchronous recalculation, ruining performance.
 **Action:** Replace `scroll` event listeners and `offsetTop` with `IntersectionObserver` to track element visibility. This shifts the tracking off the main thread and completely bypasses the dirty-layout synchronous reflow cycle.
+
+## 2026-05-08 - Preload Critical Above-The-Fold Images
+
+**Learning:** The browser's native parser doesn't immediately discover the profile image located deep inside the `<body>` element. This delays the loading of the main hero image, significantly penalizing the Largest Contentful Paint (LCP) performance metric, particularly on slower networks.
+**Action:** Always add a `<link rel="preload" as="image" href="...">` tag to the `<head>` for critical above-the-fold hero images. This instructs the browser to prioritize fetching the resource early during page load before the main parser reaches the image tag.
