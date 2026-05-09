@@ -17,6 +17,8 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>"
     />
+    <!-- ⚡ Bolt Performance Optimization: Preload the hero image to improve Largest Contentful Paint (LCP) -->
+    <link rel="preload" href="hero.png" as="image" />
     <link rel="stylesheet" href="../../css/style.css" />
   </head>
   <body>
@@ -79,7 +81,6 @@
                   alt="Proportional Control Valve Overview"
                   class="section-img"
                   data-lightbox
-                  loading="lazy"
                 />
                 <p class="caption">
                   This assembled view highlights my ability to turn a valve concept into a complete
@@ -283,7 +284,6 @@
                   alt="电气比例控制阀整体设计"
                   class="section-img"
                   data-lightbox
-                  loading="lazy"
                 />
                 <p class="caption">
                   这张装配渲染图体现了我把比例阀从概念落实为完整产品形态的能力，把主体、黄铜底座、电连接器和气路接口整合进同一套可制造设计中。
