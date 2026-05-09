@@ -18,3 +18,7 @@
 
 **Learning:** The browser's native parser doesn't immediately discover the profile image located deep inside the `<body>` element. This delays the loading of the main hero image, significantly penalizing the Largest Contentful Paint (LCP) performance metric, particularly on slower networks.
 **Action:** Always add a `<link rel="preload" as="image" href="...">` tag to the `<head>` for critical above-the-fold hero images. This instructs the browser to prioritize fetching the resource early during page load before the main parser reaches the image tag.
+## 2026-05-09 - Preload Additional Critical LCP Images
+
+**Learning:** Just like the main hero profile image, individual sub-pages (e.g., marriage page, project pages) also have their own critical hero images. The main parser still doesn't prioritize them if they are deep in the `<body>` element. Furthermore, these hero images shouldn't have `loading="lazy"` since they are above the fold.
+**Action:** Always verify that critical above-the-fold images across all pages lack `loading="lazy"` and are preloaded via `<link rel="preload" as="image" href="...">` in their respective `<head>` sections.
