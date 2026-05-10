@@ -23,3 +23,8 @@
 
 **Learning:** Just like the main hero profile image, individual sub-pages (e.g., marriage page, project pages) also have their own critical hero images. The main parser still doesn't prioritize them if they are deep in the `<body>` element. Furthermore, these hero images shouldn't have `loading="lazy"` since they are above the fold.
 **Action:** Always verify that critical above-the-fold images across all pages lack `loading="lazy"` and are preloaded via `<link rel="preload" as="image" href="...">` in their respective `<head>` sections.
+
+## 2026-05-10 - Prevent Unnecessary Video Preloading
+
+**Learning:** By default, browsers may aggressively fetch metadata and buffer chunks of `<video>` elements, even if they are far below the fold. This can delay the window `load` event and waste significant bandwidth (e.g., fetching parts of a 2.2MB video before it's even seen).
+**Action:** Always explicitly set `preload="none"` on `<video>` elements that are not critical for the initial paint or above the fold. This instructs the browser to defer fetching the video data until the user initiates playback or scrolls near the element.
