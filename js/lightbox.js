@@ -99,15 +99,26 @@
   lb.addEventListener('click', (e) => {
     if (e.target === lb) closeLb();
   });
+
+  let ticking = false;
+  // ⚡ Bolt Performance Optimization: Throttle frequent 'wheel' events with requestAnimationFrame
+  // to prevent DOM update thrashing and reduce main-thread blocking when zooming.
   lb.addEventListener(
     'wheel',
     (e) => {
       if (!lb.classList.contains('active')) return;
       e.preventDefault();
-      setScale(scale + (e.deltaY < 0 ? STEP : -STEP));
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScale(scale + (e.deltaY < 0 ? STEP : -STEP));
+          ticking = false;
+        });
+        ticking = true;
+      }
     },
     { passive: false }
   );
+
   document.addEventListener('keydown', (e) => {
     if (!lb.classList.contains('active')) return;
     if (e.key === 'Escape') closeLb();
