@@ -28,3 +28,8 @@
 
 **Learning:** By default, browsers may aggressively fetch metadata and buffer chunks of `<video>` elements, even if they are far below the fold. This can delay the window `load` event and waste significant bandwidth (e.g., fetching parts of a 2.2MB video before it's even seen).
 **Action:** Always explicitly set `preload="none"` on `<video>` elements that are not critical for the initial paint or above the fold. This instructs the browser to defer fetching the video data until the user initiates playback or scrolls near the element.
+
+## 2026-05-11 - Throttle Frequent Events like wheel
+
+**Learning:** Unthrottled frequent events like `wheel` that cause DOM updates (e.g. style changes) can trigger layout thrashing and block the main thread. In `js/lightbox.js`, scaling the image based on mouse wheel generated hundreds of style updates per second.
+**Action:** Always throttle frequent UI events (like `wheel`, `mousemove`, `resize`) using `requestAnimationFrame` when manipulating the DOM to ensure updates sync with the browser's display refresh rate (60fps) and do not queue redundant layout reflows.
