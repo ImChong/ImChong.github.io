@@ -71,6 +71,7 @@ let cachedNavLinks = null;
 // initLang IIFE below — can safely reach setupNavObserver() without
 // tripping the temporal dead zone on these `let` bindings.
 let navObserver = null;
+let subpageTocCleanup = null;
 
 function applyLangMode(mode) {
   root.setAttribute('data-lang-mode', mode);
@@ -101,6 +102,7 @@ function applyLangMode(mode) {
   }
   cachedNavLinks = null;
   setupNavObserver();
+  setupSubpageTocObserver();
 }
 
 function toggleLang() {
@@ -157,6 +159,80 @@ function setupNavObserver() {
   for (let i = 0; i < sections.length; i++) {
     navObserver.observe(sections[i]);
   }
+}
+
+/* ─── Subpage TOC active section (scrollspy) ───────────── */
+function setupSubpageTocObserver() {
+  if (subpageTocCleanup) {
+    subpageTocCleanup();
+    subpageTocCleanup = null;
+  }
+
+  const mode = root.getAttribute('data-lang-mode') || 'en';
+  const langBlock = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+  if (!langBlock) return;
+
+  const layout = langBlock.querySelector('.container.subpage-detail-layout');
+  if (!layout) return;
+
+  const tocNav = layout.querySelector('.page-toc nav');
+  if (!tocNav) return;
+
+  const linkEls = [...tocNav.querySelectorAll('a[href^="#"]')];
+  if (!linkEls.length) return;
+
+  const sections = [];
+  for (let i = 0; i < linkEls.length; i++) {
+    const rawId = linkEls[i].getAttribute('href').slice(1);
+    const target = langBlock.querySelector('#' + CSS.escape(rawId));
+    if (target) sections.push({ id: rawId, el: target, link: linkEls[i] });
+  }
+  if (!sections.length) return;
+
+  const headerEl = document.querySelector('.site-header');
+
+  const readActivateLine = () => {
+    const h = headerEl ? headerEl.getBoundingClientRect().height : 0;
+    const fallback = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--header-h')
+    );
+    return (h || fallback || 56) + 16;
+  };
+
+  const update = () => {
+    const line = readActivateLine();
+    let activeId = sections[0].id;
+    for (let j = 0; j < sections.length; j++) {
+      const top = sections[j].el.getBoundingClientRect().top;
+      if (top <= line) activeId = sections[j].id;
+      else break;
+    }
+    for (let k = 0; k < sections.length; k++) {
+      const on = sections[k].id === activeId;
+      sections[k].link.classList.toggle('active', on);
+      if (on) sections[k].link.setAttribute('aria-current', 'location');
+      else sections[k].link.removeAttribute('aria-current');
+    }
+  };
+
+  let ticking = false;
+  const onScrollOrResize = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      update();
+    });
+  };
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
+  subpageTocCleanup = () => {
+    window.removeEventListener('scroll', onScrollOrResize);
+    window.removeEventListener('resize', onScrollOrResize);
+  };
+
+  update();
 }
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
