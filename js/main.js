@@ -191,50 +191,32 @@ function setupSubpageTocObserver() {
   }
   if (!sections.length) return;
 
-  const headerEl = document.querySelector('.site-header');
+  // ⚡ Bolt Performance Optimization: Replace scroll listener and getBoundingClientRect
+  // with IntersectionObserver to eliminate main-thread layout thrashing.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const activeId = entry.target.id;
+          for (let k = 0; k < sections.length; k++) {
+            const on = sections[k].id === activeId;
+            sections[k].link.classList.toggle('active', on);
+            if (on) sections[k].link.setAttribute('aria-current', 'location');
+            else sections[k].link.removeAttribute('aria-current');
+          }
+        }
+      });
+    },
+    { rootMargin: '-10% 0px -40% 0px' }
+  );
 
-  const readActivateLine = () => {
-    const h = headerEl ? headerEl.getBoundingClientRect().height : 0;
-    const fallback = parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue('--header-h')
-    );
-    return (h || fallback || 56) + 16;
-  };
+  for (let i = 0; i < sections.length; i++) {
+    observer.observe(sections[i].el);
+  }
 
-  const update = () => {
-    const line = readActivateLine();
-    let activeId = sections[0].id;
-    for (let j = 0; j < sections.length; j++) {
-      const top = sections[j].el.getBoundingClientRect().top;
-      if (top <= line) activeId = sections[j].id;
-      else break;
-    }
-    for (let k = 0; k < sections.length; k++) {
-      const on = sections[k].id === activeId;
-      sections[k].link.classList.toggle('active', on);
-      if (on) sections[k].link.setAttribute('aria-current', 'location');
-      else sections[k].link.removeAttribute('aria-current');
-    }
-  };
-
-  let ticking = false;
-  const onScrollOrResize = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
-      update();
-    });
-  };
-
-  window.addEventListener('scroll', onScrollOrResize, { passive: true });
-  window.addEventListener('resize', onScrollOrResize, { passive: true });
   subpageTocCleanup = () => {
-    window.removeEventListener('scroll', onScrollOrResize);
-    window.removeEventListener('resize', onScrollOrResize);
+    observer.disconnect();
   };
-
-  update();
 }
 
 /* ─── Subpage TOC mobile drawer (floating button + off-canvas panel) ─ */
