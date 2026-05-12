@@ -852,33 +852,16 @@ ul {
 }
 
 /* ── Subpage detail layout + sticky TOC (Robotics_Notebooks detail.html pattern) ─
-   Wide viewports: TOC is sticky under the header and offset into the left margin so it
-   visually floats beside the article column — same idea as
-   https://imchong.github.io/Robotics_Notebooks/detail.html?id=entity-mimickit */
+   From 1200px up: main column uses the same width and horizontal padding as .container /
+   .header-inner (960px max, 24px side padding) so text aligns with the header controls.
+   TOC sits in the left margin (zero-width grid track + negative margin) and does not
+   shrink the article column. */
 
 .container.subpage-detail-layout {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  justify-content: center;
-
-  /* Widen only on subpages so the article column keeps the same usable width as the
-     homepage .container (960px) after reserving TOC + gap. */
-  max-width: calc(960px + 260px + 40px);
-}
-
-.subpage-detail-main {
-  flex: 1;
-  min-width: 0;
+  overflow: visible;
 }
 
 .page-toc {
-  width: 260px;
-  flex-shrink: 0;
-  align-self: flex-start;
-  position: sticky;
-  top: calc(var(--header-h) + 24px);
-  z-index: 2;
   padding: 14px 16px;
   font-size: 0.82rem;
   line-height: 1.45;
@@ -893,8 +876,28 @@ ul {
 }
 
 @media (min-width: 1200px) {
+  .container.subpage-detail-layout {
+    display: grid;
+    grid-template-columns: 0 minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0;
+  }
+
   .page-toc {
-    margin-left: -300px;
+    grid-column: 1;
+    grid-row: 1;
+    width: 260px;
+    margin-left: calc(-260px - 40px);
+    place-self: start;
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    z-index: 2;
+  }
+
+  .subpage-detail-main {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
   }
 }
 
@@ -937,9 +940,7 @@ ul {
 
 @media (max-width: 1199px) {
   .container.subpage-detail-layout {
-    flex-direction: column;
-    gap: 20px;
-    max-width: 960px;
+    display: block;
   }
 
   .page-toc {
