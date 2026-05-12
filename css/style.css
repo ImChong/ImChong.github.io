@@ -376,6 +376,13 @@ ul {
   transform: translateY(-1px);
 }
 
+/* Let wide images (e.g. CAD sheets) respect the column width inside flex cards.
+   Without this, min-width:auto on the flex item can track the image intrinsic width. */
+.card-body {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
 .card-icon {
   font-size: 1.6rem;
   flex-shrink: 0;
