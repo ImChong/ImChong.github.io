@@ -861,12 +861,15 @@ ul {
   gap: 40px;
   align-items: flex-start;
   justify-content: center;
+
+  /* Widen only on subpages so the article column keeps the same usable width as the
+     homepage .container (960px) after reserving TOC + gap. */
+  max-width: calc(960px + 260px + 40px);
 }
 
 .subpage-detail-main {
   flex: 1;
   min-width: 0;
-  max-width: 800px;
 }
 
 .page-toc {
@@ -896,11 +899,11 @@ ul {
 }
 
 .page-toc-title {
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text);
   margin: 0 0 12px;
 }
 
@@ -936,6 +939,7 @@ ul {
   .container.subpage-detail-layout {
     flex-direction: column;
     gap: 20px;
+    max-width: 960px;
   }
 
   .page-toc {
@@ -944,9 +948,5 @@ ul {
     margin-left: 0;
     position: relative;
     top: auto;
-  }
-
-  .subpage-detail-main {
-    max-width: 100%;
   }
 }
