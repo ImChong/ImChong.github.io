@@ -72,6 +72,7 @@ let cachedNavLinks = null;
 // tripping the temporal dead zone on these `let` bindings.
 let navObserver = null;
 let subpageTocCleanup = null;
+let subpageMobileCleanup = null;
 
 function applyLangMode(mode) {
   root.setAttribute('data-lang-mode', mode);
@@ -102,6 +103,7 @@ function applyLangMode(mode) {
   }
   cachedNavLinks = null;
   setupNavObserver();
+  setupSubpageTocMobileDrawer();
   setupSubpageTocObserver();
 }
 
@@ -233,6 +235,129 @@ function setupSubpageTocObserver() {
   };
 
   update();
+}
+
+/* ─── Subpage TOC mobile drawer (floating button + off-canvas panel) ─ */
+function setupSubpageTocMobileDrawer() {
+  if (subpageMobileCleanup) {
+    subpageMobileCleanup();
+    subpageMobileCleanup = null;
+  }
+
+  const mode = root.getAttribute('data-lang-mode') || 'en';
+  const langBlock = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+  if (!langBlock) return;
+
+  const layout = langBlock.querySelector('.container.subpage-detail-layout');
+  const pageToc = layout?.querySelector('.page-toc');
+  const tocNav = pageToc?.querySelector('nav');
+  const tocLinks = tocNav ? [...tocNav.querySelectorAll('a[href^="#"]')] : [];
+  if (!pageToc || tocLinks.length === 0) return;
+
+  pageToc.id = mode === 'zh' ? 'subpage-page-toc-zh' : 'subpage-page-toc-en';
+
+  const mq = window.matchMedia('(max-width: 1199px)');
+
+  const overlay = document.createElement('div');
+  overlay.className = 'subpage-toc-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'subpage-toc-toggle';
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-controls', pageToc.id);
+  toggle.setAttribute(
+    'aria-label',
+    mode === 'zh' ? '打开或关闭本页目录' : 'Open or close table of contents'
+  );
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', '24');
+  svg.setAttribute('height', '24');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', 'currentColor');
+  path.setAttribute('stroke-width', '2');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+  svg.appendChild(path);
+  toggle.appendChild(svg);
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(toggle);
+
+  const close = () => {
+    pageToc.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  const open = () => {
+    pageToc.classList.add('is-open');
+    overlay.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const syncMq = () => {
+    if (!mq.matches) {
+      close();
+      toggle.hidden = true;
+    } else {
+      toggle.hidden = false;
+    }
+  };
+
+  const ac = new AbortController();
+  const { signal } = ac;
+
+  toggle.addEventListener(
+    'click',
+    (e) => {
+      e.stopPropagation();
+      if (pageToc.classList.contains('is-open')) close();
+      else open();
+    },
+    { signal }
+  );
+
+  overlay.addEventListener('click', close, { signal });
+
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.key === 'Escape' && pageToc.classList.contains('is-open')) close();
+    },
+    { signal }
+  );
+
+  for (let i = 0; i < tocLinks.length; i++) {
+    tocLinks[i].addEventListener(
+      'click',
+      () => {
+        if (mq.matches) close();
+      },
+      { signal }
+    );
+  }
+
+  mq.addEventListener('change', syncMq, { signal });
+  syncMq();
+
+  subpageMobileCleanup = () => {
+    ac.abort();
+    close();
+    pageToc.classList.remove('is-open');
+    toggle.remove();
+    overlay.remove();
+    document.body.style.overflow = '';
+  };
 }
 
 /* ─── Smooth Scroll ────────────────────────────────────── */

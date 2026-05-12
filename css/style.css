@@ -951,16 +951,80 @@ ul {
   background: rgba(91, 156, 246, 0.14);
 }
 
+/* Mobile: TOC drawer + FAB (toggle/overlay injected by main.js on subpages with TOC) */
+.subpage-toc-toggle {
+  position: fixed;
+  bottom: 24px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  z-index: 1100;
+  transition:
+    transform var(--transition),
+    background var(--transition);
+}
+
+.subpage-toc-toggle:active {
+  transform: scale(0.92);
+}
+
+.subpage-toc-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.subpage-toc-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
 @media (max-width: 1199px) {
   .container.subpage-detail-layout {
     display: block;
   }
 
   .page-toc {
-    width: 100%;
-    max-width: 420px;
-    margin-left: 0;
-    position: relative;
-    top: auto;
+    position: fixed;
+    top: calc(var(--header-h) + 12px);
+    bottom: 96px;
+    left: -300px;
+    width: 280px;
+    margin: 0;
+    max-width: none;
+    z-index: 1000;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 0 16px 16px 0;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+    transition:
+      left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      background var(--transition),
+      border-color var(--transition),
+      box-shadow var(--transition);
+  }
+
+  .page-toc.is-open {
+    left: 0;
+  }
+
+  [data-theme='dark'] .page-toc {
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.45);
   }
 }
