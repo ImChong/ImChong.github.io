@@ -62,11 +62,6 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 const langBtn = document.getElementById('langToggle');
 const langLabel = langBtn ? langBtn.querySelector('.lang-label') : null;
 
-// Cached collection of nav links. Invalidated whenever the language mode
-// flips, since the visible/hidden state of the two language containers
-// changes which link set IntersectionObserver should watch.
-let cachedNavLinks = null;
-
 // Declared up-front so that applyLangMode() — which is invoked by the
 // initLang IIFE below — can safely reach setupNavObserver() without
 // tripping the temporal dead zone on these `let` bindings.
@@ -97,11 +92,9 @@ function applyLangMode(mode) {
   }
 
   const navLinks = document.querySelectorAll('.main-nav a');
-  for (let i = 0; i < navLinks.length; i++) {
-    navLinks[i].textContent =
-      mode === 'zh' ? navLinks[i].getAttribute('data-zh') : navLinks[i].getAttribute('data-en');
-  }
-  cachedNavLinks = null;
+  navLinks.forEach((link) => {
+    link.textContent = mode === 'zh' ? link.getAttribute('data-zh') : link.getAttribute('data-en');
+  });
   setupNavObserver();
   setupSubpageTocMobileDrawer();
   setupSubpageTocObserver();
@@ -127,12 +120,6 @@ if (langBtn) langBtn.addEventListener('click', toggleLang);
 // reach setupNavObserver() during the initial language bootstrap without
 // hitting a temporal-dead-zone ReferenceError.)
 
-function getActiveNavLinks() {
-  if (cachedNavLinks) return cachedNavLinks;
-  cachedNavLinks = document.querySelectorAll('.main-nav a');
-  return cachedNavLinks;
-}
-
 function setupNavObserver() {
   if (navObserver) navObserver.disconnect();
   const mode = root.getAttribute('data-lang-mode') || 'en';
@@ -140,27 +127,27 @@ function setupNavObserver() {
   if (!container) return;
 
   const sections = container.querySelectorAll('section[id]');
-  const navLinks = getActiveNavLinks();
+  const navLinks = document.querySelectorAll('.main-nav a');
 
   navObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const activeId = entry.target.id;
-          for (let j = 0; j < navLinks.length; j++) {
-            const href = navLinks[j].getAttribute('href').slice(1);
-            if (href === activeId) navLinks[j].classList.add('active');
-            else navLinks[j].classList.remove('active');
-          }
+          navLinks.forEach((link) => {
+            const href = link.getAttribute('href').slice(1);
+            if (href === activeId) link.classList.add('active');
+            else link.classList.remove('active');
+          });
         }
       });
     },
     { rootMargin: '-80px 0px -40% 0px' }
   );
 
-  for (let i = 0; i < sections.length; i++) {
-    navObserver.observe(sections[i]);
-  }
+  sections.forEach((section) => {
+    navObserver.observe(section);
+  });
 }
 
 /* ─── Subpage TOC active section (scrollspy) ───────────── */
@@ -184,11 +171,11 @@ function setupSubpageTocObserver() {
   if (!linkEls.length) return;
 
   const sections = [];
-  for (let i = 0; i < linkEls.length; i++) {
-    const rawId = linkEls[i].getAttribute('href').slice(1);
+  linkEls.forEach((linkEl) => {
+    const rawId = linkEl.getAttribute('href').slice(1);
     const target = langBlock.querySelector('#' + CSS.escape(rawId));
-    if (target) sections.push({ id: rawId, el: target, link: linkEls[i] });
-  }
+    if (target) sections.push({ id: rawId, el: target, link: linkEl });
+  });
   if (!sections.length) return;
 
   // ⚡ Bolt Performance Optimization: Replace scroll listener and getBoundingClientRect
@@ -198,21 +185,21 @@ function setupSubpageTocObserver() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const activeId = entry.target.id;
-          for (let k = 0; k < sections.length; k++) {
-            const on = sections[k].id === activeId;
-            sections[k].link.classList.toggle('active', on);
-            if (on) sections[k].link.setAttribute('aria-current', 'location');
-            else sections[k].link.removeAttribute('aria-current');
-          }
+          sections.forEach((section) => {
+            const on = section.id === activeId;
+            section.link.classList.toggle('active', on);
+            if (on) section.link.setAttribute('aria-current', 'location');
+            else section.link.removeAttribute('aria-current');
+          });
         }
       });
     },
     { rootMargin: '-10% 0px -40% 0px' }
   );
 
-  for (let i = 0; i < sections.length; i++) {
-    observer.observe(sections[i].el);
-  }
+  sections.forEach((section) => {
+    observer.observe(section.el);
+  });
 
   subpageTocCleanup = () => {
     observer.disconnect();
@@ -319,15 +306,15 @@ function setupSubpageTocMobileDrawer() {
     { signal }
   );
 
-  for (let i = 0; i < tocLinks.length; i++) {
-    tocLinks[i].addEventListener(
+  tocLinks.forEach((link) => {
+    link.addEventListener(
       'click',
       () => {
         if (mq.matches) close();
       },
       { signal }
     );
-  }
+  });
 
   mq.addEventListener('change', syncMq, { signal });
   syncMq();
@@ -344,9 +331,9 @@ function setupSubpageTocMobileDrawer() {
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
 function bindNavClicks() {
-  const navLinks = getActiveNavLinks();
-  for (let k = 0; k < navLinks.length; k++) {
-    navLinks[k].addEventListener('click', (e) => {
+  const navLinks = document.querySelectorAll('.main-nav a');
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
       const targetId = e.currentTarget.getAttribute('href').slice(1);
       const mode = root.getAttribute('data-lang-mode') || 'en';
       const container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
@@ -357,7 +344,7 @@ function bindNavClicks() {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
-  }
+  });
 }
 bindNavClicks();
 
