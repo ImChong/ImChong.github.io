@@ -33,3 +33,8 @@
 
 **Learning:** Unthrottled frequent events like `wheel` that cause DOM updates (e.g. style changes) can trigger layout thrashing and block the main thread. In `js/lightbox.js`, scaling the image based on mouse wheel generated hundreds of style updates per second.
 **Action:** Always throttle frequent UI events (like `wheel`, `mousemove`, `resize`) using `requestAnimationFrame` when manipulating the DOM to ensure updates sync with the browser's display refresh rate (60fps) and do not queue redundant layout reflows.
+
+## 2026-05-18 - Simplify Query Caching
+
+**Learning:** Caching DOM queries like `document.querySelectorAll` inside a variable to avoid re-querying when the document state changes (like the language mode toggling) adds unnecessary complexity and state management bugs (e.g. invalidation errors). DOM querying by simple selectors like `.main-nav a` is extremely fast and provides no measurable benefit on occasional user interactions.
+**Action:** Always favor readable, direct DOM queries (`querySelectorAll`, `getElementById`) over caching them unless querying in a high-frequency tight loop or scroll event.
