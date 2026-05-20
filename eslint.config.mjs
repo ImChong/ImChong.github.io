@@ -20,6 +20,14 @@ export default [
       'prefer-const': 'error',
       'no-unused-vars': ['warn', { args: 'none' }],
       eqeqeq: ['error', 'smart'],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "Identifier[name='innerHTML']",
+          message:
+            'Using innerHTML is forbidden due to XSS risks. Use textContent, document.createElement, and appendChild instead.',
+        },
+      ],
     },
   },
   {
