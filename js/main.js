@@ -39,10 +39,8 @@ function toggleTheme() {
   const saved = localStorage.getItem(THEME_KEY);
   if (saved === 'dark' || saved === 'light') {
     applyTheme(saved);
-  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    applyTheme('dark');
   } else {
-    applyTheme('light');
+    applyTheme('dark');
   }
 })();
 
@@ -53,9 +51,6 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     toggleTheme();
   }
-});
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (!localStorage.getItem(THEME_KEY)) applyTheme(e.matches ? 'dark' : 'light');
 });
 
 /* ─── Language Toggle ──────────────────────────────────── */
