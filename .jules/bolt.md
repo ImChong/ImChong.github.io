@@ -40,5 +40,6 @@
 **Action:** Always favor readable, direct DOM queries (`querySelectorAll`, `getElementById`) over caching them unless querying in a high-frequency tight loop or scroll event.
 
 ## 2026-05-19 - Event Delegation for Multiple Elements
+
 **Learning:** Attaching individual event listeners to multiple similar DOM elements (like images opening a lightbox) scales poorly. It increases memory overhead and slows down initialization time.
 **Action:** Always favor event delegation for multiple similar elements. Attach a single listener to a common ancestor (like `document` or `document.body`) and check for the target element using `e.target.closest('selector')`.
