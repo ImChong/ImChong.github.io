@@ -75,8 +75,14 @@
   }
 
   /* Attach to all [data-lightbox] images */
-  document.querySelectorAll('[data-lightbox]').forEach((img) => {
-    img.addEventListener('click', () => openLb(img.src, img.alt));
+  document.addEventListener('click', (e) => {
+    // ⚡ Bolt Performance Optimization: Use event delegation instead of attaching individual
+    // click listeners to every [data-lightbox] image. This reduces memory footprint and
+    // speeds up initialization.
+    const img = e.target.closest('img[data-lightbox]');
+    if (img) {
+      openLb(img.src, img.alt);
+    }
   });
 
   /* Controls */
