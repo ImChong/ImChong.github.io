@@ -301,15 +301,17 @@ function setupSubpageTocMobileDrawer() {
     { signal }
   );
 
-  tocLinks.forEach((link) => {
-    link.addEventListener(
-      'click',
-      () => {
-        if (mq.matches) close();
-      },
-      { signal }
-    );
-  });
+  // ⚡ Bolt Performance Optimization: Use event delegation instead of attaching individual
+  // click listeners to every table of contents link. This reduces memory footprint and
+  // speeds up initialization.
+  tocNav.addEventListener(
+    'click',
+    (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (link && mq.matches) close();
+    },
+    { signal }
+  );
 
   mq.addEventListener('change', syncMq, { signal });
   syncMq();
@@ -326,10 +328,13 @@ function setupSubpageTocMobileDrawer() {
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
 function bindNavClicks() {
-  const navLinks = document.querySelectorAll('.main-nav a');
-  navLinks.forEach((link) => {
-    link.addEventListener('click', (e) => {
-      const targetId = e.currentTarget.getAttribute('href').slice(1);
+  // ⚡ Bolt Performance Optimization: Use event delegation instead of attaching individual
+  // click listeners to every main navigation link. This reduces memory footprint and
+  // speeds up initialization.
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.main-nav a');
+    if (link) {
+      const targetId = link.getAttribute('href').slice(1);
       const mode = root.getAttribute('data-lang-mode') || 'en';
       const container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
       const target = container ? container.querySelector('#' + CSS.escape(targetId)) : null;
@@ -338,7 +343,7 @@ function bindNavClicks() {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    });
+    }
   });
 }
 bindNavClicks();
