@@ -15,3 +15,9 @@
 **Vulnerability:** The application was missing strict directives in its `Content-Security-Policy` to enforce secure connections and prevent mixed content on modern browsers. While it restricted sources, it did not explicitly instruct the browser to upgrade insecure HTTP requests to HTTPS, which leaves open the possibility of a downgrade attack if a user happens to request an insecure resource or follow an HTTP link.
 **Learning:** For static sites with no backend, maximizing the strictness of the client-side `Content-Security-Policy` via `<meta>` tags is crucial. `upgrade-insecure-requests` is a highly effective way to prevent mixed content and force HTTPS connections where applicable, even when a user explicitly requests an HTTP resource. `block-all-mixed-content` serves as a fallback to ensure no insecure content is ever loaded.
 **Prevention:** Always include `upgrade-insecure-requests; block-all-mixed-content;` in the `Content-Security-Policy` of all HTML files.
+
+## 2026-05-04 - Enhance DOM XSS Protection via Trusted Types
+
+**Vulnerability:** The application mitigated DOM XSS by replacing .innerHTML with safer APIs like .textContent and .createElement, but lacked browser-level enforcement.
+**Learning:** Adding "require-trusted-types-for 'script';" to the Content-Security-Policy forces the browser to reject raw strings being passed to injection sinks (like innerHTML or eval). Since the codebase already adheres to safe DOM manipulation, this enhancement is a frictionless defense-in-depth measure.
+**Prevention:** Include "require-trusted-types-for 'script';" in the Content-Security-Policy to enforce safe DOM API usage at the browser level.
