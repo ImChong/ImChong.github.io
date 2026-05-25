@@ -48,3 +48,8 @@
 
 **Learning:** Attaching individual event listeners to multiple similar DOM elements (like images opening a lightbox, or navigation links) scales poorly. It increases memory overhead and slows down initialization time.
 **Action:** Always favor event delegation for multiple similar elements. Attach a single listener to a common ancestor (like `document` or `document.body`) and check for the target element using `e.target.closest('selector')`.
+
+## 2026-05-19 - Content Visibility Auto for Off-Screen Rendering Optimization
+
+**Learning:** For single-page portfolios with many sections (like experience, projects, education, research, awards, and family), content far below the fold forces the browser to calculate layout and rendering for the entire page on initial load. This increases main thread work and delays interactivity.
+**Action:** Use CSS `content-visibility: auto;` (along with `contain-intrinsic-size`) on major independent sections. This allows the browser to skip layout and painting for off-screen sections until the user scrolls near them, dramatically improving initial rendering performance.
