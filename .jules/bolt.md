@@ -53,3 +53,8 @@
 
 **Learning:** For single-page portfolios with many sections (like experience, projects, education, research, awards, and family), content far below the fold forces the browser to calculate layout and rendering for the entire page on initial load. This increases main thread work and delays interactivity.
 **Action:** Use CSS `content-visibility: auto;` (along with `contain-intrinsic-size`) on major independent sections. This allows the browser to skip layout and painting for off-screen sections until the user scrolls near them, dramatically improving initial rendering performance.
+
+## 2026-05-26 - Move Scripts to Head with Defer
+
+**Learning:** Scripts placed at the end of the `<body>` delay their discovery and downloading until the HTML parser reaches the bottom of the document. This can delay interactivity and script execution, especially on larger pages or slower networks.
+**Action:** Always load non-render-blocking scripts (like main application logic or UI interaction scripts) in the `<head>` using the `defer` attribute. This allows the browser to discover and download the script in parallel with HTML parsing, executing it only after the HTML is fully parsed, which improves the overall load performance and time to interactivity.
