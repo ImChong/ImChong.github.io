@@ -43,6 +43,8 @@
     <!-- ⚡ Bolt Performance Optimization: Preload the hero profile image to improve Largest Contentful Paint (LCP) -->
     <link rel="preload" href="img/profile.jpg" as="image" />
     <script src="js/theme-init.js"></script>
+    <!-- ⚡ Bolt Performance Optimization: Load main script with defer to avoid blocking HTML parsing while fetching early -->
+    <script src="js/main.js" defer></script>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -1238,7 +1240,5 @@
       <footer class="site-footer" data-footer-lang="zh"></footer>
     </div>
     <!-- /lang-zh -->
-
-    <script src="js/main.js"></script>
   </body>
 </html>

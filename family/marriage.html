@@ -20,6 +20,9 @@
     <!-- ⚡ Bolt Performance Optimization: Preload the hero image to improve Largest Contentful Paint (LCP) -->
     <link rel="preload" href="../img/family/marriage-1.jpg" as="image" />
     <script src="../js/theme-init.js"></script>
+    <!-- ⚡ Bolt Performance Optimization: Load main script with defer to avoid blocking HTML parsing while fetching early -->
+    <script src="../js/main.js" defer></script>
+    <script src="../js/lightbox.js" defer></script>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
@@ -176,8 +179,5 @@
       </main>
       <footer class="site-footer" data-footer-lang="zh"></footer>
     </div>
-
-    <script src="../js/main.js"></script>
-    <script src="../js/lightbox.js"></script>
   </body>
 </html>
