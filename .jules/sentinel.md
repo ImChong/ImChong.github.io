@@ -21,3 +21,9 @@
 **Vulnerability:** The application mitigated DOM XSS by replacing .innerHTML with safer APIs like .textContent and .createElement, but lacked browser-level enforcement.
 **Learning:** Adding "require-trusted-types-for 'script';" to the Content-Security-Policy forces the browser to reject raw strings being passed to injection sinks (like innerHTML or eval). Since the codebase already adheres to safe DOM manipulation, this enhancement is a frictionless defense-in-depth measure.
 **Prevention:** Include "require-trusted-types-for 'script';" in the Content-Security-Policy to enforce safe DOM API usage at the browser level.
+
+## 2026-05-04 - Mitigate Clickjacking via JS Frame-busting
+
+**Vulnerability:** The application was vulnerable to clickjacking. While the codebase attempts to mitigate this by setting the `frame-ancestors` directive in the CSP `<meta>` tags, browsers ignore the `frame-ancestors` directive when it is delivered via `<meta>` tags.
+**Learning:** In pure static sites without backend or server configuration (like GitHub Pages where you can't easily configure HTTP headers), mitigating clickjacking requires a JS fallback since `<meta>` tag CSP isn't sufficient.
+**Prevention:** Add a JS frame-busting snippet (e.g. `if (window.self !== window.top) { window.top.location = window.self.location; }`) in an early-loading script. Note that modern browsers and attackers using `sandbox="allow-scripts"` may bypass this basic implementation, but it serves as an initial defense-in-depth layer.
