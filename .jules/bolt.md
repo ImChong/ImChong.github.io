@@ -58,3 +58,8 @@
 
 **Learning:** Scripts placed at the end of the `<body>` delay their discovery and downloading until the HTML parser reaches the bottom of the document. This can delay interactivity and script execution, especially on larger pages or slower networks.
 **Action:** Always load non-render-blocking scripts (like main application logic or UI interaction scripts) in the `<head>` using the `defer` attribute. This allows the browser to discover and download the script in parallel with HTML parsing, executing it only after the HTML is fully parsed, which improves the overall load performance and time to interactivity.
+
+## 2026-05-27 - Lazy Initialize Interactive DOM Components
+
+**Learning:** Creating complex DOM structures (like a lightbox overlay with controls) immediately upon script execution delays the main thread during the critical initial page load phase, even if those components are hidden and may never be used by the user.
+**Action:** Use lazy initialization for interactive components that are not immediately visible. Wait to build and attach their DOM elements until the first time the user actually interacts with them (e.g., clicking an image to open the lightbox). This reduces initial DOM size and main thread blocking time.
