@@ -63,3 +63,8 @@
 
 **Learning:** Creating complex DOM structures (like a lightbox overlay with controls) immediately upon script execution delays the main thread during the critical initial page load phase, even if those components are hidden and may never be used by the user.
 **Action:** Use lazy initialization for interactive components that are not immediately visible. Wait to build and attach their DOM elements until the first time the user actually interacts with them (e.g., clicking an image to open the lightbox). This reduces initial DOM size and main thread blocking time.
+
+## 2026-06-01 - Offload decoding of dynamically created images
+
+**Learning:** When images are dynamically created in JavaScript, such as high-resolution images loaded into a lightbox component, synchronous decoding can block the main thread and cause UI jank (e.g., freezing the page temporarily while the image renders).
+**Action:** Always add `img.decoding = 'async'` when creating an `img` element in JavaScript (`document.createElement('img')`) to instruct the browser to decode the image off the main thread, improving perceived performance and responsiveness.
