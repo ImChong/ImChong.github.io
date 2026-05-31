@@ -34,6 +34,7 @@
     lbImg.id = 'lb-img';
     lbImg.src = '';
     lbImg.alt = '';
+    lbImg.decoding = 'async'; // ⚡ Bolt Performance Optimization: Decode large lightbox images off the main thread
 
     const lbControls = document.createElement('div');
     lbControls.id = 'lb-controls';
