@@ -327,6 +327,18 @@ function setupSubpageTocMobileDrawer() {
 }
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
+function scrollToSection(targetId) {
+  const mode = root.getAttribute('data-lang-mode') || 'en';
+  const container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
+  const target = container ? container.querySelector('#' + CSS.escape(targetId)) : null;
+
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return true;
+  }
+  return false;
+}
+
 function bindNavClicks() {
   // ⚡ Bolt Performance Optimization: Use event delegation instead of attaching individual
   // click listeners to every main navigation link. This reduces memory footprint and
@@ -335,13 +347,15 @@ function bindNavClicks() {
     const link = e.target.closest('.main-nav a');
     if (link) {
       const targetId = link.getAttribute('href').slice(1);
-      const mode = root.getAttribute('data-lang-mode') || 'en';
-      const container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
-      const target = container ? container.querySelector('#' + CSS.escape(targetId)) : null;
+      if (scrollToSection(targetId)) e.preventDefault();
+      return;
+    }
 
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const siteTitle = e.target.closest('a.site-title[href="#hero"]');
+    if (siteTitle) {
+      e.preventDefault();
+      if (!scrollToSection('hero')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
   });
