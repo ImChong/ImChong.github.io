@@ -27,3 +27,9 @@
 **Vulnerability:** The application was vulnerable to clickjacking. While the codebase attempts to mitigate this by setting the `frame-ancestors` directive in the CSP `<meta>` tags, browsers ignore the `frame-ancestors` directive when it is delivered via `<meta>` tags.
 **Learning:** In pure static sites without backend or server configuration (like GitHub Pages where you can't easily configure HTTP headers), mitigating clickjacking requires a JS fallback since `<meta>` tag CSP isn't sufficient.
 **Prevention:** Add a JS frame-busting snippet (e.g. `if (window.self !== window.top) { window.top.location = window.self.location; }`) in an early-loading script. Note that modern browsers and attackers using `sandbox="allow-scripts"` may bypass this basic implementation, but it serves as an initial defense-in-depth layer.
+
+## 2026-06-06 - Strengthen CSP with worker-src and connect-src
+
+**Vulnerability:** The application is a static site without backend architectures, which limits its exposure, but the Content-Security-Policy (CSP) was missing explicit limits on external connections (`connect-src`) and web workers (`worker-src`). In the event of a successful XSS attack, malicious scripts could spawn web workers or exfiltrate data to external servers via `fetch` or `XMLHttpRequest`.
+**Learning:** Adding `connect-src 'self';` and `worker-src 'none';` to the CSP prevents scripts from connecting to third-party domains and blocks the creation of background web workers. This adds an important defense-in-depth layer against data exfiltration and crypto-mining payloads.
+**Prevention:** Always scope down CSP directives as restrictively as possible. For static sites that do not use web workers or make external API calls, `worker-src 'none';` and `connect-src 'self';` should be standard practice.
