@@ -1061,8 +1061,10 @@ ul {
 
   .page-toc {
     position: fixed;
-    top: 0;
-    bottom: calc(24px + 48px + 28px + env(safe-area-inset-bottom, 0px));
+
+    /* Robotics_Notebooks detail.html: small top breathing room above drawer */
+    top: calc(16px + env(safe-area-inset-top, 0px));
+    bottom: calc(96px + env(safe-area-inset-bottom, 0px));
     left: -300px;
     width: 280px;
     height: auto;
