@@ -888,7 +888,7 @@ ul {
     box-shadow var(--transition);
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1201px) {
   .container.subpage-detail-layout {
     display: grid;
     grid-template-columns: 0 minmax(0, 1fr);
@@ -1008,20 +1008,68 @@ ul {
   visibility: visible;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1200px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+
+  .container,
+  .container.subpage-detail-layout,
+  .subpage-detail-main {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  /* content-visibility: auto on .section traps position:fixed descendants inside
+     the section box (overlay then paints above the drawer). Match Humanoid mobile
+     drawer: portal-like fixed panel + backdrop above the header stack. */
+  .section:has(.subpage-detail-layout) {
+    content-visibility: visible;
+    contain: none;
+  }
+
+  body:has(.subpage-detail-layout) .site-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1200;
+  }
+
+  body:has(.subpage-detail-layout) main {
+    padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  }
+
   .container.subpage-detail-layout {
     display: block;
   }
 
+  .subpage-toc-overlay {
+    z-index: 1250;
+  }
+
+  .subpage-toc-toggle {
+    z-index: 1350;
+  }
+
   .page-toc {
     position: fixed;
-    top: calc(var(--header-h) + 12px);
-    bottom: 96px;
+    top: 0;
+    bottom: calc(24px + 48px + 28px + env(safe-area-inset-bottom, 0px));
     left: -300px;
     width: 280px;
+    height: auto;
+    max-height: none;
     margin: 0;
     max-width: none;
-    z-index: 1000;
+    z-index: 1300;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     border-radius: 0 16px 16px 0;

@@ -220,7 +220,7 @@ function setupSubpageTocMobileDrawer() {
 
   pageToc.id = mode === 'zh' ? 'subpage-page-toc-zh' : 'subpage-page-toc-en';
 
-  const mq = window.matchMedia('(max-width: 1199px)');
+  const mq = window.matchMedia('(max-width: 1200px)');
 
   const overlay = document.createElement('div');
   overlay.className = 'subpage-toc-overlay';
