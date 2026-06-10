@@ -26,6 +26,8 @@ renderSiteFooters();
 
 /* ─── Theme (Dark / Light) ──────────────────────────────── */
 function applyTheme(theme) {
+  // ⚡ Bolt Performance Optimization: Prevent redundant DOM attribute and synchronous localStorage writes.
+  if (root.getAttribute('data-theme') === theme) return;
   root.setAttribute('data-theme', theme);
   localStorage.setItem(THEME_KEY, theme);
 }
@@ -37,10 +39,10 @@ function toggleTheme() {
 
 (function initTheme() {
   const saved = localStorage.getItem(THEME_KEY);
-  if (saved === 'dark' || saved === 'light') {
-    applyTheme(saved);
-  } else {
-    applyTheme('dark');
+  // ⚡ Bolt Performance Optimization: theme-init.js already applies the theme before initial paint.
+  // We only need to initialize the localStorage fallback if it's missing, avoiding redundant applyTheme() calls.
+  if (!saved) {
+    localStorage.setItem(THEME_KEY, 'dark');
   }
 })();
 

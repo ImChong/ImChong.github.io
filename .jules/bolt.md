@@ -68,3 +68,8 @@
 
 **Learning:** When images are dynamically created in JavaScript, such as high-resolution images loaded into a lightbox component, synchronous decoding can block the main thread and cause UI jank (e.g., freezing the page temporarily while the image renders).
 **Action:** Always add `img.decoding = 'async'` when creating an `img` element in JavaScript (`document.createElement('img')`) to instruct the browser to decode the image off the main thread, improving perceived performance and responsiveness.
+
+## 2026-06-02 - Prevent Redundant Synchronous Storage Writes
+
+**Learning:** Initializing theme state with blocking inline scripts (`<head>`) to prevent light flash is common, but duplicating that initialization logic in deferred main scripts causes redundant, synchronous DOM attribute updates and `localStorage` writes on every page load. `localStorage.setItem` is a slow synchronous API that blocks the main thread.
+**Action:** When state is pre-initialized by a blocking script, deferred scripts should avoid redundant re-application of that state. Always add early returns in state application functions (e.g., `if (current === target) return;`) to prevent unnecessary DOM mutations and synchronous storage writes.
