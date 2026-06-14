@@ -67,6 +67,9 @@ let subpageTocCleanup = null;
 let subpageMobileCleanup = null;
 
 function applyLangMode(mode) {
+  // ⚡ Bolt Performance Optimization: Prevent redundant DOM attribute and synchronous localStorage writes.
+  if (root.getAttribute('data-lang-mode') === mode) return;
+
   root.setAttribute('data-lang-mode', mode);
   // Keep <html lang> in sync so screen readers, browser translation, and
   // search engines see the correct language for the visible content.
