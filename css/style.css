@@ -117,7 +117,8 @@ ul {
 .header-actions {
   margin-left: auto;
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 1rem;
   flex-shrink: 0;
 }
 
@@ -166,7 +167,7 @@ ul {
   background: none;
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 0.3rem 0.6rem;
+  padding: 0 0.6rem;
   cursor: pointer;
   font-size: 0.85rem;
   color: var(--text-muted);
@@ -175,7 +176,12 @@ ul {
     background var(--transition);
   line-height: 1;
   min-width: 36px;
+  height: 30px;
   text-align: center;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .theme-toggle:hover {
   border-color: var(--accent);
@@ -200,7 +206,7 @@ ul {
   background: none;
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 0.3rem 0.6rem;
+  padding: 0 0.6rem;
   cursor: pointer;
   font-size: 0.78rem;
   font-weight: 700;
@@ -212,7 +218,12 @@ ul {
   line-height: 1;
   user-select: none;
   min-width: 36px;
+  height: 30px;
   text-align: center;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .lang-toggle:hover {
   background: var(--accent);
@@ -577,6 +588,9 @@ ul {
   }
   .site-title {
     flex: 1;
+  }
+  .header-actions {
+    gap: 0.35rem;
   }
 
   .card-grid {
