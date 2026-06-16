@@ -129,6 +129,9 @@ function setupNavObserver() {
   const sections = container.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.main-nav a');
 
+  // ⚡ Bolt Performance Optimization: Skip IntersectionObserver instantiation on pages without main nav
+  if (navLinks.length === 0) return;
+
   navObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {

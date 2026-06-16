@@ -73,3 +73,8 @@
 
 **Learning:** Initializing theme state with blocking inline scripts (`<head>`) to prevent light flash is common, but duplicating that initialization logic in deferred main scripts causes redundant, synchronous DOM attribute updates and `localStorage` writes on every page load. `localStorage.setItem` is a slow synchronous API that blocks the main thread.
 **Action:** When state is pre-initialized by a blocking script, deferred scripts should avoid redundant re-application of that state. Always add early returns in state application functions (e.g., `if (current === target) return;`) to prevent unnecessary DOM mutations and synchronous storage writes.
+
+## 2026-06-03 - Prevent Unused IntersectionObserver Instantiation
+
+**Learning:** Shared application scripts often execute functions indiscriminately on all pages. Creating expensive objects like `IntersectionObserver` when the target DOM elements (e.g. navigation menus) don't even exist on the current page wastes memory and initialization time.
+**Action:** When writing code that interacts with the DOM in shared scripts, always use early returns (e.g. `if (elements.length === 0) return;`) before instantiating expensive objects or attaching heavy listeners.
