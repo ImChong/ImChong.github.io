@@ -772,6 +772,9 @@ ul {
   cursor: grab;
   transition: transform 0.2s;
   transform-origin: center;
+
+  /* ⚡ Bolt Performance Optimization: Hint browser to put image on own compositor layer for smoother zoom */
+  will-change: transform;
 }
 #lightbox img:active {
   cursor: grabbing;

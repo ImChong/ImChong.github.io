@@ -78,3 +78,8 @@
 
 **Learning:** Shared application scripts often execute functions indiscriminately on all pages. Creating expensive objects like `IntersectionObserver` when the target DOM elements (e.g. navigation menus) don't even exist on the current page wastes memory and initialization time.
 **Action:** When writing code that interacts with the DOM in shared scripts, always use early returns (e.g. `if (elements.length === 0) return;`) before instantiating expensive objects or attaching heavy listeners.
+
+## 2026-06-17 - GPU Acceleration for Image Zoom
+
+**Learning:** Rapidly scaling high-resolution images via DOM transformations (like mouse wheel zoom) causes constant rasterization and layout recalculations on the main thread, resulting in janky animations and dropped frames.
+**Action:** Use `will-change: transform` in CSS on elements undergoing high-frequency scale/translate changes to promote them to their own compositor layer, offloading the scaling work to the GPU for smooth 60fps performance. Use this technique sparingly to avoid excessive memory consumption.
