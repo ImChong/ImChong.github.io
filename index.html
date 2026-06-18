@@ -129,11 +129,13 @@
             </div>
             <div class="hero-photo">
               <div class="photo-img">
-                <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP). -->
+                <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP) and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
                 <img
                   src="img/profile.jpg"
                   alt="Chong Liu at Columbia University"
                   decoding="async"
+                  width="589"
+                  height="626"
                 />
               </div>
             </div>
@@ -763,8 +765,8 @@
             </div>
             <div class="hero-photo">
               <div class="photo-img">
-                <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP). -->
-                <img src="img/profile.jpg" alt="刘冲" decoding="async" />
+                <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP) and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
+                <img src="img/profile.jpg" alt="刘冲" decoding="async" width="589" height="626" />
               </div>
             </div>
           </div>

@@ -83,3 +83,8 @@
 
 **Learning:** Rapidly scaling high-resolution images via DOM transformations (like mouse wheel zoom) causes constant rasterization and layout recalculations on the main thread, resulting in janky animations and dropped frames.
 **Action:** Use `will-change: transform` in CSS on elements undergoing high-frequency scale/translate changes to promote them to their own compositor layer, offloading the scaling work to the GPU for smooth 60fps performance. Use this technique sparingly to avoid excessive memory consumption.
+
+## 2026-06-18 - Explicit Image Dimensions to prevent CLS
+
+**Learning:** Browsers cannot reserve space for images during layout without knowing their dimensions, causing Cumulative Layout Shift (CLS) when the image finally loads and pushes content around.
+**Action:** Always provide explicit `width` and `height` attributes on `<img>` tags (even if scaled with CSS) to ensure the browser can calculate the aspect ratio and reserve the correct space immediately during initial layout.
