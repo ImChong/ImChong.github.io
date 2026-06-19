@@ -18,7 +18,7 @@
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>"
     />
     <!-- ⚡ Bolt Performance Optimization: Preload the hero image to improve Largest Contentful Paint (LCP) -->
-    <link rel="preload" href="../img/family/marriage-1.jpg" as="image" />
+    <link rel="preload" href="../img/family/marriage-1.jpg" as="image" fetchpriority="high" />
     <script src="../js/theme-init.js"></script>
     <!-- ⚡ Bolt Performance Optimization: Load main script with defer to avoid blocking HTML parsing while fetching early -->
     <script src="../js/main.js" defer></script>
@@ -75,6 +75,7 @@
                 <div class="marriage-column">
                   <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP) and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
                   <img
+                    fetchpriority="high"
                     decoding="async"
                     width="1535"
                     height="2302"
@@ -149,6 +150,7 @@
                 <div class="marriage-column">
                   <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP) and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
                   <img
+                    fetchpriority="high"
                     decoding="async"
                     width="1535"
                     height="2302"

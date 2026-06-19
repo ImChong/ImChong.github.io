@@ -18,7 +18,7 @@
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>"
     />
     <!-- ⚡ Bolt Performance Optimization: Preload the hero image to improve Largest Contentful Paint (LCP) -->
-    <link rel="preload" href="hero.png" as="image" />
+    <link rel="preload" href="hero.png" as="image" fetchpriority="high" />
     <script src="../../js/theme-init.js"></script>
     <!-- ⚡ Bolt Performance Optimization: Load main script with defer to avoid blocking HTML parsing while fetching early -->
     <script src="../../js/main.js" defer></script>
@@ -101,6 +101,7 @@
                   <h3 id="toc-en-pcv-design">Design Overview</h3>
                   <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP) and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
                   <img
+                    fetchpriority="high"
                     decoding="async"
                     width="1585"
                     height="1190"
@@ -350,6 +351,7 @@
                   <h3 id="toc-zh-pcv-design">整体设计</h3>
                   <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode images off the main thread and improve First Contentful Paint (FCP) and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
                   <img
+                    fetchpriority="high"
                     decoding="async"
                     width="1585"
                     height="1190"

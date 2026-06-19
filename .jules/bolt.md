@@ -88,3 +88,8 @@
 
 **Learning:** Browsers cannot reserve space for images during layout without knowing their dimensions, causing Cumulative Layout Shift (CLS) when the image finally loads and pushes content around.
 **Action:** Always provide explicit `width` and `height` attributes on `<img>` tags (even if scaled with CSS) to ensure the browser can calculate the aspect ratio and reserve the correct space immediately during initial layout.
+
+## 2026-06-19 - Optimize LCP with fetchpriority High
+
+**Learning:** While <link rel="preload"> helps the parser discover critical hero images earlier, adding `fetchpriority="high"` explicitly instructs the browser to prioritize fetching these assets over other network requests, resulting in significantly faster Largest Contentful Paint (LCP) times.
+**Action:** Always ensure that critical above-the-fold hero images and their corresponding preload links include the `fetchpriority="high"` attribute to maximize LCP performance.
