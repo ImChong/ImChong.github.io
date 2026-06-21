@@ -93,3 +93,8 @@
 
 **Learning:** While <link rel="preload"> helps the parser discover critical hero images earlier, adding `fetchpriority="high"` explicitly instructs the browser to prioritize fetching these assets over other network requests, resulting in significantly faster Largest Contentful Paint (LCP) times.
 **Action:** Always ensure that critical above-the-fold hero images and their corresponding preload links include the `fetchpriority="high"` attribute to maximize LCP performance.
+
+## 2026-06-25 - Prevent Synchronous LocalStorage Access on Unrelated Pages
+
+**Learning:** Reading from `localStorage` is a synchronous, blocking operation. Shared functions that initialize state from `localStorage` often run indiscriminately on every page. This needlessly blocks the main thread on pages where the related UI elements do not even exist.
+**Action:** Always add an early return that checks for the existence of the target DOM elements (e.g., `if (!btn) return;`) _before_ executing `localStorage.getItem()`. This avoids useless, main-thread blocking synchronous I/O operations.
