@@ -409,16 +409,17 @@ setupPubToggle('pubToggleBtnZh', 'zh');
 
 /* Also show non-robotics cards on load if already expanded via localStorage */
 (function initPubsState() {
+  const enBtn = document.getElementById('pubToggleBtn');
+  const zhBtn = document.getElementById('pubToggleBtnZh');
+
+  // ⚡ Bolt Performance Optimization: Only read from localStorage if the target elements exist.
+  // This prevents blocking the main thread with synchronous I/O on pages where publications don't exist.
+  if (!enBtn && !zhBtn) return;
+
   const savedExpanded = localStorage.getItem(PUBS_EXPANDED_KEY);
   if (savedExpanded === 'true') {
-    const enBtn = document.getElementById('pubToggleBtn');
-    const zhBtn = document.getElementById('pubToggleBtnZh');
-    const enOthers = document.querySelectorAll(
-      '#non-robotics-pubs .publication-card[data-related="other"]'
-    );
-    const zhOthers = document.querySelectorAll(
-      '#non-robotics-pubs-zh .publication-card[data-related="other"]'
-    );
+    const enOthers = document.querySelectorAll('#lang-en .publication-card[data-related="other"]');
+    const zhOthers = document.querySelectorAll('#lang-zh .publication-card[data-related="other"]');
     if (enBtn) {
       enBtn.setAttribute('aria-expanded', 'true');
       enBtn.textContent = 'Hide non-robotics publications ▴';
