@@ -132,18 +132,35 @@ function setupNavObserver() {
   // ⚡ Bolt Performance Optimization: Skip IntersectionObserver instantiation on pages without main nav
   if (navLinks.length === 0) return;
 
+  const linkMap = new Map();
+  navLinks.forEach((link) => {
+    const id = link.getAttribute('href').slice(1);
+    if (id) linkMap.set(id, link);
+  });
+
+  let activeNavId = null;
+
   navObserver = new IntersectionObserver(
     (entries) => {
+      let isChanged = false;
+      let newActiveId = activeNavId;
+
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const activeId = entry.target.id;
-          navLinks.forEach((link) => {
-            const href = link.getAttribute('href').slice(1);
-            if (href === activeId) link.classList.add('active');
-            else link.classList.remove('active');
-          });
+          newActiveId = entry.target.id;
+          isChanged = true;
         }
       });
+
+      if (isChanged && newActiveId !== activeNavId) {
+        if (activeNavId && linkMap.has(activeNavId)) {
+          linkMap.get(activeNavId).classList.remove('active');
+        }
+        if (newActiveId && linkMap.has(newActiveId)) {
+          linkMap.get(newActiveId).classList.add('active');
+        }
+        activeNavId = newActiveId;
+      }
     },
     { rootMargin: '-80px 0px -40% 0px' }
   );
@@ -183,19 +200,36 @@ function setupSubpageTocObserver() {
 
   // ⚡ Bolt Performance Optimization: Replace scroll listener and getBoundingClientRect
   // with IntersectionObserver to eliminate main-thread layout thrashing.
+  // We use an O(1) Hash Map tracking pattern to prevent layout thrashing and redundant O(N) DOM update loops.
+  const sectionMap = new Map();
+  sections.forEach((s) => sectionMap.set(s.id, s.link));
+  let currentActiveId = null;
+
   const observer = new IntersectionObserver(
     (entries) => {
+      let isChanged = false;
+      let newActiveId = currentActiveId;
+
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const activeId = entry.target.id;
-          sections.forEach((section) => {
-            const on = section.id === activeId;
-            section.link.classList.toggle('active', on);
-            if (on) section.link.setAttribute('aria-current', 'location');
-            else section.link.removeAttribute('aria-current');
-          });
+          newActiveId = entry.target.id;
+          isChanged = true;
         }
       });
+
+      if (isChanged && newActiveId !== currentActiveId) {
+        if (currentActiveId && sectionMap.has(currentActiveId)) {
+          const prevLink = sectionMap.get(currentActiveId);
+          prevLink.classList.remove('active');
+          prevLink.removeAttribute('aria-current');
+        }
+        if (newActiveId && sectionMap.has(newActiveId)) {
+          const newLink = sectionMap.get(newActiveId);
+          newLink.classList.add('active');
+          newLink.setAttribute('aria-current', 'location');
+        }
+        currentActiveId = newActiveId;
+      }
     },
     { rootMargin: '-10% 0px -40% 0px' }
   );

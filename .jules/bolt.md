@@ -98,3 +98,8 @@
 
 **Learning:** Reading from `localStorage` is a synchronous, blocking operation. Shared functions that initialize state from `localStorage` often run indiscriminately on every page. This needlessly blocks the main thread on pages where the related UI elements do not even exist.
 **Action:** Always add an early return that checks for the existence of the target DOM elements (e.g., `if (!btn) return;`) _before_ executing `localStorage.getItem()`. This avoids useless, main-thread blocking synchronous I/O operations.
+
+## 2026-06-25 - Prevent O(N) DOM Updates in IntersectionObserver
+
+**Learning:** Running an internal $O(N)$ loop to update DOM classes on a list of elements during every intersection callback causes layout thrashing and slows down rendering. High-frequency callbacks should only mutate DOM for elements whose state actually changes.
+**Action:** Replace internal $O(N)$ DOM update loops inside `IntersectionObserver` callbacks with an $O(1)$ Hash Map tracking pattern. Pre-map the element references, track the `activeId`, and only modify the `classList` of the previously active and newly active elements.
