@@ -33,3 +33,9 @@
 **Vulnerability:** The application is a static site without backend architectures, which limits its exposure, but the Content-Security-Policy (CSP) was missing explicit limits on external connections (`connect-src`) and web workers (`worker-src`). In the event of a successful XSS attack, malicious scripts could spawn web workers or exfiltrate data to external servers via `fetch` or `XMLHttpRequest`.
 **Learning:** Adding `connect-src 'self';` and `worker-src 'none';` to the CSP prevents scripts from connecting to third-party domains and blocks the creation of background web workers. This adds an important defense-in-depth layer against data exfiltration and crypto-mining payloads.
 **Prevention:** Always scope down CSP directives as restrictively as possible. For static sites that do not use web workers or make external API calls, `worker-src 'none';` and `connect-src 'self';` should be standard practice.
+
+## 2026-05-15 - Robust Clickjacking Mitigation Bypass
+
+**Vulnerability:** The existing frame-busting script `window.top.location = window.self.location` could be bypassed if an attacker embedded the site in an iframe with `sandbox="allow-scripts"`, which blocks top-level navigation while still rendering the page.
+**Learning:** On static sites where `frame-ancestors` CSP cannot be enforced via HTTP headers, simple frame-busting navigation is insufficient. The page must be explicitly hidden if the navigation is blocked.
+**Prevention:** When using JavaScript frame-busting, always hide the `document.documentElement` (`style.display = 'none'`) inside the frame check to ensure the content remains invisible if the attacker suppresses the navigation attempt.
