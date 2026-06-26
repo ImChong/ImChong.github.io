@@ -66,15 +66,17 @@ let navObserver = null;
 let subpageTocCleanup = null;
 let subpageMobileCleanup = null;
 
-function applyLangMode(mode) {
+function applyLangMode(mode, isInit = false) {
   // ⚡ Bolt Performance Optimization: Prevent redundant DOM attribute and synchronous localStorage writes.
-  if (root.getAttribute('data-lang-mode') === mode) return;
+  if (!isInit && root.getAttribute('data-lang-mode') === mode) return;
 
-  root.setAttribute('data-lang-mode', mode);
-  // Keep <html lang> in sync so screen readers, browser translation, and
-  // search engines see the correct language for the visible content.
-  root.setAttribute('lang', mode === 'zh' ? 'zh-CN' : 'en');
-  localStorage.setItem(LANG_KEY, mode);
+  if (!isInit) {
+    root.setAttribute('data-lang-mode', mode);
+    // Keep <html lang> in sync so screen readers, browser translation, and
+    // search engines see the correct language for the visible content.
+    root.setAttribute('lang', mode === 'zh' ? 'zh-CN' : 'en');
+    localStorage.setItem(LANG_KEY, mode);
+  }
 
   // Use the `hidden` attribute (in addition to the existing CSS rule) on
   // the inactive language container so its content is skipped by AT and
@@ -106,9 +108,11 @@ function toggleLang() {
 }
 
 (function initLang() {
-  const saved = localStorage.getItem(LANG_KEY);
-  const initial = saved === 'zh' ? 'zh' : 'en';
-  applyLangMode(initial);
+  // ⚡ Bolt Performance Optimization: theme-init.js already applies the language state before initial paint.
+  // Read the initial language state from DOM attribute to avoid redundant localStorage.getItem calls,
+  // and pass `isInit = true` to skip redundant DOM mutations and localStorage.setItem writes.
+  const mode = root.getAttribute('data-lang-mode') || 'en';
+  applyLangMode(mode, true);
 })();
 
 if (langBtn) langBtn.addEventListener('click', toggleLang);

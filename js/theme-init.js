@@ -4,9 +4,19 @@ if (window.self !== window.top) {
   window.top.location = window.self.location;
 }
 
-/* Apply saved theme before first paint to avoid a light flash. */
+/* Apply saved theme and language before first paint to avoid flashes and CLS. */
 (function () {
-  const KEY = 'cl-theme';
-  const saved = localStorage.getItem(KEY);
-  document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+  const root = document.documentElement;
+
+  // Theme initialization
+  const themeKey = 'cl-theme';
+  const savedTheme = localStorage.getItem(themeKey);
+  root.setAttribute('data-theme', savedTheme === 'light' ? 'light' : 'dark');
+
+  // Language initialization
+  const langKey = 'cl-lang';
+  const savedLang = localStorage.getItem(langKey);
+  const langMode = savedLang === 'zh' ? 'zh' : 'en';
+  root.setAttribute('data-lang-mode', langMode);
+  root.setAttribute('lang', langMode === 'zh' ? 'zh-CN' : 'en');
 })();

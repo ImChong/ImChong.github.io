@@ -103,3 +103,8 @@
 
 **Learning:** Running an internal $O(N)$ loop to update DOM classes on a list of elements during every intersection callback causes layout thrashing and slows down rendering. High-frequency callbacks should only mutate DOM for elements whose state actually changes.
 **Action:** Replace internal $O(N)$ DOM update loops inside `IntersectionObserver` callbacks with an $O(1)$ Hash Map tracking pattern. Pre-map the element references, track the `activeId`, and only modify the `classList` of the previously active and newly active elements.
+
+## 2026-06-25 - Prevent Language Flash and Redundant Synchronous I/O
+
+**Learning:** When language mode state is initialized in `js/main.js` which is deferred, the browser will render the default language (English) first, resulting in a flash of incorrect content (CLS and FOUC) for users who have a different language saved (like Chinese). Additionally, applying this state in a deferred script often involves repeating synchronous `localStorage` sets that block the main thread unnecessarily.
+**Action:** Always extract critical visual state initialization (like Theme or Language modes) into a blocking, inline `<head>` script (`theme-init.js`) to set `data-lang-mode` immediately. Update deferred scripts (`main.js`) to read this state directly from the DOM rather than performing redundant, synchronous `localStorage.getItem` and `localStorage.setItem` calls during initialization.
