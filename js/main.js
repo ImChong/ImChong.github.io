@@ -37,15 +37,7 @@ function toggleTheme() {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 }
 
-(function initTheme() {
-  const saved = localStorage.getItem(THEME_KEY);
-  // ⚡ Bolt Performance Optimization: theme-init.js already applies the theme before initial paint.
-  // We only need to initialize the localStorage fallback if it's missing, avoiding redundant applyTheme() calls.
-  if (!saved) {
-    localStorage.setItem(THEME_KEY, 'dark');
-  }
-})();
-
+// ⚡ Bolt Performance Optimization: Removed initTheme IIFE to eliminate redundant synchronous localStorage I/O on page load. theme-init.js handles default theme assignment.
 const themeBtn = document.getElementById('themeToggle');
 if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
 document.addEventListener('keydown', (e) => {
