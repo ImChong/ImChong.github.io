@@ -16,6 +16,7 @@ export default [
       },
     },
     rules: {
+      'no-eval': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
       'no-unused-vars': ['warn', { args: 'none' }],
