@@ -108,3 +108,8 @@
 
 **Learning:** When language mode state is initialized in `js/main.js` which is deferred, the browser will render the default language (English) first, resulting in a flash of incorrect content (CLS and FOUC) for users who have a different language saved (like Chinese). Additionally, applying this state in a deferred script often involves repeating synchronous `localStorage` sets that block the main thread unnecessarily.
 **Action:** Always extract critical visual state initialization (like Theme or Language modes) into a blocking, inline `<head>` script (`theme-init.js`) to set `data-lang-mode` immediately. Update deferred scripts (`main.js`) to read this state directly from the DOM rather than performing redundant, synchronous `localStorage.getItem` and `localStorage.setItem` calls during initialization.
+
+## 2026-06-30 - GPU Acceleration for Position Animation
+
+**Learning:** Animating layout properties like `top`, `left`, `width`, or `height` (e.g. for an off-canvas drawer) triggers a layout recalculation and paint on the main thread for every frame of the animation, causing layout thrashing and jank.
+**Action:** Always animate the `transform` property (e.g. `transform: translateX()` instead of `left`) or `opacity` for UI elements like drawers or modals. These properties can be handled entirely by the GPU compositor, ensuring smooth 60fps animations without blocking the main thread.

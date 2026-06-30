@@ -1134,7 +1134,10 @@ ul {
     /* Robotics_Notebooks detail.html: small top breathing room above drawer */
     top: calc(16px + env(safe-area-inset-top, 0px));
     bottom: calc(96px + env(safe-area-inset-bottom, 0px));
-    left: -300px;
+    left: 0;
+
+    /* ⚡ Bolt Performance Optimization: Animate transform instead of left to avoid main-thread layout thrashing */
+    transform: translateX(-100%);
     width: 280px;
     height: auto;
     max-height: none;
@@ -1146,14 +1149,14 @@ ul {
     border-radius: 0 16px 16px 0;
     box-shadow: 2px 0 16px rgba(0, 0, 0, 0.45);
     transition:
-      left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       background var(--transition),
       border-color var(--transition),
       box-shadow var(--transition);
   }
 
   .page-toc.is-open {
-    left: 0;
+    transform: translateX(0);
   }
 
   [data-theme='light'] .page-toc {

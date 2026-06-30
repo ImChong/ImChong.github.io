@@ -1,6 +1,4 @@
-127.0.0.1 - - [26/Jun/2026 15:29:13] "GET /index.html HTTP/1.1" 200 -
-127.0.0.1 - - [26/Jun/2026 15:29:13] "GET /img/profile.jpg HTTP/1.1" 200 -
-127.0.0.1 - - [26/Jun/2026 15:29:13] "GET /js/theme-init.js HTTP/1.1" 200 -
-127.0.0.1 - - [26/Jun/2026 15:29:13] "GET /js/main.js HTTP/1.1" 200 -
-127.0.0.1 - - [26/Jun/2026 15:29:13] "GET /css/style.css HTTP/1.1" 200 -
-127.0.0.1 - - [26/Jun/2026 15:29:13] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [30/Jun/2026 15:14:00] "GET /experience/bridgedp.html HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 15:14:00] "GET /js/theme-init.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 15:14:00] "GET /js/main.js HTTP/1.1" 200 -
+127.0.0.1 - - [30/Jun/2026 15:14:00] "GET /css/style.css HTTP/1.1" 200 -
