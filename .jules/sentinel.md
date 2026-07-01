@@ -39,3 +39,9 @@
 **Vulnerability:** The existing frame-busting script `window.top.location = window.self.location` could be bypassed if an attacker embedded the site in an iframe with `sandbox="allow-scripts"`, which blocks top-level navigation while still rendering the page.
 **Learning:** On static sites where `frame-ancestors` CSP cannot be enforced via HTTP headers, simple frame-busting navigation is insufficient. The page must be explicitly hidden if the navigation is blocked.
 **Prevention:** When using JavaScript frame-busting, always hide the `document.documentElement` (`style.display = 'none'`) inside the frame check to ensure the content remains invisible if the attacker suppresses the navigation attempt.
+
+## 2026-07-01 - Enhance CSP with explicit media-src and manifest-src
+
+**Vulnerability:** The codebase relied on `default-src 'self'` for media and manifest origins, which is acceptable but missing explicit boundaries for defense in depth.
+**Learning:** Explicitly setting `media-src 'self'` and `manifest-src 'self'` ensures that if `default-src` is ever loosened, these specific resource types remain secure. It is a good practice to declare explicit directives for all expected asset types.
+**Prevention:** Include `media-src` and `manifest-src` in CSP along with other specific directives.
