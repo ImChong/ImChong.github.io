@@ -842,13 +842,16 @@ ul {
 }
 .marriage-img {
   width: 100%;
+  height: auto;
   border-radius: 8px;
   box-shadow: var(--shadow-md);
   transition: transform 0.3s ease;
   cursor: zoom-in;
 }
 .marriage-img.fill {
-  height: 100%;
+  flex: 1;
+  min-height: 0;
+  height: auto;
   object-fit: cover;
 }
 .marriage-img:hover {
