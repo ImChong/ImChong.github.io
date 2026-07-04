@@ -1038,13 +1038,13 @@ ul {
 
 /* Mobile: TOC drawer + FAB (toggle/overlay injected by main.js on subpages with TOC) */
 .subpage-toc-toggle {
+  display: none;
   position: fixed;
   bottom: 24px;
   left: 20px;
   width: 48px;
   height: 48px;
   padding: 0;
-  display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -1056,6 +1056,10 @@ ul {
   transition:
     transform var(--transition),
     background var(--transition);
+}
+
+.subpage-toc-toggle[hidden] {
+  display: none !important;
 }
 
 .subpage-toc-toggle:active {
@@ -1128,6 +1132,7 @@ ul {
   }
 
   .subpage-toc-toggle {
+    display: flex;
     z-index: 1350;
   }
 
