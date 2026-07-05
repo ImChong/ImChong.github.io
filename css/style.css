@@ -1103,14 +1103,6 @@ ul {
     overflow-x: clip;
   }
 
-  /* content-visibility: auto on .section traps position:fixed descendants inside
-     the section box (overlay then paints above the drawer). Match Humanoid mobile
-     drawer: portal-like fixed panel + backdrop above the header stack. */
-  .section:has(.subpage-detail-layout) {
-    content-visibility: visible;
-    contain: none;
-  }
-
   body:has(.subpage-detail-layout) .site-header {
     position: fixed;
     top: 0;
@@ -1125,6 +1117,16 @@ ul {
 
   .container.subpage-detail-layout {
     display: block;
+  }
+}
+
+/* TOC drawer + FAB: narrow viewports */
+@media (max-width: 1200px) {
+  /* content-visibility: auto on .section traps position:fixed descendants inside
+     the section box (overlay then paints above the drawer). */
+  .section:has(.subpage-detail-layout) {
+    content-visibility: visible;
+    contain: none;
   }
 
   .subpage-toc-overlay {
@@ -1170,4 +1172,50 @@ ul {
   [data-theme='light'] .page-toc {
     box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
   }
+}
+
+/* Same drawer treatment when the left-margin TOC is clipped on wider viewports */
+body.subpage-toc-drawer-mode .section:has(.subpage-detail-layout) {
+  content-visibility: visible;
+  contain: none;
+}
+
+body.subpage-toc-drawer-mode .subpage-toc-overlay {
+  z-index: 1250;
+}
+
+body.subpage-toc-drawer-mode .subpage-toc-toggle {
+  display: flex;
+  z-index: 1350;
+}
+
+body.subpage-toc-drawer-mode .page-toc {
+  position: fixed;
+  top: calc(16px + env(safe-area-inset-top, 0px));
+  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  left: 0;
+  transform: translateX(-100%);
+  width: 280px;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  max-width: none;
+  z-index: 1300;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.45);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+body.subpage-toc-drawer-mode .page-toc.is-open {
+  transform: translateX(0);
+}
+
+[data-theme='light'] body.subpage-toc-drawer-mode .page-toc {
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
 }

@@ -259,6 +259,8 @@ function setupSubpageTocMobileDrawer() {
   pageToc.id = mode === 'zh' ? 'subpage-page-toc-zh' : 'subpage-page-toc-en';
 
   const mq = window.matchMedia('(max-width: 1200px)');
+  const TOC_LEFT_OUTSET = 300; // matches .page-toc width (260px) + margin gap (40px)
+  const CONTAINER_PAD = 24;
 
   const overlay = document.createElement('div');
   overlay.className = 'subpage-toc-overlay';
@@ -307,8 +309,17 @@ function setupSubpageTocMobileDrawer() {
     document.body.style.overflow = 'hidden';
   };
 
-  const syncMq = () => {
-    if (!mq.matches) {
+  const isTocClipped = () => {
+    const layoutRect = layout.getBoundingClientRect();
+    return layoutRect.left + CONTAINER_PAD - TOC_LEFT_OUTSET < 0;
+  };
+
+  const shouldUseDrawer = () => mq.matches || isTocClipped();
+
+  const syncDrawer = () => {
+    const useDrawer = shouldUseDrawer();
+    document.body.classList.toggle('subpage-toc-drawer-mode', useDrawer && !mq.matches);
+    if (!useDrawer) {
       close();
       toggle.hidden = true;
     } else {
@@ -346,18 +357,23 @@ function setupSubpageTocMobileDrawer() {
     'click',
     (e) => {
       const link = e.target.closest('a[href^="#"]');
-      if (link && mq.matches) close();
+      if (link && shouldUseDrawer()) close();
     },
     { signal }
   );
 
-  mq.addEventListener('change', syncMq, { signal });
-  syncMq();
+  mq.addEventListener('change', syncDrawer, { signal });
+  window.addEventListener('resize', syncDrawer, { signal });
+  const resizeObserver = new ResizeObserver(syncDrawer);
+  resizeObserver.observe(layout);
+  syncDrawer();
 
   subpageMobileCleanup = () => {
     ac.abort();
+    resizeObserver.disconnect();
     close();
     pageToc.classList.remove('is-open');
+    document.body.classList.remove('subpage-toc-drawer-mode');
     toggle.remove();
     overlay.remove();
     document.body.style.overflow = '';
