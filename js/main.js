@@ -363,7 +363,24 @@ function setupSubpageTocMobileDrawer() {
   );
 
   mq.addEventListener('change', syncDrawer, { signal });
-  window.addEventListener('resize', syncDrawer, { signal });
+
+  // ⚡ Bolt Performance Optimization: Throttle frequent 'resize' events with requestAnimationFrame
+  // to prevent DOM update thrashing and reduce main-thread blocking when window is resized.
+  let resizeTicking = false;
+  window.addEventListener(
+    'resize',
+    () => {
+      if (!resizeTicking) {
+        window.requestAnimationFrame(() => {
+          syncDrawer();
+          resizeTicking = false;
+        });
+        resizeTicking = true;
+      }
+    },
+    { signal }
+  );
+
   const resizeObserver = new ResizeObserver(syncDrawer);
   resizeObserver.observe(layout);
   syncDrawer();

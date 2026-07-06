@@ -113,3 +113,8 @@
 
 **Learning:** Animating layout properties like `top`, `left`, `width`, or `height` (e.g. for an off-canvas drawer) triggers a layout recalculation and paint on the main thread for every frame of the animation, causing layout thrashing and jank.
 **Action:** Always animate the `transform` property (e.g. `transform: translateX()` instead of `left`) or `opacity` for UI elements like drawers or modals. These properties can be handled entirely by the GPU compositor, ensuring smooth 60fps animations without blocking the main thread.
+
+## 2026-07-05 - Throttle resize event to prevent layout thrashing
+
+**Learning:** Frequent window resize events can rapidly trigger `syncDrawer` which calculates bounding rects and mutates DOM class names, causing main-thread layout thrashing and jank during resize operations.
+**Action:** Throttle the `resize` event listener using `requestAnimationFrame` with a ticking flag to ensure the DOM update callback is executed at most once per display frame, preserving UI smoothness.
