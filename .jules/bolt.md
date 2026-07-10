@@ -118,3 +118,8 @@
 
 **Learning:** Frequent window resize events can rapidly trigger `syncDrawer` which calculates bounding rects and mutates DOM class names, causing main-thread layout thrashing and jank during resize operations.
 **Action:** Throttle the `resize` event listener using `requestAnimationFrame` with a ticking flag to ensure the DOM update callback is executed at most once per display frame, preserving UI smoothness.
+
+## 2026-07-20 - Prevent CSS Transition Thrashing on JS-Driven Animations
+
+**Learning:** When a CSS property (like `transform`) has an active `transition` (e.g., `transition: transform 0.2s`), updating that property continuously via JavaScript at 60fps (e.g., inside a `wheel` or `mousemove` event throttled by `requestAnimationFrame`) causes severe transition thrashing. The browser constantly cancels and restarts the 200ms transition every 16ms, causing visual lag, rubber-banding, and high CPU overhead as it interpolates between rapidly shifting target values.
+**Action:** Always temporarily disable CSS transitions (e.g., `element.style.transition = 'none'`) during continuous JS-driven state updates, and restore them via a `setTimeout` when the continuous interaction ends. This allows JS to explicitly control the frame-by-frame rendering without the browser's CSS engine fighting the updates.
