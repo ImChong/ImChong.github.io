@@ -5,6 +5,7 @@
 (function () {
   let lb, lbImg, zoomLabel;
   let isBuilt = false;
+  let wheelTimeout;
 
   /* Zoom state */
   const STEP = 0.25,
@@ -67,20 +68,28 @@
     document.body.appendChild(lb);
 
     /* Controls */
+    function resetTransition() {
+      clearTimeout(wheelTimeout);
+      lbImg.style.transition = '';
+    }
+
     lbClose.addEventListener('click', closeLb);
     lbClose.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') closeLb();
     });
     btnZoomIn.addEventListener('click', (e) => {
       e.stopPropagation();
+      resetTransition();
       setScale(scale + STEP);
     });
     btnZoomOut.addEventListener('click', (e) => {
       e.stopPropagation();
+      resetTransition();
       setScale(scale - STEP);
     });
     btnZoomReset.addEventListener('click', (e) => {
       e.stopPropagation();
+      resetTransition();
       setScale(1);
     });
     lb.addEventListener('click', (e) => {
@@ -90,11 +99,17 @@
     let ticking = false;
     // ⚡ Bolt Performance Optimization: Throttle frequent 'wheel' events with requestAnimationFrame
     // to prevent DOM update thrashing and reduce main-thread blocking when zooming.
+    // Additionally, temporarily disable CSS transitions during continuous JS-driven state updates
+    // to prevent transition thrashing (browser canceling/restarting transition every frame).
     lb.addEventListener(
       'wheel',
       (e) => {
         if (!lb.classList.contains('active')) return;
         e.preventDefault();
+
+        clearTimeout(wheelTimeout);
+        lbImg.style.transition = 'none';
+
         if (!ticking) {
           window.requestAnimationFrame(() => {
             setScale(scale + (e.deltaY < 0 ? STEP : -STEP));
@@ -102,6 +117,10 @@
           });
           ticking = true;
         }
+
+        wheelTimeout = setTimeout(() => {
+          lbImg.style.transition = '';
+        }, 150);
       },
       { passive: false }
     );
@@ -125,6 +144,8 @@
 
   function closeLb() {
     if (!isBuilt) return;
+    clearTimeout(wheelTimeout);
+    lbImg.style.transition = '';
     lb.classList.remove('active');
     document.body.style.overflow = '';
   }
