@@ -17,6 +17,9 @@ export default [
     },
     rules: {
       'no-eval': 'error',
+      'no-implied-eval': 'error',
+      'no-new-func': 'error',
+      'no-script-url': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
       'no-unused-vars': ['warn', { args: 'none' }],

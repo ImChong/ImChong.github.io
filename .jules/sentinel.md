@@ -45,3 +45,9 @@
 **Vulnerability:** The codebase relied on `default-src 'self'` for media and manifest origins, which is acceptable but missing explicit boundaries for defense in depth.
 **Learning:** Explicitly setting `media-src 'self'` and `manifest-src 'self'` ensures that if `default-src` is ever loosened, these specific resource types remain secure. It is a good practice to declare explicit directives for all expected asset types.
 **Prevention:** Include `media-src` and `manifest-src` in CSP along with other specific directives.
+
+## 2025-10-18 - Enforce Strict JavaScript Code Execution Policies
+
+**Vulnerability:** The application was not proactively restricting alternative JavaScript code execution sinks (such as `setTimeout` with strings, the `Function` constructor, and `javascript:` URIs) which could be used as DOM-based XSS vectors if dynamic string evaluation is introduced.
+**Learning:** While the primary `no-eval` rule and innerHTML restrictions were in place, developers can inadvertently evaluate unsanitized string input using implied eval methods (`setTimeout("...", ...)`), creating new functions dynamically (`new Function("...")`), or assigning `javascript:` URIs to link targets.
+**Prevention:** Enhance defense-in-depth by statically analyzing the codebase and explicitly forbidding these dangerous patterns. Added `'no-implied-eval': 'error'`, `'no-new-func': 'error'`, and `'no-script-url': 'error'` to the ESLint configuration to reject these constructs during the CI process.
