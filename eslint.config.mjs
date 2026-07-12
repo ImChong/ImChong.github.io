@@ -31,6 +31,22 @@ export default [
           message:
             'Using innerHTML is forbidden due to XSS risks. Use textContent, document.createElement, and appendChild instead.',
         },
+        {
+          selector: "Identifier[name='outerHTML']",
+          message:
+            'Using outerHTML is forbidden due to XSS risks. Use textContent, document.createElement, and appendChild instead.',
+        },
+        {
+          selector: "Identifier[name='insertAdjacentHTML']",
+          message:
+            'Using insertAdjacentHTML is forbidden due to XSS risks. Use textContent, document.createElement, and appendChild instead.',
+        },
+        {
+          selector:
+            "CallExpression[callee.object.name='document'][callee.property.name=/^(write|writeln)$/]",
+          message:
+            'Using document.write or document.writeln is forbidden due to XSS risks. Use safer DOM manipulation APIs instead.',
+        },
       ],
     },
   },
