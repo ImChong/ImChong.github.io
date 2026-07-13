@@ -1,8 +1,11 @@
 /* 🛡️ Sentinel: Mitigate Clickjacking */
 /* Since frame-ancestors CSP directive is ignored in <meta> tags, use frame-busting JS */
-if (window.self !== window.top) {
-  window.top.location = window.self.location;
-  // Prevent rendering if top.location is blocked (e.g., via sandbox="allow-scripts")
+try {
+  if (window.self !== window.top) {
+    document.documentElement.style.display = 'none';
+    window.top.location = window.self.location;
+  }
+} catch {
   document.documentElement.style.display = 'none';
 }
 
