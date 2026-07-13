@@ -51,3 +51,9 @@
 **Vulnerability:** The application was not proactively restricting alternative JavaScript code execution sinks (such as `setTimeout` with strings, the `Function` constructor, and `javascript:` URIs) which could be used as DOM-based XSS vectors if dynamic string evaluation is introduced.
 **Learning:** While the primary `no-eval` rule and innerHTML restrictions were in place, developers can inadvertently evaluate unsanitized string input using implied eval methods (`setTimeout("...", ...)`), creating new functions dynamically (`new Function("...")`), or assigning `javascript:` URIs to link targets.
 **Prevention:** Enhance defense-in-depth by statically analyzing the codebase and explicitly forbidding these dangerous patterns. Added `'no-implied-eval': 'error'`, `'no-new-func': 'error'`, and `'no-script-url': 'error'` to the ESLint configuration to reject these constructs during the CI process.
+
+## 2024-05-18 - Fix Clickjacking Frame-Busting Bypass
+
+**Vulnerability:** The existing frame-busting script (`if (window.self !== window.top) window.top.location = window.self.location;`) was vulnerable to bypass when embedded in a sandboxed iframe without `allow-top-navigation`. Accessing `window.top.location` throws a `SecurityError` due to cross-origin or sandbox restrictions, halting script execution before the document is hidden.
+**Learning:** `SecurityError`s from cross-origin/sandbox access stop script execution, which can silently bypass security controls following the access attempt.
+**Prevention:** When writing frame-busting scripts for static sites where headers aren't available, always hide the document _before_ attempting top-level navigation, and wrap the logic in a `try...catch` block to securely handle thrown exceptions and keep the document hidden in the `catch` block.
