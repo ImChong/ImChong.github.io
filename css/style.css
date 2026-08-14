@@ -471,6 +471,13 @@ ul {
   text-decoration: none;
   transition: color 0.2s;
 }
+.project-tab-icon {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.2em;
+  vertical-align: -0.18em;
+}
 .project-link:hover {
   color: var(--accent-hover);
 }
