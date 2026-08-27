@@ -679,13 +679,15 @@ ul {
 .home-nav-fab {
   display: none;
   position: fixed;
-  right: 16px;
+
+  /* Bottom-left, matching the subpage TOC drawer button. */
+  left: 16px;
   bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   z-index: 1350;
 
   /* Button sits first in the DOM for tab order; reverse puts the menu on top. */
   flex-direction: column-reverse;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 12px;
 }
 
@@ -749,7 +751,7 @@ ul {
   opacity: 0;
   visibility: hidden;
   transform: translateY(8px) scale(0.96);
-  transform-origin: bottom right;
+  transform-origin: bottom left;
   transition:
     opacity 0.2s ease,
     transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
