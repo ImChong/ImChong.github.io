@@ -579,7 +579,7 @@ ul {
 }
 
 /* Header: keep title + actions on one row; pin theme toggle to content right edge
-   (Humanoid_Robot_Learning_Paper_Notebooks header-right pattern). */
+   (Robot_Learning_Paper_Notebooks header-right pattern). */
 @media (max-width: 1200px) {
   .header-inner {
     flex-wrap: nowrap;
