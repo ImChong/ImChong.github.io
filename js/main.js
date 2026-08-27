@@ -57,6 +57,7 @@ const langLabel = langBtn ? langBtn.querySelector('.lang-label') : null;
 let navObserver = null;
 let subpageTocCleanup = null;
 let subpageMobileCleanup = null;
+let homeSectionNavCleanup = null;
 
 function applyLangMode(mode, isInit = false) {
   // ⚡ Bolt Performance Optimization: Prevent redundant DOM attribute and synchronous localStorage writes.
@@ -89,6 +90,7 @@ function applyLangMode(mode, isInit = false) {
   navLinks.forEach((link) => {
     link.textContent = mode === 'zh' ? link.getAttribute('data-zh') : link.getAttribute('data-en');
   });
+  setupHomeSectionNav();
   setupNavObserver();
   setupSubpageTocMobileDrawer();
   setupSubpageTocObserver();
@@ -123,7 +125,8 @@ function setupNavObserver() {
   if (!container) return;
 
   const sections = container.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.main-nav a');
+  // The mobile jump menu mirrors the header nav, so a section may own several links.
+  const navLinks = document.querySelectorAll('.main-nav a, .home-nav-menu a');
 
   // ⚡ Bolt Performance Optimization: Skip IntersectionObserver instantiation on pages without main nav
   if (navLinks.length === 0) return;
@@ -131,8 +134,21 @@ function setupNavObserver() {
   const linkMap = new Map();
   navLinks.forEach((link) => {
     const id = link.getAttribute('href').slice(1);
-    if (id) linkMap.set(id, link);
+    if (!id) return;
+    const group = linkMap.get(id);
+    if (group) group.push(link);
+    else linkMap.set(id, [link]);
   });
+
+  const markActive = (id, isActive) => {
+    const group = linkMap.get(id);
+    if (!group) return;
+    group.forEach((link) => {
+      link.classList.toggle('active', isActive);
+      if (isActive) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  };
 
   let activeNavId = null;
 
@@ -149,12 +165,8 @@ function setupNavObserver() {
       });
 
       if (isChanged && newActiveId !== activeNavId) {
-        if (activeNavId && linkMap.has(activeNavId)) {
-          linkMap.get(activeNavId).classList.remove('active');
-        }
-        if (newActiveId && linkMap.has(newActiveId)) {
-          linkMap.get(newActiveId).classList.add('active');
-        }
+        if (activeNavId) markActive(activeNavId, false);
+        if (newActiveId) markActive(newActiveId, true);
         activeNavId = newActiveId;
       }
     },
@@ -397,17 +409,239 @@ function setupSubpageTocMobileDrawer() {
   };
 }
 
+/* ─── Home section jump FAB (mobile) ───────────────────── */
+// The header nav collapses below 720px, so the homepage gets a floating
+// button that opens a compact jump menu mirroring that nav (plus "Top").
+// Built from the DOM so labels, order and targets stay in one place.
+function homeSectionIcon(section) {
+  const title = section.querySelector('.section-title');
+  const first = title ? title.textContent.trim().split(/\s+/)[0] : '';
+  // Section titles lead with an emoji ("🛠️ Projects"); skip a plain-text word.
+  return first && !/[a-z0-9\u4e00-\u9fa5]/i.test(first) ? first : '';
+}
+
+function homeSectionFabIcon(kind) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', '22');
+  svg.setAttribute('height', '22');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('class', 'home-nav-fab__icon home-nav-fab__icon--' + kind);
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', 'currentColor');
+  path.setAttribute('stroke-width', '2');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('d', kind === 'close' ? 'M7 7l10 10M17 7L7 17' : 'M5 7h14M5 12h14M5 17h9');
+  svg.appendChild(path);
+  return svg;
+}
+
+function setupHomeSectionNav() {
+  if (homeSectionNavCleanup) {
+    homeSectionNavCleanup();
+    homeSectionNavCleanup = null;
+  }
+
+  const mode = root.getAttribute('data-lang-mode') || 'en';
+  const isZh = mode === 'zh';
+  const langBlock = document.getElementById(isZh ? 'lang-zh' : 'lang-en');
+  const navLinks = [...document.querySelectorAll('.main-nav a[href^="#"]')];
+  // Subpages carry no .main-nav, so this is a no-op outside the homepage.
+  if (!langBlock || navLinks.length === 0) return;
+
+  const items = [];
+  if (langBlock.querySelector('#hero')) {
+    items.push({ id: 'hero', icon: '⬆️', label: isZh ? '顶部' : 'Top' });
+  }
+  navLinks.forEach((link) => {
+    const id = link.getAttribute('href').slice(1);
+    const section = id ? langBlock.querySelector('#' + CSS.escape(id)) : null;
+    if (!section) return;
+    const label = (isZh ? link.getAttribute('data-zh') : link.getAttribute('data-en')) || '';
+    items.push({ id, icon: homeSectionIcon(section), label: label || link.textContent.trim() });
+  });
+  if (items.length === 0) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'home-nav-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+
+  const fab = document.createElement('div');
+  fab.className = 'home-nav-fab';
+
+  // Button first in DOM order so Tab moves from it into the menu it opens;
+  // CSS (column-reverse) still paints the menu above the button.
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'home-nav-fab__toggle';
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-controls', 'home-nav-menu');
+  toggle.setAttribute(
+    'aria-label',
+    isZh ? '打开或关闭章节导航' : 'Open or close section navigation'
+  );
+  toggle.appendChild(homeSectionFabIcon('open'));
+  toggle.appendChild(homeSectionFabIcon('close'));
+
+  const menu = document.createElement('nav');
+  menu.id = 'home-nav-menu';
+  menu.className = 'home-nav-menu';
+  menu.setAttribute('aria-label', isZh ? '章节导航' : 'Section navigation');
+
+  const list = document.createElement('ul');
+  items.forEach((item) => {
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = '#' + item.id;
+    if (item.icon) {
+      const icon = document.createElement('span');
+      icon.className = 'home-nav-menu__icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = item.icon;
+      link.appendChild(icon);
+    }
+    const label = document.createElement('span');
+    label.className = 'home-nav-menu__label';
+    label.textContent = item.label;
+    link.appendChild(label);
+    li.appendChild(link);
+    list.appendChild(li);
+  });
+  menu.appendChild(list);
+
+  fab.appendChild(toggle);
+  fab.appendChild(menu);
+  document.body.appendChild(overlay);
+  document.body.appendChild(fab);
+
+  const close = () => {
+    if (!fab.classList.contains('is-open')) return;
+    fab.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (menu.contains(document.activeElement)) toggle.focus();
+  };
+
+  const open = () => {
+    fab.classList.add('is-open');
+    overlay.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const ac = new AbortController();
+  const { signal } = ac;
+
+  toggle.addEventListener(
+    'click',
+    (e) => {
+      e.stopPropagation();
+      if (fab.classList.contains('is-open')) close();
+      else open();
+    },
+    { signal }
+  );
+
+  overlay.addEventListener('click', close, { signal });
+
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.key === 'Escape') close();
+    },
+    { signal }
+  );
+
+  // The links themselves scroll via the delegated .main-nav handler; this
+  // only dismisses the menu that launched them.
+  menu.addEventListener(
+    'click',
+    (e) => {
+      if (e.target.closest('a[href^="#"]')) close();
+    },
+    { signal }
+  );
+
+  // The FAB is hidden above 720px — never leave the page scroll-locked there.
+  const mq = window.matchMedia('(max-width: 720px)');
+  mq.addEventListener(
+    'change',
+    () => {
+      if (!mq.matches) close();
+    },
+    { signal }
+  );
+
+  homeSectionNavCleanup = () => {
+    ac.abort();
+    close();
+    fab.remove();
+    overlay.remove();
+    document.body.style.overflow = '';
+  };
+}
+
 /* ─── Smooth Scroll ────────────────────────────────────── */
+// `content-visibility: auto` keeps off-screen sections at their placeholder
+// height, so a long jump lands short: the sections scrolled past grow to full
+// size mid-flight and push the target down. Re-aim until it settles under the
+// sticky header, which matters most for the mobile jump menu.
+const SCROLL_SETTLE_PASSES = 8;
+const SCROLL_SETTLE_DELAY = 220;
+
+let scrollSettleTimer = null;
+let scrollSettleAbort = null;
+
+function stopScrollSettle() {
+  if (scrollSettleTimer) {
+    clearTimeout(scrollSettleTimer);
+    scrollSettleTimer = null;
+  }
+  if (scrollSettleAbort) {
+    scrollSettleAbort.abort();
+    scrollSettleAbort = null;
+  }
+}
+
 function scrollToSection(targetId) {
   const mode = root.getAttribute('data-lang-mode') || 'en';
   const container = document.getElementById(mode === 'zh' ? 'lang-zh' : 'lang-en');
   const target = container ? container.querySelector('#' + CSS.escape(targetId)) : null;
+  if (!target) return false;
 
-  if (target) {
+  stopScrollSettle();
+
+  // Hand control straight back if the reader takes over mid-flight.
+  scrollSettleAbort = new AbortController();
+  ['wheel', 'touchstart', 'keydown'].forEach((type) => {
+    window.addEventListener(type, stopScrollSettle, {
+      passive: true,
+      signal: scrollSettleAbort.signal,
+    });
+  });
+
+  const headerOffset = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+  let passesLeft = SCROLL_SETTLE_PASSES;
+
+  const aim = () => {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    return true;
-  }
-  return false;
+    scrollSettleTimer = setTimeout(() => {
+      scrollSettleTimer = null;
+      passesLeft -= 1;
+      const drift = Math.abs(target.getBoundingClientRect().top - headerOffset);
+      const atPageEnd =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (drift > 2 && !atPageEnd && passesLeft > 0) aim();
+      else stopScrollSettle();
+    }, SCROLL_SETTLE_DELAY);
+  };
+
+  aim();
+  return true;
 }
 
 function bindNavClicks() {
@@ -415,7 +649,7 @@ function bindNavClicks() {
   // click listeners to every main navigation link. This reduces memory footprint and
   // speeds up initialization.
   document.addEventListener('click', (e) => {
-    const link = e.target.closest('.main-nav a');
+    const link = e.target.closest('.main-nav a, .home-nav-menu a');
     if (link) {
       const targetId = link.getAttribute('href').slice(1);
       if (scrollToSection(targetId)) e.preventDefault();
