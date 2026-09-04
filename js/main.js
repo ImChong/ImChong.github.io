@@ -587,16 +587,29 @@ function setupHomeSectionNav() {
 
 /* ─── Smooth Scroll ────────────────────────────────────── */
 // `content-visibility: auto` keeps off-screen sections at their placeholder
-// height, so a long jump lands short: the sections scrolled past grow to full
-// size mid-flight and push the target down. Re-aim until it settles under the
-// sticky header, which matters most for the mobile jump menu.
-const SCROLL_SETTLE_PASSES = 8;
-const SCROLL_SETTLE_DELAY = 220;
+// height, so a long jump used to land short: the sections scrolled past grew
+// to full size mid-flight and pushed the target down. Re-aiming during the
+// animation fixed the landing but stalled and restarted the scroll mid-way,
+// which reads as a stutter. Instead, force every section to lay out *before*
+// the jump so the target's position is final, then run one uninterrupted
+// smooth scroll. `contain-intrinsic-size: auto` makes each section remember
+// that measured height, so the override costs a single layout pass.
+const JUMP_CLASS = 'is-section-jump';
+const SCROLL_SETTLE_TIMEOUT = 2500;
+const SCROLL_IDLE_FRAMES = 3;
+// The browser can take a frame or two to start animating; don't mistake that
+// for having arrived.
+const SCROLL_START_GRACE = 250;
 
-let scrollSettleTimer = null;
 let scrollSettleAbort = null;
+let scrollSettleRaf = null;
+let scrollSettleTimer = null;
 
 function stopScrollSettle() {
+  if (scrollSettleRaf) {
+    cancelAnimationFrame(scrollSettleRaf);
+    scrollSettleRaf = null;
+  }
   if (scrollSettleTimer) {
     clearTimeout(scrollSettleTimer);
     scrollSettleTimer = null;
@@ -605,6 +618,7 @@ function stopScrollSettle() {
     scrollSettleAbort.abort();
     scrollSettleAbort = null;
   }
+  root.classList.remove(JUMP_CLASS);
 }
 
 function scrollToSection(targetId) {
@@ -625,22 +639,64 @@ function scrollToSection(targetId) {
   });
 
   const headerOffset = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
-  let passesLeft = SCROLL_SETTLE_PASSES;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const aim = () => {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    scrollSettleTimer = setTimeout(() => {
-      scrollSettleTimer = null;
-      passesLeft -= 1;
-      const drift = Math.abs(target.getBoundingClientRect().top - headerOffset);
-      const atPageEnd =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      if (drift > 2 && !atPageEnd && passesLeft > 0) aim();
-      else stopScrollSettle();
-    }, SCROLL_SETTLE_DELAY);
+  // Drop the placeholder heights and read the target once — the read flushes
+  // layout for every section, so nothing shifts once the animation starts.
+  root.classList.add(JUMP_CLASS);
+  const maxScroll = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  const aimAt = () =>
+    Math.min(
+      maxScroll(),
+      Math.max(0, Math.round(window.scrollY + target.getBoundingClientRect().top - headerOffset))
+    );
+  const top = aimAt();
+
+  window.scrollTo({ top, behavior: reduceMotion ? 'instant' : 'smooth' });
+
+  // Keep the override in place until the scroll stops, then correct at most
+  // once (dynamic content such as lazy images can still nudge the target).
+  const startedAt = performance.now();
+  let idleFrames = 0;
+  let lastY = window.scrollY;
+  let hasMoved = false;
+  let corrected = false;
+
+  const watch = () => {
+    scrollSettleRaf = null;
+    const y = window.scrollY;
+    if (Math.abs(y - lastY) < 1) {
+      idleFrames += 1;
+    } else {
+      idleFrames = 0;
+      hasMoved = true;
+    }
+    lastY = y;
+
+    const settled =
+      idleFrames >= SCROLL_IDLE_FRAMES &&
+      (hasMoved || performance.now() - startedAt > SCROLL_START_GRACE);
+    if (!settled) {
+      scrollSettleRaf = requestAnimationFrame(watch);
+      return;
+    }
+
+    // Compare against the clamped landing spot, so a target the page cannot
+    // scroll far enough to reach (#hero at the top, the last section at the
+    // bottom) counts as arrived instead of triggering a pointless correction.
+    if (!corrected && Math.abs(window.scrollY - aimAt()) > 2) {
+      corrected = true;
+      idleFrames = 0;
+      window.scrollTo({ top: aimAt(), behavior: reduceMotion ? 'instant' : 'smooth' });
+      scrollSettleRaf = requestAnimationFrame(watch);
+      return;
+    }
+
+    stopScrollSettle();
   };
 
-  aim();
+  scrollSettleRaf = requestAnimationFrame(watch);
+  scrollSettleTimer = setTimeout(stopScrollSettle, SCROLL_SETTLE_TIMEOUT);
   return true;
 }
 
