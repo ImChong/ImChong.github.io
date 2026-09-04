@@ -98,7 +98,9 @@ ul {
   height: var(--header-h);
   background: var(--bg);
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px);
+
+  /* No backdrop-filter here: --bg is opaque, so a blur would be invisible while
+     still forcing a backdrop snapshot on every scrolled frame. */
   transition:
     background var(--transition),
     border-color var(--transition);
@@ -364,6 +366,12 @@ ul {
   border-bottom: 1px solid var(--border);
   content-visibility: auto;
   contain-intrinsic-size: auto 500px;
+}
+
+/* While a nav jump is animating, render every section so the target stops
+   moving under the scroll (js/main.js adds/removes .is-section-jump). */
+html.is-section-jump .section {
+  content-visibility: visible;
 }
 .section-alt {
   background: var(--bg-alt);
