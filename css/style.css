@@ -307,14 +307,17 @@ ul {
   margin-bottom: 28px;
 }
 .hero-role {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  line-height: 1.4;
-  color: var(--accent);
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 3px 12px;
+  color: var(--text);
+}
+
+/* Middot separator, matching the .hero-links idiom above. */
+.hero-role::after {
+  content: '·';
+  margin-left: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
 }
 .hero-location {
   font-size: 0.85rem;
@@ -663,6 +666,11 @@ ul {
 @media (max-width: 480px) {
   .header-inner {
     gap: 0.5rem;
+  }
+
+  /* The meta row wraps on phones; drop the separator so no dot dangles. */
+  .hero-role::after {
+    content: none;
   }
   .header-start {
     gap: 12px;
