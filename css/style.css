@@ -298,21 +298,30 @@ ul {
   user-select: none;
 }
 
-.hero-role {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 2px;
+/* Role + location share one wrapping row so a short title keeps company. */
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-bottom: 28px;
 }
-.hero-role-zh {
+.hero-role {
   font-size: 0.95rem;
-  color: var(--text-zh);
-  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Middot separator, matching the .hero-links idiom above. */
+.hero-role::after {
+  content: '·';
+  margin-left: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
 }
 .hero-location {
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 28px;
 }
 
 .bio p {
@@ -657,6 +666,11 @@ ul {
 @media (max-width: 480px) {
   .header-inner {
     gap: 0.5rem;
+  }
+
+  /* The meta row wraps on phones; drop the separator so no dot dangles. */
+  .hero-role::after {
+    content: none;
   }
   .header-start {
     gap: 12px;
