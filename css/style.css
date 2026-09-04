@@ -298,21 +298,27 @@ ul {
   user-select: none;
 }
 
-.hero-role {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 2px;
+/* Role + location share one wrapping row so a short title keeps company. */
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-bottom: 28px;
 }
-.hero-role-zh {
-  font-size: 0.95rem;
-  color: var(--text-zh);
-  margin-bottom: 6px;
+.hero-role {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--accent);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 12px;
 }
 .hero-location {
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 28px;
 }
 
 .bio p {
