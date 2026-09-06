@@ -390,6 +390,13 @@ ul {
   contain-intrinsic-size: auto 500px;
 }
 
+/* .site-footer draws its own top rule. The two used to sit flush and read as
+   one line; now that the footer is pinned to the bottom of a short page they
+   would show as two, so the last section drops its own. */
+main > .section:last-child {
+  border-bottom: none;
+}
+
 /* While a nav jump is animating, render every section so the target stops
    moving under the scroll (js/main.js adds/removes .is-section-jump). */
 html.is-section-jump .section {
