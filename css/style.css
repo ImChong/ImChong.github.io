@@ -710,6 +710,11 @@ html.is-section-jump .section {
   bottom: calc(20px + env(safe-area-inset-bottom, 0px) + var(--fab-footer-lift, 0px));
   z-index: 1350;
 
+  /* The closed menu keeps its layout box (visibility: hidden), so this wrapper
+     is a ~160x340px invisible rectangle. Let clicks fall through it to the page
+     underneath; the toggle and the menu opt back in below. */
+  pointer-events: none;
+
   /* Button sits first in the DOM for tab order; reverse puts the menu on top. */
   flex-direction: column-reverse;
   align-items: flex-start;
@@ -725,6 +730,7 @@ html.is-section-jump .section {
 
 .home-nav-fab__toggle {
   display: inline-flex;
+  pointer-events: auto;
   align-items: center;
   justify-content: center;
   width: 48px;
@@ -763,6 +769,7 @@ html.is-section-jump .section {
 
 .home-nav-menu {
   width: max-content;
+  pointer-events: auto;
   min-width: 160px;
   max-width: min(72vw, 260px);
   max-height: calc(100vh - 150px);
