@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; worker-src 'none'; connect-src 'self'; require-trusted-types-for 'script';"
+    />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), bluetooth=(), fullscreen=(), display-capture=()"
+    />
+    <title>Featured Undergraduate Researcher | Chong Liu</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>"
+    />
+    <!-- ⚡ Bolt Performance Optimization: Preload the hero image to improve Largest Contentful Paint (LCP) -->
+    <link
+      rel="preload"
+      href="../img/awards/micro-edm-2018-lab.jpg"
+      as="image"
+      fetchpriority="high"
+    />
+    <script src="../js/theme-init.js"></script>
+    <!-- ⚡ Bolt Performance Optimization: Load main script with defer to avoid blocking HTML parsing while fetching early -->
+    <script src="../js/main.js" defer></script>
+    <script src="../js/lightbox.js" defer></script>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="../index.html">← Chong Liu | 刘冲</a>
+        <div class="header-actions">
+          <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+            <span class="lang-label">中文</span>
+          </button>
+          <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode (Ctrl+Shift+L)"
+          >
+            <span class="icon-sun">☀️</span>
+            <span class="icon-moon">🌙</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── EN Content ─────────────────────────────────────── -->
+    <div id="lang-en">
+      <main>
+        <section class="section">
+          <div class="container subpage-detail-layout">
+            <aside class="page-toc" aria-labelledby="toc-en-label-edm">
+              <p class="page-toc-title" id="toc-en-label-edm">On this page</p>
+              <nav aria-label="In this article">
+                <ul>
+                  <li><a href="#toc-en-edm-meta">Details</a></li>
+                  <li><a href="#toc-en-edm-research">The Research</a></li>
+                  <li><a href="#toc-en-edm-coverage">News Coverage</a></li>
+                  <li><a href="#toc-en-edm-sources">Source Links</a></li>
+                </ul>
+              </nav>
+            </aside>
+            <div class="subpage-detail-main">
+              <h1 class="section-title">Featured Undergraduate Researcher</h1>
+              <p class="card-meta">
+                Miami University College of Engineering and Computing · August 2018
+              </p>
+
+              <div class="detail-meta mt-lg" id="toc-en-edm-meta">
+                <p><strong>Recognition:</strong> Featured undergraduate researcher</p>
+                <p>
+                  <strong>Published by:</strong> Miami University College of Engineering and
+                  Computing
+                </p>
+                <p><strong>Date:</strong> 21 August 2018</p>
+                <p><strong>Subject:</strong> Chong Liu (刘冲)</p>
+                <p>
+                  <strong>Topic:</strong> Micro-electrical discharge machining (micro-EDM) of Bulk
+                  Metallic Glass
+                </p>
+              </div>
+
+              <div class="card mt-lg">
+                <div class="card-body">
+                  <h3 id="toc-en-edm-research">The Research</h3>
+                  <p>
+                    The feature covered undergraduate research into the behaviour of Bulk Metallic
+                    Glass (BMG) under micro-electrical discharge machining — the same line of work
+                    that later won the Best Presentation Award at the Dayton Engineering Science
+                    Symposium.
+                  </p>
+                  <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode the image off the main thread and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
+                  <img
+                    fetchpriority="high"
+                    decoding="async"
+                    width="300"
+                    height="225"
+                    src="../img/awards/micro-edm-2018-lab.jpg"
+                    alt="Chong Liu operating a micro-EDM machine in the Miami University lab"
+                    class="section-img natural"
+                    data-lightbox
+                  />
+                  <p class="caption">
+                    In the lab at the micro-EDM machine, as published with the original Miami
+                    University news story.
+                  </p>
+                  <p class="mt-sm">
+                    <a href="dess-best-presentation.html" class="project-link"
+                      >Related: Best Presentation Award — DESS →</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="card mt-md">
+                <div class="card-body">
+                  <h3 id="toc-en-edm-coverage">News Coverage</h3>
+                  <p>
+                    Miami University's Science Friday Research News carried the story on
+                    <strong>08/21/2018</strong> under the headline "Student performs
+                    micro-electrical discharge machining on Bulk Metallic Glass". The entry reads:
+                  </p>
+                  <p class="detail-meta">
+                    "A senior mechanical engineering major is studying the behavior of Bulk Metallic
+                    Glass through the use of micro-electrical discharge machining."
+                  </p>
+                  <img
+                    decoding="async"
+                    width="1280"
+                    height="1376"
+                    src="../img/awards/micro-edm-2018-research-news.png"
+                    alt="Miami University Science Friday Research News archive listing, with the 08/21/2018 micro-EDM entry highlighted"
+                    class="section-img"
+                    data-lightbox
+                    loading="lazy"
+                  />
+                  <p class="caption">
+                    The entry as it still appears in the Science Friday Research News archive
+                    (highlighted). Click the image to zoom.
+                  </p>
+                </div>
+              </div>
+
+              <div class="card mt-md">
+                <div class="card-body">
+                  <h3 id="toc-en-edm-sources">Source Links</h3>
+                  <p>
+                    The original article has been removed from Miami University's website — the link
+                    below now returns a 404. It is kept here for reference, together with working
+                    alternatives.
+                  </p>
+                  <ul class="card-bullets mt-sm">
+                    <li>
+                      Original article (no longer available):
+                      <a
+                        href="https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >miamioh.edu/cec/news/2018/08/undergrad-chong-research.html</a
+                      >
+                    </li>
+                    <li>
+                      Archived copy (Internet Archive):
+                      <a
+                        href="https://web.archive.org/web/20240726201241/https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >web.archive.org snapshot, 26 July 2024</a
+                      >
+                    </li>
+                    <li>
+                      Still live — the news entry in Miami's Science Friday Research News archive:
+                      <a
+                        href="https://miamioh.edu/sciencefriday/research-news/?page=39"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >miamioh.edu/sciencefriday/research-news/?page=39</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <p class="mt-xl">
+                <a href="../index.html#awards" class="project-link">← Back to Home</a>
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-footer-lang="en">
+        <noscript
+          ><div class="container footer-inner">
+            <p class="footer-copy">&copy; Chong Liu 2026</p>
+          </div></noscript
+        >
+      </footer>
+    </div>
+
+    <!-- ─── ZH Content ─────────────────────────────────────── -->
+    <div id="lang-zh" hidden>
+      <main>
+        <section class="section">
+          <div class="container subpage-detail-layout">
+            <aside class="page-toc" aria-labelledby="toc-zh-label-edm">
+              <p class="page-toc-title" id="toc-zh-label-edm">本页目录</p>
+              <nav aria-label="本页章节">
+                <ul>
+                  <li><a href="#toc-zh-edm-meta">报道信息</a></li>
+                  <li><a href="#toc-zh-edm-research">研究内容</a></li>
+                  <li><a href="#toc-zh-edm-coverage">新闻报道</a></li>
+                  <li><a href="#toc-zh-edm-sources">原始链接</a></li>
+                </ul>
+              </nav>
+            </aside>
+            <div class="subpage-detail-main">
+              <h1 class="section-title">本科生科研专题报道</h1>
+              <p class="card-meta">迈阿密大学工程与计算机学院 · 2018年8月</p>
+
+              <div class="detail-meta mt-lg" id="toc-zh-edm-meta">
+                <p><strong>类型：</strong>本科生科研专题报道</p>
+                <p><strong>发布单位：</strong>迈阿密大学工程与计算机学院</p>
+                <p><strong>日期：</strong>2018年8月21日</p>
+                <p><strong>报道对象：</strong>刘冲</p>
+                <p><strong>研究方向：</strong>块体金属玻璃（BMG）的微电火花加工（micro-EDM）</p>
+              </div>
+
+              <div class="card mt-lg">
+                <div class="card-body">
+                  <h3 id="toc-zh-edm-research">研究内容</h3>
+                  <p>
+                    该报道介绍了本科阶段关于块体金属玻璃（Bulk Metallic Glass,
+                    BMG）在微电火花加工条件下材料行为的研究工作 ——
+                    这一研究方向随后在代顿工程科学研讨会上获得最佳演讲奖。
+                  </p>
+                  <!-- ⚡ Bolt Performance Optimization: Use decoding="async" to decode the image off the main thread and provide explicit width/height to prevent Cumulative Layout Shift (CLS). -->
+                  <img
+                    fetchpriority="high"
+                    decoding="async"
+                    width="300"
+                    height="225"
+                    src="../img/awards/micro-edm-2018-lab.jpg"
+                    alt="刘冲在迈阿密大学实验室操作微电火花加工设备"
+                    class="section-img natural"
+                    data-lightbox
+                  />
+                  <p class="caption">
+                    实验室中操作微电火花加工设备，取自迈阿密大学原始新闻报道所配图片。
+                  </p>
+                  <p class="mt-sm">
+                    <a href="dess-best-presentation.html" class="project-link"
+                      >相关：最佳演讲奖 — 代顿工程科学研讨会 (DESS) →</a
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="card mt-md">
+                <div class="card-body">
+                  <h3 id="toc-zh-edm-coverage">新闻报道</h3>
+                  <p>
+                    迈阿密大学 Science Friday Research News 于 <strong>2018年8月21日</strong>
+                    刊发该报道，标题为 "Student performs micro-electrical discharge machining on
+                    Bulk Metallic Glass"，正文摘要为：
+                  </p>
+                  <p class="detail-meta">
+                    "A senior mechanical engineering major is studying the behavior of Bulk Metallic
+                    Glass through the use of micro-electrical discharge machining."
+                  </p>
+                  <img
+                    decoding="async"
+                    width="1280"
+                    height="1376"
+                    src="../img/awards/micro-edm-2018-research-news.png"
+                    alt="迈阿密大学 Science Friday Research News 归档列表，高亮显示 2018年8月21日 微电火花加工条目"
+                    class="section-img"
+                    data-lightbox
+                    loading="lazy"
+                  />
+                  <p class="caption">
+                    该条目至今仍保留在 Science Friday Research News
+                    归档列表中（已高亮）。点击可放大查看。
+                  </p>
+                </div>
+              </div>
+
+              <div class="card mt-md">
+                <div class="card-body">
+                  <h3 id="toc-zh-edm-sources">原始链接</h3>
+                  <p>
+                    原文已从迈阿密大学官网移除，下方原始链接现返回
+                    404。此处保留该链接以供查证，并附上仍可访问的替代来源。
+                  </p>
+                  <ul class="card-bullets mt-sm">
+                    <li>
+                      原文链接（已失效）：
+                      <a
+                        href="https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >miamioh.edu/cec/news/2018/08/undergrad-chong-research.html</a
+                      >
+                    </li>
+                    <li>
+                      互联网档案馆存档：
+                      <a
+                        href="https://web.archive.org/web/20240726201241/https://miamioh.edu/cec/news/2018/08/undergrad-chong-research.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >web.archive.org 快照，2024年7月26日</a
+                      >
+                    </li>
+                    <li>
+                      仍然有效 —— 迈阿密大学 Science Friday Research News 归档列表中的该条目：
+                      <a
+                        href="https://miamioh.edu/sciencefriday/research-news/?page=39"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >miamioh.edu/sciencefriday/research-news/?page=39</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <p class="mt-xl">
+                <a href="../index.html#awards" class="project-link">← 返回主页</a>
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-footer-lang="zh"></footer>
+    </div>
+  </body>
+</html>
