@@ -61,6 +61,14 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
+
+  /* Sticky-footer column: the language wrapper below grows to fill a short
+     page (family/marriage.html), so .site-footer keeps its own height at the
+     bottom of the viewport instead of trailing body background that reads as
+     an over-tall footer. Fixed-position overlays are out of flow, unaffected. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   transition:
     background var(--transition),
     color var(--transition);
@@ -241,7 +249,15 @@ ul {
   border-color: var(--accent);
 }
 
-/* Language version display */
+/* Language version display. The visible wrapper is the flex child that soaks up
+   the leftover height; `flex` rather than `block` so its own <main> can do the
+   same for the footer. */
+#lang-en,
+[data-lang-mode='zh'] #lang-zh {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
 #lang-zh {
   display: none !important;
 }
@@ -249,7 +265,13 @@ ul {
   display: none !important;
 }
 [data-lang-mode='zh'] #lang-zh {
-  display: block !important;
+  display: flex !important;
+}
+
+/* Pushes .site-footer to the bottom of a short page; a no-op elsewhere. */
+#lang-en > main,
+#lang-zh > main {
+  flex: 1 0 auto;
 }
 
 /* ── Hero ───────────────────────────────────────────────── */
