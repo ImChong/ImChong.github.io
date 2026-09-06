@@ -12,7 +12,7 @@
     "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"css/**/*.css\"",
-    "lint:html": "html-validate \"index.html\" \"experience/**/*.html\" \"family/**/*.html\"",
+    "lint:html": "html-validate \"index.html\" \"awards/**/*.html\" \"experience/**/*.html\" \"family/**/*.html\"",
     "check": "npm run format:check && npm run lint"
   },
   "devDependencies": {
