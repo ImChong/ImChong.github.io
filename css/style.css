@@ -704,7 +704,10 @@ html.is-section-jump .section {
 
   /* Bottom-left, matching the subpage TOC drawer button. */
   left: 16px;
-  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+
+  /* --fab-footer-lift is set by main.js so the button steps above the footer
+     instead of covering it once the page is scrolled to the end. */
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px) + var(--fab-footer-lift, 0px));
   z-index: 1350;
 
   /* Button sits first in the DOM for tab order; reverse puts the menu on top. */
@@ -1230,7 +1233,10 @@ html.is-section-jump .section {
 .subpage-toc-toggle {
   display: none;
   position: fixed;
-  bottom: 24px;
+
+  /* --fab-footer-lift is set by main.js so the button steps above the footer
+     instead of covering it once the page is scrolled to the end. */
+  bottom: calc(24px + var(--fab-footer-lift, 0px));
   left: 20px;
   width: 48px;
   height: 48px;

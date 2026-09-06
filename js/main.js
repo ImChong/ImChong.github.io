@@ -251,6 +251,65 @@ function setupSubpageTocObserver() {
   };
 }
 
+/* ─── Keep floating buttons clear of the footer ─────────── */
+// The TOC drawer button and the homepage section-jump FAB are position:fixed,
+// so at the end of a page they used to sit on top of .site-footer. Measure how
+// far the button reaches into the footer and hand that back to CSS as
+// --fab-footer-lift, which is added to the button's `bottom` — keeping the
+// safe-area inset inside the original calc().
+function keepClearOfFooter(el, footer, measured = el) {
+  if (!footer) return () => {};
+
+  // Declared inside the function: this runs during the initial language
+  // bootstrap, before module-level `const`s further down the file are
+  // initialised (see the temporal-dead-zone note near navObserver).
+  const FOOTER_CLEARANCE = 12;
+  let lift = 0;
+  let ticking = false;
+
+  const apply = () => {
+    const rect = measured.getBoundingClientRect();
+    // Hidden on this breakpoint (or not laid out yet): nothing to lift.
+    if (rect.height === 0) return;
+    // rect already includes the current lift, so the delta is self-correcting:
+    // positive means the button overlaps the footer, negative gives slack back
+    // as the footer scrolls out of view.
+    const next = Math.max(
+      0,
+      lift + rect.bottom + FOOTER_CLEARANCE - footer.getBoundingClientRect().top
+    );
+    if (Math.abs(next - lift) < 0.5) return;
+    lift = next;
+    el.style.setProperty('--fab-footer-lift', lift + 'px');
+  };
+
+  // ⚡ Bolt Performance Optimization: Throttle scroll/resize work with
+  // requestAnimationFrame so the measurement runs at most once per frame.
+  const schedule = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      ticking = false;
+      apply();
+    });
+  };
+
+  const ac = new AbortController();
+  window.addEventListener('scroll', schedule, { passive: true, signal: ac.signal });
+  window.addEventListener('resize', schedule, { signal: ac.signal });
+
+  // The footer grows/shrinks with the viewport width; re-measure when it does.
+  const resizeObserver = new ResizeObserver(schedule);
+  resizeObserver.observe(footer);
+  apply();
+
+  return () => {
+    ac.abort();
+    resizeObserver.disconnect();
+    el.style.removeProperty('--fab-footer-lift');
+  };
+}
+
 /* ─── Subpage TOC mobile drawer (floating button + off-canvas panel) ─ */
 function setupSubpageTocMobileDrawer() {
   if (subpageMobileCleanup) {
@@ -397,9 +456,12 @@ function setupSubpageTocMobileDrawer() {
   resizeObserver.observe(layout);
   syncDrawer();
 
+  const releaseFooterClearance = keepClearOfFooter(toggle, langBlock.querySelector('.site-footer'));
+
   subpageMobileCleanup = () => {
     ac.abort();
     resizeObserver.disconnect();
+    releaseFooterClearance();
     close();
     pageToc.classList.remove('is-open');
     document.body.classList.remove('subpage-toc-drawer-mode');
@@ -566,6 +628,12 @@ function setupHomeSectionNav() {
     { signal }
   );
 
+  const releaseFooterClearance = keepClearOfFooter(
+    fab,
+    langBlock.querySelector('.site-footer'),
+    toggle
+  );
+
   // The FAB is hidden above 720px — never leave the page scroll-locked there.
   const mq = window.matchMedia('(max-width: 720px)');
   mq.addEventListener(
@@ -578,6 +646,7 @@ function setupHomeSectionNav() {
 
   homeSectionNavCleanup = () => {
     ac.abort();
+    releaseFooterClearance();
     close();
     fab.remove();
     overlay.remove();
