@@ -1113,6 +1113,13 @@ html.is-section-jump .section {
   margin: 12px auto;
   cursor: zoom-in;
 }
+
+/* Small source images (archived news thumbnails) keep their natural size rather
+   than being upscaled to the column width, which would blur them. */
+.section-img.natural {
+  width: auto;
+  max-width: 100%;
+}
 .video-card {
   padding: 0 !important;
   overflow: hidden;
