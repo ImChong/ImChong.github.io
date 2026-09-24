@@ -4,7 +4,7 @@
 [![Quality Checks](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml/badge.svg)](https://github.com/ImChong/ImChong.github.io/actions/workflows/lint.yml)
 [![License](https://img.shields.io/github/license/ImChong/ImChong.github.io)](LICENSE)
 
-> 🤖 Robot Control Engineer | 机器人运动控制算法工程师
+> 🤖 Robotics Engineer | 机器人工程师
 
 🔗 **Live Site:** [https://imchong.github.io/](https://imchong.github.io/)
 
