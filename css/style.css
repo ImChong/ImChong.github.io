@@ -390,6 +390,16 @@ ul {
   contain-intrinsic-size: auto 500px;
 }
 
+/* iOS WebKit (every iOS browser) does not scroll-anchor when an off-screen
+   section swaps its placeholder height for its real one, so scrolling back up
+   jumps and can stall short of the top. Render sections normally there. */
+@supports (-webkit-touch-callout: none) {
+  .section {
+    content-visibility: visible;
+    contain-intrinsic-size: none;
+  }
+}
+
 /* .site-footer draws its own top rule. The two used to sit flush and read as
    one line; now that the footer is pinned to the bottom of a short page they
    would show as two, so the last section drops its own. */
