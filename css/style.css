@@ -1472,3 +1472,35 @@ body.subpage-toc-drawer-mode .page-toc.is-open {
 [data-theme='light'] body.subpage-toc-drawer-mode .page-toc {
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
 }
+
+/* ── Scroll Reveal ──────────────────────────────────────── */
+
+/* js/scroll-reveal.js only adds .scroll-reveal to blocks below the fold, then
+   .is-revealed once they enter the viewport, and drops both when done. Content
+   stays visible if JS fails, under reduced motion, and in print. The revealed
+   state keeps each element's own opacity (e.g. .placeholder-card). */
+.scroll-reveal:not(.is-revealed) {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+.scroll-reveal.is-revealed {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal:not(.is-revealed) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media print {
+  .scroll-reveal:not(.is-revealed) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
