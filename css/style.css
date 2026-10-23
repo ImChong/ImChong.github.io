@@ -1544,6 +1544,7 @@ body.subpage-toc-drawer-mode .page-toc.is-open {
 }
 .related-link-title {
   flex: 1;
+  color: var(--text);
   font-weight: 600;
 }
 .related-link-arrow {
@@ -1557,7 +1558,4 @@ body.subpage-toc-drawer-mode .page-toc.is-open {
 .card-body .related-link:hover,
 .detail-meta .related-link {
   text-decoration: none;
-}
-.related-link-title {
-  color: var(--text);
 }
