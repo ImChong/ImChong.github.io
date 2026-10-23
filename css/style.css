@@ -1559,3 +1559,20 @@ body.subpage-toc-drawer-mode .page-toc.is-open {
 .detail-meta .related-link {
   text-decoration: none;
 }
+
+@media (max-width: 720px) {
+  .related-link {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    align-items: center;
+    padding: 10px 14px;
+  }
+  .related-link-label {
+    grid-column: 1 / -1;
+  }
+  .related-link-title {
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+}
