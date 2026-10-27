@@ -673,10 +673,12 @@ html.is-section-jump .section {
 /* Surface + hairline only: elevation is reserved for things that float
    (header, menus, the drawer), so resting cards carry no shadow. */
 .card {
+  --card-pad: 24px;
+
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 24px;
+  padding: var(--card-pad);
   display: flex;
   gap: 16px;
   align-items: flex-start;
@@ -765,6 +767,33 @@ html.is-section-jump .section {
 }
 .card-grid .card-body > :last-child > .project-link {
   margin-top: 0;
+}
+
+/* Project preview: a screenshot of the project's homepage across the top of
+   the card. It cancels the card padding to sit flush with the card edges, and
+   its top corners follow the card's (radius minus the 1px border) so the two
+   stay concentric; with the card's 16px gap, the space below it matches the
+   card padding. Images come from scripts/capture_project_previews.py. */
+.project-preview {
+  display: block;
+  align-self: stretch;
+  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) calc(var(--card-pad) - 16px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  background: var(--bg-alt);
+  transition: border-color var(--transition);
+}
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--dur-move) var(--ease);
+}
+.card:hover .project-preview img {
+  transform: scale(1.03);
 }
 .project-link:hover {
   color: var(--accent-hover);
@@ -915,7 +944,7 @@ html.is-section-jump .section {
     padding: 40px 0 48px;
   }
   .card {
-    padding: 16px;
+    --card-pad: 16px;
   }
 }
 
@@ -1854,6 +1883,7 @@ html.is-theme-switching *::after {
   }
 
   .card:hover,
+  .card:hover .project-preview img,
   .related-link:hover,
   .related-link:hover .related-link-arrow,
   .marriage-img:hover,
