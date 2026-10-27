@@ -39,7 +39,49 @@ function toggleTheme() {
 
 // ⚡ Bolt Performance Optimization: Removed initTheme IIFE to eliminate redundant synchronous localStorage I/O on page load. theme-init.js handles default theme assignment.
 const themeBtn = document.getElementById('themeToggle');
-if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+// The new theme is revealed as a circle growing out of the toggle button
+// (View Transitions; same effect as ImChong/Robotics_Notebooks docs/main.js).
+// Without the API, or under reduced motion, the theme simply switches.
+function toggleThemeWithReveal() {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (typeof document.startViewTransition !== 'function' || reduceMotion || !themeBtn) {
+    toggleTheme();
+    return;
+  }
+
+  const rect = themeBtn.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  // Far enough to reach the viewport corner farthest from the button.
+  const radius = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y)
+  );
+
+  // .is-theme-switching (style.css) turns off the default cross-fade and every
+  // colour transition, so the new snapshot is already the final palette instead
+  // of fading in for 300ms underneath the reveal.
+  root.classList.add('is-theme-switching');
+  const transition = document.startViewTransition(toggleTheme);
+  transition.ready
+    .then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        {
+          duration: 560,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          pseudoElement: '::view-transition-new(root)',
+        }
+      );
+    })
+    .catch(() => {
+      // Transition skipped: the callback has still switched the theme.
+    });
+  transition.finished.finally(() => root.classList.remove('is-theme-switching'));
+}
+
+if (themeBtn) themeBtn.addEventListener('click', toggleThemeWithReveal);
 
 // Until the reader picks a theme, keep following the OS setting live.
 window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
@@ -49,7 +91,7 @@ window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e
 document.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.shiftKey && e.key === 'L') {
     e.preventDefault();
-    toggleTheme();
+    toggleThemeWithReveal();
   }
 });
 

@@ -1782,6 +1782,22 @@ body.subpage-toc-drawer-mode .page-toc.is-open {
   margin-top: 32px;
 }
 
+/* ── Theme switch reveal ────────────────────────────────────
+   js/main.js grows the new theme out of the toggle with a View Transition
+   clip-path. While it runs, drop the default cross-fade and every colour
+   transition so the new snapshot is the final palette, not a mid-fade grey. */
+html.is-theme-switching::view-transition-old(root),
+html.is-theme-switching::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.is-theme-switching *,
+html.is-theme-switching *::before,
+html.is-theme-switching *::after {
+  transition: none !important;
+}
+
 /* ── Reduced motion ─────────────────────────────────────────
    Movement becomes a plain fade or an instant change; colour transitions stay. */
 @media (prefers-reduced-motion: reduce) {
