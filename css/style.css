@@ -1133,8 +1133,6 @@ html.is-section-jump .section {
   position: fixed;
   inset: 0;
   z-index: var(--z-overlay);
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(2px);
   opacity: 0;
   visibility: hidden;
 
@@ -1599,8 +1597,6 @@ html.is-section-jump .section {
   position: fixed;
   inset: 0;
   z-index: var(--z-overlay);
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(2px);
   opacity: 0;
   visibility: hidden;
 
@@ -1669,37 +1665,40 @@ html.is-section-jump .section {
   .page-toc {
     position: fixed;
 
-    /* Robotics_Notebooks detail.html: small top breathing room above drawer */
-    top: calc(16px + env(safe-area-inset-top, 0px));
-    bottom: calc(96px + env(safe-area-inset-bottom, 0px));
-    left: 0;
-
-    /* ⚡ Bolt Performance Optimization: Animate transform instead of left to avoid main-thread layout thrashing */
-    transform: translateX(-100%);
-    width: 280px;
+    /* Popup above the bottom-left button, like the homepage jump menu:
+       24px edge + 48px button + 12px gap. */
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px) + var(--fab-footer-lift, 0px));
+    left: 16px;
+    top: auto;
+    width: min(72vw, 280px);
     height: auto;
-    max-height: none;
+    max-height: calc(100vh - 160px);
+    max-height: calc(100dvh - 160px);
     margin: 0;
     max-width: none;
     z-index: var(--z-drawer);
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 0 16px 16px 0;
-    transition:
-      transform var(--dur-move) var(--ease),
-      background-color var(--transition),
-      border-color var(--transition),
-      box-shadow var(--transition);
-  }
+    border-radius: 16px;
 
-  /* The closed drawer sits just past the left edge; without this its shadow
-     would bleed into the viewport as a faint smudge. */
-  .page-toc:not(.is-open) {
-    box-shadow: none;
+    /* Closed: invisible and not a hit target (iOS routes touches to hidden scrollers). */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(8px) scale(0.96);
+    transform-origin: bottom left;
+    transition:
+      opacity var(--dur-color) var(--ease),
+      transform var(--dur-move) var(--ease),
+      visibility var(--dur-color) var(--ease),
+      background-color var(--transition),
+      border-color var(--transition);
   }
 
   .page-toc.is-open {
-    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1715,32 +1714,41 @@ body.subpage-toc-drawer-mode .subpage-toc-toggle {
 
 body.subpage-toc-drawer-mode .page-toc {
   position: fixed;
-  top: calc(16px + env(safe-area-inset-top, 0px));
-  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
-  left: 0;
-  transform: translateX(-100%);
-  width: 280px;
+
+  /* Popup above the bottom-left button, like the homepage jump menu:
+     24px edge + 48px button + 12px gap. */
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px) + var(--fab-footer-lift, 0px));
+  left: 16px;
+  top: auto;
+  width: min(72vw, 280px);
   height: auto;
-  max-height: none;
+  max-height: calc(100vh - 160px);
+  max-height: calc(100dvh - 160px);
   margin: 0;
   max-width: none;
   z-index: var(--z-drawer);
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: 0 16px 16px 0;
-  transition:
-    transform var(--dur-move) var(--ease),
-    background-color var(--transition),
-    border-color var(--transition),
-    box-shadow var(--transition);
-}
+  border-radius: 16px;
 
-body.subpage-toc-drawer-mode .page-toc:not(.is-open) {
-  box-shadow: none;
+  /* Closed: invisible and not a hit target (iOS routes touches to hidden scrollers). */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom left;
+  transition:
+    opacity var(--dur-color) var(--ease),
+    transform var(--dur-move) var(--ease),
+    visibility var(--dur-color) var(--ease),
+    background-color var(--transition),
+    border-color var(--transition);
 }
 
 body.subpage-toc-drawer-mode .page-toc.is-open {
-  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
 }
 
 /* ── Scroll Reveal ──────────────────────────────────────── */
@@ -1917,6 +1925,7 @@ html.is-theme-switching *::after {
   .page-toc,
   body.subpage-toc-drawer-mode .page-toc {
     transition-duration: 0.01ms;
+    transform: none;
   }
 
   .home-nav-fab.is-open .home-nav-menu li {

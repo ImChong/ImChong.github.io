@@ -520,7 +520,11 @@ function setupSubpageTocMobileDrawer() {
   resizeObserver.observe(layout);
   syncDrawer();
 
-  const releaseFooterClearance = keepClearOfFooter(toggle, langBlock.querySelector('.site-footer'));
+  const releaseFooterClearance = keepClearOfFooter(
+    document.body,
+    langBlock.querySelector('.site-footer'),
+    toggle
+  );
 
   subpageMobileCleanup = () => {
     ac.abort();
