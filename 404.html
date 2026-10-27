@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; worker-src 'none'; connect-src 'self'; require-trusted-types-for 'script';"
+    />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), bluetooth=(), fullscreen=(), display-capture=()"
+    />
+    <meta name="robots" content="noindex" />
+    <title>Page not found | Chong Liu</title>
+    <!-- GitHub Pages serves this file for any missing path at any depth, so every
+         asset URL is root-absolute rather than relative. -->
+    <link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/geist-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/main.js" defer></script>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#lang-en" data-en="Skip to content" data-zh="跳到正文"
+      >Skip to content</a
+    >
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-title" href="/">← Chong Liu | 刘冲</a>
+        <div class="header-actions">
+          <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch to Chinese">
+            <span class="lang-label">中文</span>
+          </button>
+          <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode (Ctrl+Shift+L)"
+          >
+            <span class="icon icon-theme" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── EN Content ─────────────────────────────────────── -->
+    <div id="lang-en">
+      <main>
+        <section class="not-found">
+          <div class="container">
+            <p class="not-found-code">404</p>
+            <h1 class="hero-name">Page not found</h1>
+            <p>
+              This address does not match any page on the site. It may have moved when the project
+              pages were reorganized, or the link may contain a typo.
+            </p>
+            <div class="not-found-actions">
+              <a class="btn" href="/">Go to the homepage</a>
+              <a class="project-link" href="/#projects">Browse projects →</a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-footer-lang="en">
+        <noscript>
+          <div class="container footer-inner">
+            <p class="footer-copy">&copy; Chong Liu 2026</p>
+          </div>
+        </noscript>
+      </footer>
+    </div>
+
+    <!-- ─── ZH Content ─────────────────────────────────────── -->
+    <div id="lang-zh" hidden>
+      <main>
+        <section class="not-found">
+          <div class="container">
+            <p class="not-found-code">404</p>
+            <h1 class="hero-name">页面不存在</h1>
+            <p>
+              本站没有与这个地址对应的页面。页面可能在项目整理时移动了位置，或者链接中有拼写错误。
+            </p>
+            <div class="not-found-actions">
+              <a class="btn" href="/">返回首页</a>
+              <a class="project-link" href="/#projects">查看项目 →</a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="site-footer" data-footer-lang="zh"></footer>
+    </div>
+  </body>
+</html>

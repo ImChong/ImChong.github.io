@@ -13,9 +13,17 @@
       content="camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), bluetooth=(), fullscreen=(), display-capture=()"
     />
     <title>Featured Undergraduate Researcher | Chong Liu</title>
+    <meta
+      name="description"
+      content="Miami University featured Chong Liu as an undergraduate researcher in August 2018 for micro-EDM research on Bulk Metallic Glass."
+    />
+    <link rel="icon" href="../img/favicon.svg" type="image/svg+xml" />
     <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>"
+      rel="preload"
+      href="../fonts/geist-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <!-- ⚡ Bolt Performance Optimization: Preload the hero image to improve Largest Contentful Paint (LCP) -->
     <link
@@ -32,6 +40,9 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#lang-en" data-en="Skip to content" data-zh="跳到正文"
+      >Skip to content</a
+    >
     <header class="site-header">
       <div class="header-inner">
         <a class="site-title" href="../index.html">← Chong Liu | 刘冲</a>
@@ -46,8 +57,7 @@
             aria-label="Toggle dark mode"
             title="Toggle dark mode (Ctrl+Shift+L)"
           >
-            <span class="icon-sun">☀️</span>
-            <span class="icon-moon">🌙</span>
+            <span class="icon icon-theme" aria-hidden="true"></span>
           </button>
         </div>
       </div>
