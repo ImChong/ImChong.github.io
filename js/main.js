@@ -545,10 +545,18 @@ function iconSpan(name) {
 // The header nav collapses below 720px, so the homepage gets a floating
 // button that opens a compact jump menu mirroring that nav (plus "Top").
 // Built from the DOM so labels, order and targets stay in one place.
-// Section titles lead with an icon span; the menu reuses the same glyph.
+// Section titles lead with a toned icon tile; the menu reuses the same glyph
+// in the same colour (the tone-* class sits on the tile, so copy it across).
 function homeSectionIcon(section) {
-  const icon = section.querySelector('.section-title > .icon');
-  return icon ? icon.cloneNode(false) : null;
+  const tile = section.querySelector('.section-title > .section-icon');
+  const glyph = tile ? tile.querySelector('.icon') : null;
+  if (!glyph) return null;
+  const icon = glyph.cloneNode(false);
+  icon.setAttribute('aria-hidden', 'true');
+  tile.classList.forEach((name) => {
+    if (name.startsWith('tone-')) icon.classList.add(name);
+  });
+  return icon;
 }
 
 function homeSectionFabIcon(kind) {
