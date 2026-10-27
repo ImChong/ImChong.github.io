@@ -33,12 +33,16 @@
     <meta name="twitter:image" content="https://imchong.github.io/img/profile.jpg" />
     <link rel="canonical" href="https://imchong.github.io/" />
     <title>Chong Liu | 刘冲</title>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>"
-    />
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
     <!-- ⚡ Bolt Performance Optimization: Preload the hero profile image to improve Largest Contentful Paint (LCP) -->
     <link rel="preload" href="img/profile.jpg" as="image" fetchpriority="high" />
+    <link
+      rel="preload"
+      href="fonts/geist-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <script src="js/theme-init.js"></script>
     <!-- ⚡ Bolt Performance Optimization: Load main script with defer to avoid blocking HTML parsing while fetching early -->
     <script src="js/main.js" defer></script>
@@ -46,6 +50,9 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <a class="skip-link" href="#lang-en" data-en="Skip to content" data-zh="跳到正文"
+      >Skip to content</a
+    >
     <!-- ─── Top Nav ─────────────────────────────────────────── -->
     <header class="site-header">
       <div class="header-inner">
@@ -71,8 +78,7 @@
             aria-label="Toggle dark mode"
             title="Toggle dark mode (Ctrl+Shift+L)"
           >
-            <span class="icon-sun">☀️</span>
-            <span class="icon-moon">🌙</span>
+            <span class="icon icon-theme" aria-hidden="true"></span>
           </button>
         </div>
       </div>
@@ -109,7 +115,10 @@
               </div>
               <div class="hero-meta">
                 <span class="hero-role">Robotics Engineer</span>
-                <span class="hero-location">📍 Shenzhen, Guangdong, China</span>
+                <span class="hero-location"
+                  ><span class="icon icon-map-pin" aria-hidden="true"></span>Shenzhen, Guangdong,
+                  China</span
+                >
               </div>
 
               <div class="bio">
@@ -149,7 +158,9 @@
 
         <section id="projects" class="section section-alt">
           <div class="container">
-            <h2 class="section-title">🛠️ Projects</h2>
+            <h2 class="section-title">
+              <span class="icon icon-wrench" aria-hidden="true"></span>Projects
+            </h2>
             <div class="card-list card-grid">
               <article class="card project-card">
                 <div class="card-body">
@@ -173,7 +184,7 @@
                     href="https://imchong.github.io/Robotics_Notebooks/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >🗺️ Visit Website →</a
+                    >Visit Website →</a
                   >
                 </div>
               </article>
@@ -200,7 +211,7 @@
                     href="https://imchong.github.io/Robot_Learning_Paper_Notebooks/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >📚 View Notes →</a
+                    >View Notes →</a
                   >
                 </div>
               </article>
@@ -227,7 +238,7 @@
                       href="https://imchong.github.io/Robot_Description_Gallery_Online/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >🖼️ View Gallery →</a
+                      >View Gallery →</a
                     >
                   </div>
                 </div>
@@ -255,26 +266,6 @@
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <svg
-                        class="project-tab-icon"
-                        viewBox="0 0 32 32"
-                        aria-hidden="true"
-                        focusable="false"
-                      >
-                        <rect width="32" height="32" rx="7" fill="#2f6df6" />
-                        <g fill="#fff">
-                          <circle cx="9" cy="9" r="3.2" />
-                          <circle cx="23" cy="16" r="3.2" />
-                          <circle cx="9" cy="23" r="3.2" />
-                          <path
-                            d="M9 9 L23 16 L9 23"
-                            stroke="#fff"
-                            stroke-width="2.2"
-                            fill="none"
-                            stroke-linejoin="round"
-                          />
-                        </g>
-                      </svg>
                       View Tool →
                     </a>
                   </div>
@@ -303,7 +294,7 @@
                       href="https://imchong.github.io/Robot_Retarget_Online/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >🔄 View Demo →</a
+                      >View Demo →</a
                     >
                   </div>
                 </div>
@@ -336,27 +327,6 @@
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <svg
-                        class="project-tab-icon"
-                        viewBox="0 0 32 32"
-                        aria-hidden="true"
-                        focusable="false"
-                      >
-                        <rect width="32" height="32" rx="7" fill="#2d74da" />
-                        <g fill="#fff">
-                          <path
-                            d="M9 10H15M9 22H15M15 10V22M15 16H23"
-                            stroke="#fff"
-                            stroke-width="2.2"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                          <circle cx="9" cy="10" r="2.6" />
-                          <circle cx="9" cy="22" r="2.6" />
-                          <circle cx="23" cy="16" r="2.6" />
-                        </g>
-                      </svg>
                       View Board →
                     </a>
                   </div>
@@ -385,7 +355,7 @@
                     href="https://imchong.github.io/Robot_Learning_Sim2Sim_Online/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >🤖 View Demo →</a
+                    >View Demo →</a
                   >
                 </div>
               </article>
@@ -404,7 +374,7 @@
                     coordination.
                   </p>
                   <a class="project-link" href="experience/pcv/proportional-control-valve.html"
-                    >💼 View Project →</a
+                    >View Project →</a
                   >
                 </div>
               </article>
@@ -414,7 +384,9 @@
 
         <section id="experience" class="section">
           <div class="container">
-            <h2 class="section-title">💼 Work Experience</h2>
+            <h2 class="section-title">
+              <span class="icon icon-briefcase" aria-hidden="true"></span>Work experience
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">
@@ -450,7 +422,9 @@
 
         <section id="education" class="section section-alt">
           <div class="container">
-            <h2 class="section-title">🎓 Education</h2>
+            <h2 class="section-title">
+              <span class="icon icon-graduation-cap" aria-hidden="true"></span>Education
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">
@@ -498,7 +472,9 @@
 
         <section id="research" class="section">
           <div class="container">
-            <h2 class="section-title">📝 Research Experience</h2>
+            <h2 class="section-title">
+              <span class="icon icon-article" aria-hidden="true"></span>Research experience
+            </h2>
             <p class="section-subtitle">
               Publications listed in reverse chronological order. See
               <a
@@ -739,7 +715,9 @@
 
         <section id="awards" class="section">
           <div class="container">
-            <h2 class="section-title">🥇 Honors &amp; Awards</h2>
+            <h2 class="section-title">
+              <span class="icon icon-medal" aria-hidden="true"></span>Honors &amp; awards
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">
@@ -825,7 +803,9 @@
 
         <section id="family" class="section section-alt">
           <div class="container">
-            <h2 class="section-title">🏡 Family</h2>
+            <h2 class="section-title">
+              <span class="icon icon-house" aria-hidden="true"></span>Family
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">
@@ -885,7 +865,9 @@
               </div>
               <div class="hero-meta">
                 <span class="hero-role">机器人工程师</span>
-                <span class="hero-location">📍 广东省深圳市</span>
+                <span class="hero-location"
+                  ><span class="icon icon-map-pin" aria-hidden="true"></span>广东省深圳市</span
+                >
               </div>
 
               <div class="bio">
@@ -918,7 +900,9 @@
 
         <section id="projects" class="section section-alt">
           <div class="container">
-            <h2 class="section-title">🛠️ 项目经历</h2>
+            <h2 class="section-title">
+              <span class="icon icon-wrench" aria-hidden="true"></span>项目经历
+            </h2>
             <div class="card-list card-grid">
               <article class="card project-card">
                 <div class="card-body">
@@ -940,7 +924,7 @@
                       href="https://imchong.github.io/Robotics_Notebooks/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >🗺️ 查看网站 →</a
+                      >查看网站 →</a
                     >
                   </div>
                 </div>
@@ -965,7 +949,7 @@
                       href="https://imchong.github.io/Robot_Learning_Paper_Notebooks/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >📚 查看笔记 →</a
+                      >查看笔记 →</a
                     >
                   </div>
                 </div>
@@ -991,7 +975,7 @@
                       href="https://imchong.github.io/Robot_Description_Gallery_Online/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >🖼️ 查看合集 →</a
+                      >查看合集 →</a
                     >
                   </div>
                 </div>
@@ -1019,26 +1003,6 @@
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <svg
-                        class="project-tab-icon"
-                        viewBox="0 0 32 32"
-                        aria-hidden="true"
-                        focusable="false"
-                      >
-                        <rect width="32" height="32" rx="7" fill="#2f6df6" />
-                        <g fill="#fff">
-                          <circle cx="9" cy="9" r="3.2" />
-                          <circle cx="23" cy="16" r="3.2" />
-                          <circle cx="9" cy="23" r="3.2" />
-                          <path
-                            d="M9 9 L23 16 L9 23"
-                            stroke="#fff"
-                            stroke-width="2.2"
-                            fill="none"
-                            stroke-linejoin="round"
-                          />
-                        </g>
-                      </svg>
                       查看工具 →
                     </a>
                   </div>
@@ -1065,7 +1029,7 @@
                       href="https://imchong.github.io/Robot_Retarget_Online/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >🔄 查看演示 →</a
+                      >查看演示 →</a
                     >
                   </div>
                 </div>
@@ -1094,27 +1058,6 @@
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <svg
-                        class="project-tab-icon"
-                        viewBox="0 0 32 32"
-                        aria-hidden="true"
-                        focusable="false"
-                      >
-                        <rect width="32" height="32" rx="7" fill="#2d74da" />
-                        <g fill="#fff">
-                          <path
-                            d="M9 10H15M9 22H15M15 10V22M15 16H23"
-                            stroke="#fff"
-                            stroke-width="2.2"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                          <circle cx="9" cy="10" r="2.6" />
-                          <circle cx="9" cy="22" r="2.6" />
-                          <circle cx="23" cy="16" r="2.6" />
-                        </g>
-                      </svg>
                       查看分析板 →
                     </a>
                   </div>
@@ -1141,7 +1084,7 @@
                       href="https://imchong.github.io/Robot_Learning_Sim2Sim_Online/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      >🤖 查看演示 →</a
+                      >查看演示 →</a
                     >
                   </div>
                 </div>
@@ -1157,7 +1100,7 @@
                     360）、运动学分析、公差累积计算、弹簧力学测试，以及多职能团队协作的机电一体化项目。
                   </p>
                   <a class="project-link" href="experience/pcv/proportional-control-valve.html"
-                    >💼 查看项目 →</a
+                    >查看项目 →</a
                   >
                 </div>
               </article>
@@ -1167,7 +1110,9 @@
 
         <section id="experience" class="section">
           <div class="container">
-            <h2 class="section-title">💼 工作经历</h2>
+            <h2 class="section-title">
+              <span class="icon icon-briefcase" aria-hidden="true"></span>工作经历
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">
@@ -1199,7 +1144,9 @@
 
         <section id="education" class="section section-alt">
           <div class="container">
-            <h2 class="section-title">🎓 教育背景</h2>
+            <h2 class="section-title">
+              <span class="icon icon-graduation-cap" aria-hidden="true"></span>教育背景
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">
@@ -1245,7 +1192,9 @@
 
         <section id="research" class="section">
           <div class="container">
-            <h2 class="section-title">📝 科研经历</h2>
+            <h2 class="section-title">
+              <span class="icon icon-article" aria-hidden="true"></span>科研经历
+            </h2>
             <p class="section-subtitle">
               论文按时间倒序排列，引用详情见
               <a
@@ -1463,7 +1412,9 @@
 
         <section id="awards" class="section">
           <div class="container">
-            <h2 class="section-title">🥇 荣誉奖项</h2>
+            <h2 class="section-title">
+              <span class="icon icon-medal" aria-hidden="true"></span>荣誉奖项
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">
@@ -1545,7 +1496,9 @@
 
         <section id="family" class="section section-alt">
           <div class="container">
-            <h2 class="section-title">🏡 家庭</h2>
+            <h2 class="section-title">
+              <span class="icon icon-house" aria-hidden="true"></span>家庭
+            </h2>
             <div class="card-list">
               <article class="card">
                 <div class="card-body">

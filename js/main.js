@@ -39,11 +39,59 @@ function toggleTheme() {
 
 // ⚡ Bolt Performance Optimization: Removed initTheme IIFE to eliminate redundant synchronous localStorage I/O on page load. theme-init.js handles default theme assignment.
 const themeBtn = document.getElementById('themeToggle');
-if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+// The new theme is revealed as a circle growing out of the toggle button
+// (View Transitions; same effect as ImChong/Robotics_Notebooks docs/main.js).
+// Without the API, or under reduced motion, the theme simply switches.
+function toggleThemeWithReveal() {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (typeof document.startViewTransition !== 'function' || reduceMotion || !themeBtn) {
+    toggleTheme();
+    return;
+  }
+
+  const rect = themeBtn.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  // Far enough to reach the viewport corner farthest from the button.
+  const radius = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y)
+  );
+
+  // .is-theme-switching (style.css) turns off the default cross-fade and every
+  // colour transition, so the new snapshot is already the final palette instead
+  // of fading in for 300ms underneath the reveal.
+  root.classList.add('is-theme-switching');
+  const transition = document.startViewTransition(toggleTheme);
+  transition.ready
+    .then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+        {
+          duration: 560,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          pseudoElement: '::view-transition-new(root)',
+        }
+      );
+    })
+    .catch(() => {
+      // Transition skipped: the callback has still switched the theme.
+    });
+  transition.finished.finally(() => root.classList.remove('is-theme-switching'));
+}
+
+if (themeBtn) themeBtn.addEventListener('click', toggleThemeWithReveal);
+
+// Until the reader picks a theme, keep following the OS setting live.
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+  if (localStorage.getItem(THEME_KEY)) return;
+  root.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+});
 document.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.shiftKey && e.key === 'L') {
     e.preventDefault();
-    toggleTheme();
+    toggleThemeWithReveal();
   }
 });
 
@@ -90,6 +138,13 @@ function applyLangMode(mode, isInit = false) {
   navLinks.forEach((link) => {
     link.textContent = mode === 'zh' ? link.getAttribute('data-zh') : link.getAttribute('data-en');
   });
+
+  // The skip link jumps into whichever language block is showing.
+  const skipLink = document.querySelector('.skip-link');
+  if (skipLink) {
+    skipLink.href = mode === 'zh' ? '#lang-zh' : '#lang-en';
+    skipLink.textContent = skipLink.getAttribute(mode === 'zh' ? 'data-zh' : 'data-en');
+  }
   setupHomeSectionNav();
   setupNavObserver();
   setupSubpageTocMobileDrawer();
@@ -295,8 +350,25 @@ function keepClearOfFooter(el, footer, measured = el) {
   };
 
   const ac = new AbortController();
-  window.addEventListener('scroll', schedule, { passive: true, signal: ac.signal });
   window.addEventListener('resize', schedule, { signal: ac.signal });
+
+  // The button can only reach the footer while the footer is on screen, so
+  // the per-frame scroll measurement is attached only for that stretch; an
+  // IntersectionObserver switches it on and off instead of listening always.
+  let scrollAc = null;
+  const footerObserver = new IntersectionObserver((entries) => {
+    const visible = entries[entries.length - 1].isIntersecting;
+    if (visible && !scrollAc) {
+      scrollAc = new AbortController();
+      window.addEventListener('scroll', schedule, { passive: true, signal: scrollAc.signal });
+    } else if (!visible && scrollAc) {
+      scrollAc.abort();
+      scrollAc = null;
+    }
+    // Settle once on every crossing: lifts on entry, hands slack back on exit.
+    schedule();
+  });
+  footerObserver.observe(footer);
 
   // The footer grows/shrinks with the viewport width; re-measure when it does.
   const resizeObserver = new ResizeObserver(schedule);
@@ -305,6 +377,8 @@ function keepClearOfFooter(el, footer, measured = el) {
 
   return () => {
     ac.abort();
+    if (scrollAc) scrollAc.abort();
+    footerObserver.disconnect();
     resizeObserver.disconnect();
     el.style.removeProperty('--fab-footer-lift');
   };
@@ -347,19 +421,7 @@ function setupSubpageTocMobileDrawer() {
     mode === 'zh' ? '打开或关闭本页目录' : 'Open or close table of contents'
   );
 
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('width', '24');
-  svg.setAttribute('height', '24');
-  svg.setAttribute('aria-hidden', 'true');
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', 'currentColor');
-  path.setAttribute('stroke-width', '2');
-  path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-  svg.appendChild(path);
-  toggle.appendChild(svg);
+  toggle.appendChild(iconSpan('toc'));
 
   document.body.appendChild(overlay);
   document.body.appendChild(toggle);
@@ -471,32 +533,28 @@ function setupSubpageTocMobileDrawer() {
   };
 }
 
+// Phosphor icon drawn by the .icon / .icon-<name> mask classes in style.css.
+function iconSpan(name) {
+  const icon = document.createElement('span');
+  icon.className = 'icon icon-' + name;
+  icon.setAttribute('aria-hidden', 'true');
+  return icon;
+}
+
 /* ─── Home section jump FAB (mobile) ───────────────────── */
 // The header nav collapses below 720px, so the homepage gets a floating
 // button that opens a compact jump menu mirroring that nav (plus "Top").
 // Built from the DOM so labels, order and targets stay in one place.
+// Section titles lead with an icon span; the menu reuses the same glyph.
 function homeSectionIcon(section) {
-  const title = section.querySelector('.section-title');
-  const first = title ? title.textContent.trim().split(/\s+/)[0] : '';
-  // Section titles lead with an emoji ("🛠️ Projects"); skip a plain-text word.
-  return first && !/[a-z0-9\u4e00-\u9fa5]/i.test(first) ? first : '';
+  const icon = section.querySelector('.section-title > .icon');
+  return icon ? icon.cloneNode(false) : null;
 }
 
 function homeSectionFabIcon(kind) {
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('width', '22');
-  svg.setAttribute('height', '22');
-  svg.setAttribute('aria-hidden', 'true');
-  svg.setAttribute('class', 'home-nav-fab__icon home-nav-fab__icon--' + kind);
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', 'currentColor');
-  path.setAttribute('stroke-width', '2');
-  path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('d', kind === 'close' ? 'M7 7l10 10M17 7L7 17' : 'M5 7h14M5 12h14M5 17h9');
-  svg.appendChild(path);
-  return svg;
+  const icon = iconSpan(kind === 'close' ? 'x' : 'list');
+  icon.classList.add('home-nav-fab__icon', 'home-nav-fab__icon--' + kind);
+  return icon;
 }
 
 function setupHomeSectionNav() {
@@ -514,7 +572,7 @@ function setupHomeSectionNav() {
 
   const items = [];
   if (langBlock.querySelector('#hero')) {
-    items.push({ id: 'hero', icon: '⬆️', label: isZh ? '顶部' : 'Top' });
+    items.push({ id: 'hero', icon: iconSpan('arrow-up'), label: isZh ? '顶部' : 'Top' });
   }
   navLinks.forEach((link) => {
     const id = link.getAttribute('href').slice(1);
@@ -552,16 +610,16 @@ function setupHomeSectionNav() {
   menu.setAttribute('aria-label', isZh ? '章节导航' : 'Section navigation');
 
   const list = document.createElement('ul');
-  items.forEach((item) => {
+  // The menu paints bottom-up (column-reverse on the FAB) but reads top-down,
+  // so --i counts from the top item for the staggered entrance.
+  items.forEach((item, index) => {
     const li = document.createElement('li');
+    li.style.setProperty('--i', index);
     const link = document.createElement('a');
     link.href = '#' + item.id;
     if (item.icon) {
-      const icon = document.createElement('span');
-      icon.className = 'home-nav-menu__icon';
-      icon.setAttribute('aria-hidden', 'true');
-      icon.textContent = item.icon;
-      link.appendChild(icon);
+      item.icon.classList.add('home-nav-menu__icon');
+      link.appendChild(item.icon);
     }
     const label = document.createElement('span');
     label.className = 'home-nav-menu__label';

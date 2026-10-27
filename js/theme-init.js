@@ -13,10 +13,12 @@ try {
 (function () {
   const root = document.documentElement;
 
-  // Theme initialization
+  // Theme initialization: an explicit choice wins, otherwise follow the OS.
   const themeKey = 'cl-theme';
   const savedTheme = localStorage.getItem(themeKey);
-  root.setAttribute('data-theme', savedTheme === 'light' ? 'light' : 'dark');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const theme = savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : null;
+  root.setAttribute('data-theme', theme || (prefersLight ? 'light' : 'dark'));
 
   // Language initialization
   const langKey = 'cl-lang';
