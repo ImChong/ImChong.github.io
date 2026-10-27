@@ -421,7 +421,9 @@ function setupSubpageTocMobileDrawer() {
     mode === 'zh' ? '打开或关闭本页目录' : 'Open or close table of contents'
   );
 
-  toggle.appendChild(iconSpan('toc'));
+  const openIcon = homeSectionFabIcon('open');
+  openIcon.classList.replace('icon-list', 'icon-toc');
+  toggle.append(openIcon, homeSectionFabIcon('close'));
 
   document.body.appendChild(overlay);
   document.body.appendChild(toggle);
@@ -518,7 +520,11 @@ function setupSubpageTocMobileDrawer() {
   resizeObserver.observe(layout);
   syncDrawer();
 
-  const releaseFooterClearance = keepClearOfFooter(toggle, langBlock.querySelector('.site-footer'));
+  const releaseFooterClearance = keepClearOfFooter(
+    document.body,
+    langBlock.querySelector('.site-footer'),
+    toggle
+  );
 
   subpageMobileCleanup = () => {
     ac.abort();
