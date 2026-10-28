@@ -35,12 +35,17 @@ WEBP_QUALITY = 80
 BASE = "https://imchong.github.io"
 
 
-def load_sample_motion(page) -> None:
-    """Robot Retarget: open the sample menu and load the LAFAN1 walk clip."""
+def open_retarget_config(page) -> None:
+    """Robot Retarget: load the LAFAN1 walk clip, then open the retarget
+    config step so the G1 and the BVH skeleton show side by side."""
     page.get_by_text(re.compile(r"加载示例动作|sample", re.I)).first.click()
     page.wait_for_timeout(800)
     page.get_by_text(re.compile(r"Walk")).first.click()
     page.wait_for_timeout(4000)
+    page.get_by_role("button", name=re.compile(r"下一步|Next", re.I)).first.click()
+    # "机器人模型加载完成 (36/36)" / "Robot model loaded (36/36)"
+    page.get_by_text(re.compile(r"加载完成|loaded \(")).first.wait_for(timeout=60000)
+    page.wait_for_timeout(1500)
 
 
 def load_sample_robot(page) -> None:
@@ -80,7 +85,7 @@ PROJECTS = [
         "rjoct.lang",
         load_sample_robot,
     ),
-    ("robot-retarget", "/Robot_Retarget_Online/", "rro-locale", load_sample_motion),
+    ("robot-retarget", "/Robot_Retarget_Online/", "rro-locale", open_retarget_config),
     ("robot-learning-io-board", "/Robot_Learning_IO_Board_Online/", None, None),
     (
         "robot-learning-sim2sim",
