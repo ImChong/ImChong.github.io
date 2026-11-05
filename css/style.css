@@ -757,14 +757,33 @@ html.is-section-jump .section {
 }
 
 /* Institution / company logo at the end of an education or experience card's
-   name, the height of the heading text. A one-colour logo comes as a pair,
-   one per theme. */
+   name, as tall as the script beside it: cap height on the baseline for
+   English, the full em box (where CJK glyphs sit, like .icon) for Chinese.
+   .card-logo--small shrinks a heavy logo to 80%, centred on the same line,
+   and a one-colour logo comes as a pair, one per theme. The em value before
+   each cap value is Geist's cap height (0.71em), for browsers without the
+   cap unit. */
 .card-logo {
   display: inline-block;
   width: auto;
-  height: 1.25em;
+  height: 0.71em;
+  height: 1cap;
   margin-left: 0.25em;
-  vertical-align: middle;
+  vertical-align: baseline;
+}
+.card-logo--small {
+  height: 0.57em;
+  height: 0.8cap;
+  vertical-align: 0.07em;
+  vertical-align: 0.1cap;
+}
+#lang-zh .card-logo {
+  height: 1em;
+  vertical-align: -0.125em;
+}
+#lang-zh .card-logo--small {
+  height: 0.8em;
+  vertical-align: -0.025em;
 }
 [data-theme='dark'] .card-logo--on-light,
 [data-theme='light'] .card-logo--on-dark {
