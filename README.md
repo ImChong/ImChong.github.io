@@ -31,7 +31,8 @@ Hi! I'm **Chong Liu (刘冲)**, a Robot Control Engineer based in Shenzhen, Chin
 │   └── style.css       # Styles with CSS custom properties for theming
 ├── js/
 │   ├── main.js         # Dark mode, scroll highlight, smooth navigation
-│   └── scroll-reveal.js # Fade-in / slide-up of blocks as they scroll into view
+│   ├── scroll-reveal.js # Fade-in / slide-up of blocks as they scroll into view
+│   └── pointer-effects.js # Mouse-only card spotlight and magnetic header buttons / hero links
 └── README.md
 ```
 
