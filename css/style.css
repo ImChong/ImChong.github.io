@@ -2005,7 +2005,12 @@ html.is-theme-switching *::after {
     transform: none;
   }
 
-  .skip-link,
+  /* The skip link hides by its transform alone, so it keeps it and only drops
+     the slide (the TOC popup hides by opacity / visibility). */
+  .skip-link {
+    transition-duration: 0.01ms;
+  }
+
   .page-toc,
   body.subpage-toc-drawer-mode .page-toc {
     transition-duration: 0.01ms;
