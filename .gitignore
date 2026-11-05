@@ -1,3 +1,7 @@
 node_modules/
 USER.md
 __pycache__/
+
+# Local screenshot / video captures for reviewing visual changes (not committed)
+docs/pr-screenshots/
+docs/pr-videos/
