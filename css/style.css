@@ -437,8 +437,7 @@ ul {
     background-color var(--transition),
     border-color var(--transition),
     color var(--transition),
-    transform var(--dur-move) var(--ease),
-    translate var(--dur-move) var(--ease);
+    transform var(--dur-move) var(--ease);
 }
 .theme-toggle {
   font-size: 1.125rem;
@@ -518,9 +517,6 @@ ul {
 .hero-links a {
   color: var(--accent);
   font-weight: 500;
-  transition:
-    color var(--transition),
-    translate var(--dur-move) var(--ease);
 }
 .hero-links a:hover {
   text-decoration: underline;
