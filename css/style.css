@@ -786,6 +786,13 @@ html.is-section-jump .section {
   display: none;
 }
 
+/* Parked: the logos stay in the markup and img/, sized as above, but are not
+   shown until their placement is settled. Delete this rule to bring them
+   back. Lazy images that are not rendered are not fetched either. */
+.card-body .card-logo {
+  display: none;
+}
+
 .card-body h3 {
   font-size: 1.125rem;
   line-height: 1.75rem;

@@ -18,18 +18,13 @@ This is a **static website** (pure HTML, CSS, vanilla JS) with no build step, no
 
 ### Pull requests that change layout or visuals
 
-Reviewers should see **browser-rendered** screenshots (what users see), not raw asset files pulled from `src` alone.
+Check visual changes in a real browser (what users see), not by reading asset files from `src` alone.
 
 1. From the repo root, serve the built site locally, for example:
    - `python3 -m http.server 8765 --bind 127.0.0.1`
-2. Capture screenshots against that origin (Playwright is used in automation; install once with `pip install playwright` and `playwright install chromium`).
-3. For the proportional control valve page, run:
-   - `python3 scripts/capture_pcv_pr_screenshots.py`  
-     (expects the server on port **8765**; writes under `docs/pr-screenshots/`.)
-4. **Commit** the new or updated PNGs under `docs/pr-screenshots/` on the PR branch so they stay in git history.
-5. In the PR description, embed those images with stable URLs, for example:
-   - `https://raw.githubusercontent.com/ImChong/ImChong.github.io/<branch>/docs/pr-screenshots/<filename>.png`  
-     Replace `<branch>` with your working branch name after `git push`.
+2. Capture screenshots against that origin (Playwright is used in automation; install once with `pip install playwright` and `playwright install chromium`). The `scripts/capture_*.py` helpers expect the server on port **8765**, for example:
+   - `python3 scripts/capture_pcv_pr_screenshots.py`
+3. **Do not commit screenshots or videos.** The helpers write to `docs/pr-screenshots/` (videos go in `docs/pr-videos/`); both are git-ignored scratch output. Share captures with the requester directly instead of putting them in the repo or linking them from the PR description, and describe the visual change in the PR text.
 
 Viewport captures (1280×900) show the fixed sections clearly; full-page captures document the whole article in each language.
 
