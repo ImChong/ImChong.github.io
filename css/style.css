@@ -44,6 +44,7 @@
   --accent-hover: #89b4f0;
   --accent-soft: rgba(110, 163, 237, 0.14);
   --accent-line: rgba(110, 163, 237, 0.4);
+  --accent-glow: rgba(110, 163, 237, 0.16);
   --on-accent: #181818;
   --header-bg: rgba(24, 24, 24, 0.72);
 
@@ -97,6 +98,7 @@
   --accent-hover: #1a5bb8;
   --accent-soft: rgba(37, 99, 201, 0.1);
   --accent-line: rgba(37, 99, 201, 0.35);
+  --accent-glow: rgba(37, 99, 201, 0.16);
   --on-accent: #ffffff;
   --header-bg: rgba(255, 255, 255, 0.72);
   --tone-orange: #c2410c;
@@ -435,7 +437,8 @@ ul {
     background-color var(--transition),
     border-color var(--transition),
     color var(--transition),
-    transform var(--dur-move) var(--ease);
+    transform var(--dur-move) var(--ease),
+    translate var(--dur-move) var(--ease);
 }
 .theme-toggle {
   font-size: 1.125rem;
@@ -515,6 +518,9 @@ ul {
 .hero-links a {
   color: var(--accent);
   font-weight: 500;
+  transition:
+    color var(--transition),
+    translate var(--dur-move) var(--ease);
 }
 .hero-links a:hover {
   text-decoration: underline;
@@ -675,6 +681,8 @@ html.is-section-jump .section {
 .card {
   --card-pad: 24px;
 
+  position: relative;
+  isolation: isolate;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -690,6 +698,55 @@ html.is-section-jump .section {
 .card:hover {
   border-color: var(--accent-line);
   transform: translateY(-2px);
+}
+
+/* Pointer spotlight: a soft glow follows the mouse inside the card and lights
+   the nearest stretch of its border. js/pointer-effects.js feeds the position
+   (--spot-x / --spot-y) and sets html.has-pointer-fx only for a mouse without
+   prefers-reduced-motion. The glow sits under the content (z-index -1 inside
+   the card's own stacking context); the rim is masked down to the 1px border. */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.card::before {
+  inset: 0;
+  z-index: -1;
+  border-radius: calc(var(--radius) - 1px);
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--accent-glow),
+    transparent 70%
+  );
+}
+.card::after {
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    216px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--accent),
+    transparent 70%
+  );
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Chromium < 120 */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Chromium < 120 */
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.has-pointer-fx .card:hover::before,
+.has-pointer-fx .card:hover::after {
+  opacity: 1;
 }
 
 /* Let wide images (e.g. CAD sheets) respect the column width inside flex cards.
