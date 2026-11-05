@@ -756,13 +756,15 @@ html.is-section-jump .section {
   min-width: 0;
 }
 
-/* Institution / company logo at the right of an education or experience card,
-   straight on the card. A one-colour logo comes as a pair, one per theme. */
+/* Institution / company logo at the end of an education or experience card's
+   name, the height of the heading text. A one-colour logo comes as a pair,
+   one per theme. */
 .card-logo {
-  flex: 0 0 auto;
-  width: 56px;
-  height: 56px;
-  object-fit: contain;
+  display: inline-block;
+  width: auto;
+  height: 1.25em;
+  margin-left: 0.25em;
+  vertical-align: middle;
 }
 [data-theme='dark'] .card-logo--on-light,
 [data-theme='light'] .card-logo--on-dark {
@@ -1025,10 +1027,6 @@ html.is-section-jump .section {
   }
   .card {
     --card-pad: 16px;
-  }
-  .card-logo {
-    width: 44px;
-    height: 44px;
   }
 }
 
