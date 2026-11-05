@@ -756,18 +756,12 @@ html.is-section-jump .section {
   min-width: 0;
 }
 
-/* Institution logo at the right of an education card. The tile stays white in
-   both themes: the logos are drawn for a white ground, and Columbia's navy
-   crown sinks into the dark surface without it. */
+/* Institution logo at the right of an education card, straight on the card. */
 .card-logo {
   flex: 0 0 auto;
-  width: 64px;
-  height: 64px;
-  padding: 6px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 8px;
 }
 
 .card-body h3 {
@@ -1028,9 +1022,8 @@ html.is-section-jump .section {
     --card-pad: 16px;
   }
   .card-logo {
-    width: 48px;
-    height: 48px;
-    padding: 4px;
+    width: 44px;
+    height: 44px;
   }
 }
 
