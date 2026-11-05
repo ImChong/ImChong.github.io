@@ -803,6 +803,16 @@ html.is-section-jump .section {
   margin-bottom: 0;
 }
 
+/* Detail pages: the card is the measure, so its body text, bullets and figure
+   captions run the full card width. A 65ch cap stopped them about 70% of the
+   way across (and at about 43 characters a line in Chinese, where 1ch is
+   roughly half a character). */
+.subpage-detail-main .card-body > p:not(.card-meta),
+.subpage-detail-main .card-bullets li,
+.subpage-detail-main .caption {
+  max-width: none;
+}
+
 /* ── Project Grid ───────────────────────────────────────── */
 .card-grid {
   display: grid;
