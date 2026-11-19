@@ -1,61 +1,10 @@
-name: Refresh paper notebook project screenshots (temporary)
-
-on:
-  push:
-    branches:
-      - chore/refresh-paper-notebooks-previews-20261119
-
+name: Capture screenshots test
+on: push
 permissions:
   contents: write
-
 jobs:
   capture:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
-          persist-credentials: true
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Install screenshot dependencies
-        run: |
-          python -m pip install --disable-pip-version-check pillow playwright
-          python -m playwright install --with-deps chromium
-      - name: Refresh English and Chinese screenshots from live site
-        env:
-          HTTPS_PROXY: ""
-          https_proxy: ""
-        run: |
-          python - <<'PY'
-          from io import BytesIO
-          from PIL import Image
-          from playwright.sync_api import sync_playwright
-          import scripts.capture_project_previews as cp
-
-          with sync_playwright() as p:
-              browser = p.chromium.launch(headless=True)
-              for lang in ("en", "zh"):
-                  context = browser.new_context(viewport=cp.VIEWPORT, color_scheme="dark")
-                  context.add_init_script(f"localStorage.setItem('cl-lang', {lang!r});")
-                  page = context.new_page()
-                  page.goto(cp.BASE + "/Robot_Learning_Paper_Notebooks/", wait_until="domcontentloaded", timeout=60000)
-                  page.locator(".index-header").wait_for(timeout=30000)
-                  page.evaluate("document.fonts.ready")
-                  page.wait_for_timeout(3000)
-                  name = f"robot-learning-paper-notebooks-{lang}"
-                  cp.save_webp(Image.open(BytesIO(page.screenshot())), name)
-                  context.close()
-              browser.close()
-          PY
-      - name: Commit changed project screenshots
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add img/projects/robot-learning-paper-notebooks-en.webp img/projects/robot-learning-paper-notebooks-zh.webp
-          if ! git diff --cached --quiet; then
-            git commit -m "更新机器人学习论文笔记项目中英文截图"
-            git push origin HEAD:${{ github.ref_name }}
-          fi
+      - name: Run
+        run: echo capture-test
