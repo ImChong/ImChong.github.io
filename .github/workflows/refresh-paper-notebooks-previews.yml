@@ -1,10 +1,30 @@
-name: Capture screenshots test
+name: Capture paper notebook screenshots
 on: push
+
 permissions:
   contents: write
+
 jobs:
   capture:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Run
-        run: echo capture-test
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install capture requirements
+        run: pip install pillow playwright
+      - name: Install Chromium
+        run: python -m playwright install chromium --with-deps
+      - name: Capture previews
+        run: python scripts/refresh_paper_notebooks_previews.py
+      - name: Commit updated screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add img/projects/robot-learning-paper-notebooks-en.webp img/projects/robot-learning-paper-notebooks-zh.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "更新机器人学习论文笔记项目中英文截图"
+            git push origin HEAD:chore/refresh-paper-notebooks-previews-20261119
+          fi
