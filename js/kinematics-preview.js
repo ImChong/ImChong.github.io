@@ -11,8 +11,8 @@
   const mobileMq = window.matchMedia('(max-width: 639px)');
 
   const SIDE_OFFSET_X = 0.56;
-  const DEFAULT_TARGET_Z = 0.78;
-  const DEFAULT_CAM_OFFSET = [1.35, -3.25, 1.04];
+  const DEFAULT_TARGET_Z = 0.76;
+  const DEFAULT_CAM_OFFSET = [0.95, -2.65, 0.88];
   const BONE_UP = new TV.Vector3(0, 1, 0);
 
   function getActiveLangMode() {
@@ -306,7 +306,7 @@
     scene.background = new TV.Color(initialPalette.bg);
     scene.fog = new TV.Fog(initialPalette.bg, initialPalette.fogNear, initialPalette.fogFar);
 
-    const camera = new TV.PerspectiveCamera(42, 1.5, 0.05, 80);
+    const camera = new TV.PerspectiveCamera(40, 1.5, 0.05, 80);
     camera.up.set(0, 0, 1);
 
     const isMobile = mobileMq.matches;
@@ -329,7 +329,7 @@
     scene.add(hemi);
 
     const dirLight = new TV.DirectionalLight(0xffffff, 2.25);
-    dirLight.position.set(3.2, -2.8, 5.2);
+    dirLight.position.set(2.8, -2.6, 5.0);
     dirLight.castShadow = true;
     const shadowRes = isMobile ? 512 : 1024;
     dirLight.shadow.mapSize.set(shadowRes, shadowRes);
@@ -340,8 +340,10 @@
     dirLight.shadow.camera.near = 0.5;
     dirLight.shadow.camera.far = 16;
     dirLight.shadow.bias = -0.0004;
+    dirLight.target.position.set(0, 0, 0.6);
     scene.add(dirLight);
     scene.add(dirLight.target);
+    dirLight.target.updateMatrixWorld();
 
     let floorTex = createCheckerTexture(initialPalette.floor);
     const floorMat = new TV.MeshStandardMaterial({
@@ -363,13 +365,29 @@
     controls.maxPolarAngle = Math.PI * 0.51;
     controls.minPolarAngle = 0.25;
     controls.minDistance = 1.6;
-    controls.maxDistance = 8.0;
+    controls.maxDistance = 5.2;
 
     let currentStage = activeStage0;
     let needsRender = true;
+    let userOrbited = false;
     controls.addEventListener('change', () => {
       needsRender = true;
     });
+    controls.addEventListener('start', () => {
+      userOrbited = true;
+    });
+
+    function resetCameraView() {
+      const aspectScale = camera.aspect < 1.25 ? 1.25 / Math.max(0.8, camera.aspect) : 1.0;
+      controls.target.set(0, 0, DEFAULT_TARGET_Z);
+      camera.position.set(
+        DEFAULT_CAM_OFFSET[0] * aspectScale,
+        DEFAULT_CAM_OFFSET[1] * aspectScale,
+        DEFAULT_TARGET_Z + DEFAULT_CAM_OFFSET[2] * aspectScale
+      );
+      controls.update();
+      needsRender = true;
+    }
 
     function resizeToStage(stage) {
       if (!stage) return;
@@ -379,6 +397,7 @@
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h, false);
+      if (!userOrbited) resetCameraView();
       needsRender = true;
     }
 
@@ -445,22 +464,9 @@
     let rafId = 0;
     let lastTs = 0;
     let lastUiTs = 0;
-    let hasFocusAnchor = false;
-    let focusX = 0;
-    let focusY = 0;
     let smoothSpeed = 0.85;
-
-    function resetCameraView() {
-      const aspectScale = camera.aspect < 1.3 ? 1.35 / Math.max(0.85, camera.aspect) : 1.0;
-      controls.target.set(focusX, focusY, DEFAULT_TARGET_Z);
-      camera.position.set(
-        focusX + DEFAULT_CAM_OFFSET[0] * aspectScale,
-        focusY + DEFAULT_CAM_OFFSET[1] * aspectScale,
-        DEFAULT_TARGET_Z + DEFAULT_CAM_OFFSET[2] * aspectScale
-      );
-      controls.update();
-      needsRender = true;
-    }
+    let floorOffsetX = 0;
+    let floorOffsetY = 0;
 
     function syncControlsUI() {
       const activeId = clips[clipIdx].meta.id;
@@ -479,7 +485,7 @@
       });
     }
 
-    function poseAt(clip, fFloat, nowTs, snapCamera) {
+    function poseAt(clip, fFloat, nowTs) {
       const total = clip.meta.frameCount;
       const wrapped = ((fFloat % total) + total) % total;
       const f0 = Math.floor(wrapped);
@@ -510,43 +516,15 @@
 
       g1Rig.applyQpos(frameQpos);
       bvhRig.applyPositions(frameBvh);
-      // Lock BVH horizontal root alongside G1 pelvis so they never drift apart or collide
-      bvhRig.rootGroup.position.set(
-        frameQpos[0] - frameBvh[0] - SIDE_OFFSET_X,
-        frameQpos[1] - frameBvh[1],
-        0
-      );
 
-      const nextFocusX = frameQpos[0];
-      const nextFocusY = frameQpos[1];
-      if (!hasFocusAnchor || snapCamera) {
-        const dx = nextFocusX - controls.target.x;
-        const dy = nextFocusY - controls.target.y;
-        controls.target.x += dx;
-        controls.target.y += dy;
-        camera.position.x += dx;
-        camera.position.y += dy;
-        hasFocusAnchor = true;
-        if (snapCamera && !userSetAngle()) {
-          resetCameraView();
-        }
-      } else {
-        const dx = nextFocusX - focusX;
-        const dy = nextFocusY - focusY;
-        controls.target.x += dx;
-        controls.target.y += dy;
-        camera.position.x += dx;
-        camera.position.y += dy;
-      }
-      focusX = nextFocusX;
-      focusY = nextFocusY;
+      // Pin both figures symmetrically around (0, 0) on a virtual treadmill so neither drifts out of view
+      g1Rig.rootGroup.position.set(SIDE_OFFSET_X - frameQpos[0], -frameQpos[1], 0);
+      bvhRig.rootGroup.position.set(-SIDE_OFFSET_X - frameBvh[0], -frameBvh[1], 0);
 
-      dirLight.position.set(focusX + 3.2, focusY - 2.8, 5.2);
-      dirLight.target.position.set(focusX, focusY, 0.5);
-      dirLight.target.updateMatrixWorld();
-
-      // Seamless checkerboard tracking at exact 2m tile-pair period
-      floorMesh.position.set(Math.round(focusX / 2) * 2, Math.round(focusY / 2) * 2, 0);
+      // Scroll checkerboard floor UVs in sync with true world motion (2m checker repeat period)
+      floorOffsetX = (((frameQpos[0] / 2) % 1) + 1) % 1;
+      floorOffsetY = (((frameQpos[1] / 2) % 1) + 1) % 1;
+      floorTex.offset.set(floorOffsetX, floorOffsetY);
 
       // Update UI progress bar & telemetry at ~12Hz
       const ratio = total > 1 ? wrapped / (total - 1) : 0;
@@ -582,25 +560,17 @@
       needsRender = true;
     }
 
-    let userOrbited = false;
-    controls.addEventListener('start', () => {
-      userOrbited = true;
-    });
-    function userSetAngle() {
-      return userOrbited;
-    }
-
     function selectClip(nextIdx) {
       clipIdx = ((nextIdx % clips.length) + clips.length) % clips.length;
       frameFloat = 0;
       smoothSpeed = 0;
       syncControlsUI();
-      poseAt(clips[clipIdx], 0, 0, true);
+      poseAt(clips[clipIdx], 0, 0);
     }
 
     // Initial frame + camera framing
     syncControlsUI();
-    poseAt(clips[0], 0, 0, true);
+    poseAt(clips[0], 0, 0);
     resetCameraView();
 
     function step(ts) {
@@ -619,9 +589,9 @@
           clipIdx = (clipIdx + 1) % clips.length;
           frameFloat = 0;
           syncControlsUI();
-          poseAt(clips[clipIdx], 0, ts, true);
+          poseAt(clips[clipIdx], 0, ts);
         } else {
-          poseAt(clip, frameFloat, ts, false);
+          poseAt(clip, frameFloat, ts);
         }
       }
 
@@ -696,6 +666,7 @@
         scene.fog = new TV.Fog(nextPalette.bg, nextPalette.fogNear, nextPalette.fogFar);
         const oldTex = floorTex;
         floorTex = createCheckerTexture(nextPalette.floor);
+        floorTex.offset.set(floorOffsetX, floorOffsetY);
         floorMat.map = floorTex;
         floorMat.needsUpdate = true;
         oldTex.dispose();
