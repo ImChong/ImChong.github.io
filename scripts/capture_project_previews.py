@@ -20,6 +20,7 @@ HTTPS_PROXY, when set, is passed to the browser.
 """
 from __future__ import annotations
 
+import argparse
 import os
 import re
 import sys
@@ -107,6 +108,12 @@ def save_webp(image, name: str) -> None:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--only", nargs="+", choices=[project[0] for project in PROJECTS],
+        help="Capture only the selected project preview(s), including their language variants.",
+    )
+    args = parser.parse_args()
     try:
         from PIL import Image
         from playwright.sync_api import sync_playwright
@@ -130,6 +137,8 @@ def main() -> int:
     with sync_playwright() as p:
         browser = p.chromium.launch(**launch_kwargs)
         for name, path, lang_key, action in PROJECTS:
+            if args.only and name not in args.only:
+                continue
             for lang in LANGUAGES if lang_key else (None,):
                 context = browser.new_context(viewport=VIEWPORT, color_scheme="dark")
                 if lang_key:
@@ -150,12 +159,13 @@ def main() -> int:
         browser.close()
 
     # Proportional Control Valve: the product photo, cropped to the card ratio.
-    photo = Image.open(REPO_ROOT / "experience" / "pcv" / "hero.png")
-    if photo.mode == "RGBA":
-        backdrop = Image.new("RGB", photo.size, (255, 255, 255))
-        backdrop.paste(photo, mask=photo.split()[3])
-        photo = backdrop
-    save_webp(photo, "proportional-control-valve")
+    if not args.only:
+        photo = Image.open(REPO_ROOT / "experience" / "pcv" / "hero.png")
+        if photo.mode == "RGBA":
+            backdrop = Image.new("RGB", photo.size, (255, 255, 255))
+            backdrop.paste(photo, mask=photo.split()[3])
+            photo = backdrop
+        save_webp(photo, "proportional-control-valve")
     return 0
 
 
