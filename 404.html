@@ -13,6 +13,7 @@
       content="camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), bluetooth=(), fullscreen=(), display-capture=()"
     />
     <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0a0b0d" />
     <title>Page not found | Chong Liu</title>
     <!-- GitHub Pages serves this file for any missing path at any depth, so every
          asset URL is root-absolute rather than relative. -->
@@ -24,9 +25,15 @@
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="/fonts/geist-mono-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <script src="/js/theme-init.js"></script>
     <script src="/js/main.js" defer></script>
-    <script src="/js/pointer-effects.js" defer></script>
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
@@ -59,7 +66,7 @@
         <section class="not-found">
           <div class="container">
             <p class="not-found-code">404</p>
-            <h1 class="hero-name">Page not found</h1>
+            <h1 class="not-found-title">Page not found</h1>
             <p>
               This address does not match any page on the site. It may have moved when the project
               pages were reorganized, or the link may contain a typo.
@@ -86,7 +93,7 @@
         <section class="not-found">
           <div class="container">
             <p class="not-found-code">404</p>
-            <h1 class="hero-name">页面不存在</h1>
+            <h1 class="not-found-title">页面不存在</h1>
             <p>
               本站没有与这个地址对应的页面。页面可能在项目整理时移动了位置，或者链接中有拼写错误。
             </p>

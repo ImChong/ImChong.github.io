@@ -3,11 +3,11 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['node_modules/**', 'playwright-report/**', 'test-results/**'],
+    ignores: ['node_modules/**', 'playwright-report/**', 'test-results/**', 'js/vendor/**'],
   },
   js.configs.recommended,
   {
-    files: ['js/**/*.js'],
+    files: ['js/**/*.js', 'classic/**/*.js'],
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: 'script',

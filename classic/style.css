@@ -1,0 +1,2059 @@
+/* ═══════════════════════════════════════════════════════════
+   Chong Liu — Personal Academic Homepage
+   Clean, minimal, Notion-inspired
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Font ───────────────────────────────────────────────────
+   Geist (SIL OFL 1.1, fonts/OFL.txt), self-hosted because the CSP only allows
+   'self'. Latin glyphs only — Chinese falls through to the system CJK font. */
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../fonts/geist-latin-ext-wght-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+@font-face {
+  font-family: Geist;
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../fonts/geist-latin-wght-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── Custom Properties (dark default — avoids flash before theme-init.js) ─ */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces step through one neutral family: #181818 → #1f1f1f → #272727 → #313131. */
+  --bg: #181818;
+  --bg-alt: #1f1f1f;
+  --surface: #272727;
+  --border: #313131;
+  --text: #ededed;
+  --text-muted: #a1a1a1;
+  --accent: #6ea3ed;
+  --accent-hover: #89b4f0;
+  --accent-soft: rgba(110, 163, 237, 0.14);
+  --accent-line: rgba(110, 163, 237, 0.4);
+  --accent-glow: rgba(110, 163, 237, 0.16);
+  --on-accent: #181818;
+  --header-bg: rgba(24, 24, 24, 0.72);
+
+  /* Icon tones: one hue per section, so the icons that replaced the emoji
+     keep some of their colour. Tailwind 400 steps on dark, 600/700 on light
+     (each clears 3:1 against its own surface). */
+  --tone-orange: #fb923c;
+  --tone-sky: #38bdf8;
+  --tone-violet: #a78bfa;
+  --tone-emerald: #34d399;
+  --tone-amber: #fbbf24;
+  --tone-rose: #fb7185;
+  --tone-red: #f87171;
+
+  /* Shadows fall straight down from one light source, tinted to the page. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --radius: 12px;
+  --header-h: 64px;
+  --font-sans:
+    Geist, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui,
+    sans-serif;
+
+  /* Motion: one curve; 300ms for color / opacity, 500ms for movement. */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-color: 300ms;
+  --dur-move: 500ms;
+  --transition: var(--dur-color) var(--ease);
+
+  /* Stacking scale (low → high). */
+  --z-toc: 2;
+  --z-header: 100;
+  --z-header-fixed: 1200;
+  --z-overlay: 1250;
+  --z-drawer: 1300;
+  --z-fab: 1350;
+  --z-lightbox: 1400;
+  --z-skip: 1500;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #ffffff;
+  --bg-alt: #fafafa;
+  --surface: #ffffff;
+  --border: #e5e5e5;
+  --text: #171717;
+  --text-muted: #666666;
+  --accent: #2563c9;
+  --accent-hover: #1a5bb8;
+  --accent-soft: rgba(37, 99, 201, 0.1);
+  --accent-line: rgba(37, 99, 201, 0.35);
+  --accent-glow: rgba(37, 99, 201, 0.16);
+  --on-accent: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.72);
+  --tone-orange: #c2410c;
+  --tone-sky: #0284c7;
+  --tone-violet: #7c3aed;
+  --tone-emerald: #059669;
+  --tone-amber: #b45309;
+  --tone-rose: #e11d48;
+  --tone-red: #dc2626;
+  --shadow-sm: 0 1px 2px rgba(23, 23, 23, 0.06);
+  --shadow-md: 0 8px 24px rgba(23, 23, 23, 0.1);
+}
+
+/* ── Reset & Base ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+
+  /* Sticky-footer column: the language wrapper below grows to fill a short
+     page (family/marriage.html), so .site-footer keeps its own height at the
+     bottom of the viewport instead of trailing body background that reads as
+     an over-tall footer. Fixed-position overlays are out of flow, unaffected. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+a {
+  color: var(--accent);
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition);
+}
+a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+ul {
+  list-style: none;
+}
+
+/* Keyboard focus is always visible; mouse clicks stay clean. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Icons ──────────────────────────────────────────────────
+   Phosphor (regular weight, MIT) drawn as a mask so they take currentColor.
+   Usage: <span class="icon icon-wrench" aria-hidden="true"></span> */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  background-color: currentcolor;
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Chromium < 120 */
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.icon-wrench {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,96a64,64,0,0,1-94.94,56L73,217A24,24,0,0,1,39,183L104,126.94a64,64,0,0,1,80-90.29L144,80l5.66,26.34L176,112l43.35-40A63.8,63.8,0,0,1,224,96Z' opacity='0.2'/%3E%3Cpath d='M226.76,69a8,8,0,0,0-12.84-2.88l-40.3,37.19-17.23-3.7-3.7-17.23,37.19-40.3A8,8,0,0,0,187,29.24,72,72,0,0,0,88,96,72.34,72.34,0,0,0,94,124.94L33.79,177c-.15.12-.29.26-.43.39a32,32,0,0,0,45.26,45.26c.13-.13.27-.28.39-.42L131.06,162A72,72,0,0,0,232,96,71.56,71.56,0,0,0,226.76,69ZM160,152a56.14,56.14,0,0,1-27.07-7,8,8,0,0,0-9.92,1.77L67.11,211.51a16,16,0,0,1-22.62-22.62L109.18,133a8,8,0,0,0,1.77-9.93,56,56,0,0,1,58.36-82.31l-31.2,33.81a8,8,0,0,0-1.94,7.1L141.83,108a8,8,0,0,0,6.14,6.14l26.35,5.66a8,8,0,0,0,7.1-1.94l33.81-31.2A56.06,56.06,0,0,1,160,152Z'/%3E%3C/svg%3E");
+}
+
+.icon-briefcase {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,118.31V200a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V118.31h0A191.14,191.14,0,0,0,128,144,191.08,191.08,0,0,0,224,118.31Z' opacity='0.2'/%3E%3Cpath d='M104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112ZM232,72V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V72A16,16,0,0,1,40,56H80V48a24,24,0,0,1,24-24h48a24,24,0,0,1,24,24v8h40A16,16,0,0,1,232,72ZM96,56h64V48a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8ZM40,72v41.62A184.07,184.07,0,0,0,128,136a184,184,0,0,0,88-22.39V72ZM216,200V131.63A200.25,200.25,0,0,1,128,152a200.19,200.19,0,0,1-88-20.36V200H216Z'/%3E%3C/svg%3E");
+}
+
+.icon-graduation-cap {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M216,113.07v53.22a8,8,0,0,1-2,5.31c-11.3,12.59-38.9,36.4-86,36.4s-74.68-23.81-86-36.4a8,8,0,0,1-2-5.31V113.07L128,160Z' opacity='0.2'/%3E%3Cpath d='M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z'/%3E%3C/svg%3E");
+}
+
+.icon-article {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,56V200a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56a8,8,0,0,1,8-8H216A8,8,0,0,1,224,56Z' opacity='0.2'/%3E%3Cpath d='M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM184,96a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,96Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,128Zm0,32a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h96A8,8,0,0,1,184,160Z'/%3E%3C/svg%3E");
+}
+
+.icon-medal {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M176,96a48,48,0,1,1-48-48A48,48,0,0,1,176,96Z' opacity='0.2'/%3E%3Cpath d='M216,96A88,88,0,1,0,72,163.83V240a8,8,0,0,0,11.58,7.16L128,225l44.43,22.21A8.07,8.07,0,0,0,176,248a8,8,0,0,0,8-8V163.83A87.85,87.85,0,0,0,216,96ZM56,96a72,72,0,1,1,72,72A72.08,72.08,0,0,1,56,96ZM168,227.06l-36.43-18.21a8,8,0,0,0-7.16,0L88,227.06V174.37a87.89,87.89,0,0,0,80,0ZM128,152A56,56,0,1,0,72,96,56.06,56.06,0,0,0,128,152Zm0-96A40,40,0,1,1,88,96,40,40,0,0,1,128,56Z'/%3E%3C/svg%3E");
+}
+
+.icon-house {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M216,116.69V216H152V152H104v64H40V116.69l82.34-82.35a8,8,0,0,1,11.32,0Z' opacity='0.2'/%3E%3Cpath d='M240,208H224V136l2.34,2.34A8,8,0,0,0,237.66,127L139.31,28.68a16,16,0,0,0-22.62,0L18.34,127a8,8,0,0,0,11.32,11.31L32,136v72H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM48,120l80-80,80,80v88H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48Zm96,88H112V160h32Z'/%3E%3C/svg%3E");
+}
+
+.icon-map-pin {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M128,24a80,80,0,0,0-80,80c0,72,80,128,80,128s80-56,80-128A80,80,0,0,0,128,24Zm0,112a32,32,0,1,1,32-32A32,32,0,0,1,128,136Z' opacity='0.2'/%3E%3Cpath d='M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z'/%3E%3C/svg%3E");
+}
+
+.icon-theme {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M201.54,54.46A104,104,0,0,0,54.46,201.54,104,104,0,0,0,201.54,54.46ZM184,195.87a87.16,87.16,0,0,1-16,10.5V99.31l16-16Zm-80-32.56,16-16v68.28a88.37,88.37,0,0,1-16-3ZM88,206.37a87,87,0,0,1-16.3-10.76L88,179.31Zm48-75.06,16-16v97.32a88.37,88.37,0,0,1-16,3ZM40,128A88,88,0,0,1,184.3,60.39L60.38,184.31A87.34,87.34,0,0,1,40,128Zm160,50.59V77.41a88,88,0,0,1,0,101.18Z'/%3E%3C/svg%3E");
+}
+
+.icon-arrow-up {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M205.66,117.66a8,8,0,0,1-11.32,0L136,59.31V216a8,8,0,0,1-16,0V59.31L61.66,117.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,117.66Z'/%3E%3C/svg%3E");
+}
+
+.icon-file-pdf {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,152a8,8,0,0,1-8,8H192v16h16a8,8,0,0,1,0,16H192v16a8,8,0,0,1-16,0V152a8,8,0,0,1,8-8h32A8,8,0,0,1,224,152ZM92,172a28,28,0,0,1-28,28H56v8a8,8,0,0,1-16,0V152a8,8,0,0,1,8-8H64A28,28,0,0,1,92,172Zm-16,0a12,12,0,0,0-12-12H56v24h8A12,12,0,0,0,76,172Zm88,8a36,36,0,0,1-36,36H112a8,8,0,0,1-8-8V152a8,8,0,0,1,8-8h16A36,36,0,0,1,164,180Zm-16,0a20,20,0,0,0-20-20h-8v40h8A20,20,0,0,0,148,180ZM40,112V40A16,16,0,0,1,56,24h96a8,8,0,0,1,5.66,2.34l56,56A8,8,0,0,1,216,88v24a8,8,0,0,1-16,0V96H152a8,8,0,0,1-8-8V40H56v72a8,8,0,0,1-16,0ZM160,80h28.69L160,51.31Z'/%3E%3C/svg%3E");
+}
+
+.icon-list {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z'/%3E%3C/svg%3E");
+}
+
+.icon-x {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z'/%3E%3C/svg%3E");
+}
+
+.icon-toc {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z'/%3E%3C/svg%3E");
+}
+
+.tone-orange {
+  color: var(--tone-orange);
+}
+.tone-sky {
+  color: var(--tone-sky);
+}
+.tone-violet {
+  color: var(--tone-violet);
+}
+.tone-emerald {
+  color: var(--tone-emerald);
+}
+.tone-amber {
+  color: var(--tone-amber);
+}
+.tone-rose {
+  color: var(--tone-rose);
+}
+.tone-red {
+  color: var(--tone-red);
+}
+
+/* ── Skip link ──────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: var(--z-skip);
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform var(--dur-move) var(--ease);
+}
+.skip-link:focus,
+.skip-link:hover {
+  color: var(--on-accent);
+  text-decoration: none;
+  transform: none;
+}
+
+/* ── Layout ─────────────────────────────────────────────── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+
+/* The header floats: a transparent strip that holds a translucent bar inset
+   8px from the viewport edges. The strip lets clicks through to the page in
+   the gutters; only the bar itself is interactive. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  height: var(--header-h);
+  padding: 8px;
+  pointer-events: none;
+}
+
+.header-inner {
+  /* 960px content column minus the 8px inset on each side, so the bar's
+     16px padding lines its text up with the 24px container gutter. */
+  max-width: 944px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: auto;
+  background: var(--header-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(12px) saturate(1.4);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.header-start {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.site-title {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.site-title:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.main-nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 4px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+.main-nav a:hover,
+.main-nav a.active {
+  background: var(--accent-soft);
+  color: var(--text);
+  text-decoration: none;
+}
+.main-nav a.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Between the 720px mobile breakpoint and the full 960px column the six nav
+   links and both buttons share a narrower bar; tighten them so it stays one row. */
+@media (max-width: 960px) {
+  .header-start {
+    gap: 12px;
+  }
+  .main-nav {
+    gap: 0;
+  }
+  .main-nav a {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+}
+
+/* ── Header buttons (theme + language + version) ────────── */
+.theme-toggle,
+.lang-toggle,
+.version-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--dur-move) var(--ease);
+}
+.theme-toggle {
+  font-size: 1.125rem;
+}
+.lang-toggle,
+.version-toggle {
+  padding: 0 12px;
+}
+.theme-toggle:hover,
+.lang-toggle:hover,
+.version-toggle:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--text);
+  text-decoration: none;
+}
+.theme-toggle:active,
+.lang-toggle:active,
+.version-toggle:active {
+  transform: scale(0.98);
+}
+
+/* Language version display. The visible wrapper is the flex child that soaks up
+   the leftover height; `flex` rather than `block` so its own <main> can do the
+   same for the footer. */
+#lang-en,
+[data-lang-mode='zh'] #lang-zh {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+#lang-zh {
+  display: none !important;
+}
+[data-lang-mode='zh'] #lang-en {
+  display: none !important;
+}
+[data-lang-mode='zh'] #lang-zh {
+  display: flex !important;
+}
+
+/* Pushes .site-footer to the bottom of a short page; a no-op elsewhere. */
+#lang-en > main,
+#lang-zh > main {
+  flex: 1 0 auto;
+}
+
+/* ── Hero ───────────────────────────────────────────────── */
+.hero {
+  padding: 64px 0 80px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 48px;
+  align-items: start;
+}
+
+.hero-name {
+  width: fit-content;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+/* Hero social links */
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.hero-links a {
+  color: var(--accent);
+  font-weight: 500;
+}
+.hero-links a:hover {
+  text-decoration: underline;
+}
+.hero-link-sep {
+  color: var(--text-muted);
+  user-select: none;
+}
+
+/* Role + location share one wrapping row so a short title keeps company. */
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 24px;
+}
+.hero-role {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+/* Middot separator, matching the .hero-links idiom above. */
+.hero-role::after {
+  content: '·';
+  margin-left: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.hero-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text-muted);
+}
+
+.bio p {
+  max-width: 65ch;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.bio p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Profile Photo ─────────────────────────────────────── */
+.hero-photo {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.photo-img {
+  width: 240px;
+  height: 300px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.photo-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* ── Sections ───────────────────────────────────────────── */
+
+/* Bottom padding runs one step larger than the top so blocks read as resting
+   on the divider rather than floating between rules. */
+.section {
+  padding: 64px 0 80px;
+  border-bottom: 1px solid var(--border);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* iOS WebKit (every iOS browser) does not scroll-anchor when an off-screen
+   section swaps its placeholder height for its real one, so scrolling back up
+   jumps and can stall short of the top. Render sections normally there. */
+@supports (-webkit-touch-callout: none) {
+  .section {
+    content-visibility: visible;
+    contain-intrinsic-size: none;
+  }
+}
+
+/* .site-footer draws its own top rule. The two used to sit flush and read as
+   one line; now that the footer is pinned to the bottom of a short page they
+   would show as two, so the last section drops its own. */
+main > .section:last-child {
+  border-bottom: none;
+}
+
+/* While a nav jump is animating, render every section so the target stops
+   moving under the scroll (js/main.js adds/removes .is-section-jump). */
+html.is-section-jump .section {
+  content-visibility: visible;
+}
+.section-alt {
+  background: var(--bg-alt);
+  transition: background-color var(--transition);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  color: var(--text);
+}
+
+/* Section icon: the tone-coloured glyph on a tile of the same hue. The tile is
+   a pseudo-element at low opacity rather than a colour-mix() background, so
+   it works in every browser that draws the mask icon. */
+.section-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-right: 12px;
+  border-radius: 8px;
+  vertical-align: middle;
+  font-size: 1.25rem;
+}
+.section-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentcolor;
+  opacity: 0.14;
+}
+.section-icon > .icon {
+  position: relative;
+  vertical-align: 0;
+}
+
+/* ── Cards ──────────────────────────────────────────────── */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Surface + hairline only: elevation is reserved for things that float
+   (header, menus, the drawer), so resting cards carry no shadow. */
+.card {
+  --card-pad: 24px;
+
+  position: relative;
+  isolation: isolate;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--card-pad);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    transform var(--dur-move) var(--ease);
+}
+.card:hover {
+  border-color: var(--accent-line);
+  transform: translateY(-2px);
+}
+
+/* Pointer spotlight: a soft glow follows the mouse inside the card and lights
+   the nearest stretch of its border. js/pointer-effects.js feeds the position
+   (--spot-x / --spot-y) and sets html.has-pointer-fx only for a mouse without
+   prefers-reduced-motion. The glow sits under the content (z-index -1 inside
+   the card's own stacking context); the rim is masked down to the 1px border. */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.card::before {
+  inset: 0;
+  z-index: -1;
+  border-radius: calc(var(--radius) - 1px);
+  background: radial-gradient(
+    360px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--accent-glow),
+    transparent 70%
+  );
+}
+.card::after {
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    216px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--accent),
+    transparent 70%
+  );
+
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Chromium < 120 */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Chromium < 120 */
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.has-pointer-fx .card:hover::before,
+.has-pointer-fx .card:hover::after {
+  opacity: 1;
+}
+
+/* Let wide images (e.g. CAD sheets) respect the column width inside flex cards.
+   Without this, min-width:auto on the flex item can track the image intrinsic width. */
+.card-body {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+/* Institution / company logo at the end of an education or experience card's
+   name, as tall as the script beside it: cap height on the baseline for
+   English, the full em box (where CJK glyphs sit, like .icon) for Chinese.
+   .card-logo--small shrinks a heavy logo to 80%, centred on the same line,
+   and a one-colour logo comes as a pair, one per theme. The em value before
+   each cap value is Geist's cap height (0.71em), for browsers without the
+   cap unit. */
+.card-logo {
+  display: inline-block;
+  width: auto;
+  height: 0.71em;
+  height: 1cap;
+  margin-left: 0.25em;
+  vertical-align: baseline;
+}
+.card-logo--small {
+  height: 0.57em;
+  height: 0.8cap;
+  vertical-align: 0.07em;
+  vertical-align: 0.1cap;
+}
+#lang-zh .card-logo {
+  height: 1em;
+  vertical-align: -0.125em;
+}
+#lang-zh .card-logo--small {
+  height: 0.8em;
+  vertical-align: -0.025em;
+}
+[data-theme='dark'] .card-logo--on-light,
+[data-theme='light'] .card-logo--on-dark {
+  display: none;
+}
+
+/* Parked: the logos stay in the markup and img/, sized as above, but are not
+   shown until their placement is settled. Delete this rule to bring them
+   back. Lazy images that are not rendered are not fetched either. */
+.card-body .card-logo {
+  display: none;
+}
+
+.card-body h3 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.card-body > p:not(.card-meta) {
+  max-width: 65ch;
+}
+.card-meta {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+.card-bullets {
+  padding-left: 16px;
+  list-style: disc;
+}
+.card-bullets li {
+  max-width: 65ch;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.card-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+/* Detail pages: the card is the measure, so its body text, bullets and figure
+   captions run the full card width. A 65ch cap stopped them about 70% of the
+   way across (and at about 43 characters a line in Chinese, where 1ch is
+   roughly half a character). */
+.subpage-detail-main .card-body > p:not(.card-meta),
+.subpage-detail-main .card-bullets li,
+.subpage-detail-main .caption {
+  max-width: none;
+}
+
+/* ── Project Grid ───────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.card-grid .card {
+  flex-direction: column;
+}
+
+/* Grid rows share a height, so pin each card's call to action to the bottom:
+   the links form one line across a row however long the descriptions run. */
+.card-grid .card-body {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+.card-grid .card-body > :last-child {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.project-link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.card-grid .card-body > :last-child > .project-link {
+  margin-top: 0;
+}
+
+/* Project preview: a screenshot of the project's homepage across the top of
+   the card. It cancels the card padding to sit flush with the card edges, and
+   its top corners follow the card's (radius minus the 1px border) so the two
+   stay concentric; with the card's 16px gap, the space below it matches the
+   card padding. Images come from scripts/capture_project_previews.py. */
+.project-preview {
+  display: block;
+  align-self: stretch;
+  margin: calc(var(--card-pad) * -1) calc(var(--card-pad) * -1) calc(var(--card-pad) - 16px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  background: var(--bg-alt);
+  transition: border-color var(--transition);
+}
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--dur-move) var(--ease);
+}
+.card:hover .project-preview img {
+  transform: scale(1.03);
+}
+.project-link:hover {
+  color: var(--accent-hover);
+}
+
+.card-body h3 a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.card-body h3 a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+/* Detail page meta */
+.detail-meta {
+  margin-top: 16px;
+  padding: 16px 24px;
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+.detail-meta p {
+  margin: 0;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.site-footer {
+  padding: 24px 0 32px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  transition: background-color var(--transition);
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+}
+
+/* Header: keep title + actions on one row; pin theme toggle to content right edge
+   (Robot_Learning_Paper_Notebooks header-right pattern). */
+@media (max-width: 1200px) {
+  .header-inner {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .header-start {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .site-title {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.25rem;
+  }
+
+  .header-actions {
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+/* Narrow two-column hero: a smaller photo leaves the text column room for the
+   role · location row on one line, so its separator never dangles. */
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) 200px;
+    gap: 40px;
+  }
+  .photo-img {
+    width: 200px;
+    height: 250px;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hero-photo {
+    order: -1;
+    justify-content: flex-start;
+  }
+  .photo-img {
+    width: 160px;
+    height: 200px;
+  }
+
+  .hero-name {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .main-nav {
+    display: none;
+  }
+  .header-start {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .site-title {
+    flex: 1 1 0;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .header-actions {
+    margin-left: auto;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    gap: 6px;
+  }
+  .lang-toggle,
+  .version-toggle {
+    padding: 0 8px;
+    font-size: 0.8125rem;
+  }
+
+  /* The meta row wraps on phones; drop the separator so no dot dangles. */
+  .hero-role::after {
+    content: none;
+  }
+  .header-start {
+    gap: 12px;
+  }
+  .hero {
+    padding: 40px 0 48px;
+  }
+  .section {
+    padding: 40px 0 48px;
+  }
+  .card {
+    --card-pad: 16px;
+  }
+}
+
+/* ── Home Section Jump FAB (mobile) ───────────────────────
+   Floating button + popup menu injected by main.js on the homepage; it takes
+   over section navigation below 720px, where .main-nav is hidden.
+   ───────────────────────────────────────────────────────── */
+.home-nav-fab {
+  display: none;
+  position: fixed;
+
+  /* Bottom-left, matching the subpage TOC drawer button. */
+  left: 16px;
+
+  /* --fab-footer-lift is set by main.js so the button steps above the footer
+     instead of covering it once the page is scrolled to the end. */
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px) + var(--fab-footer-lift, 0px));
+  z-index: var(--z-fab);
+
+  /* The closed menu keeps its layout box (visibility: hidden), so this wrapper
+     is a ~160x340px invisible rectangle. Let clicks fall through it to the page
+     underneath; the toggle and the menu opt back in below. */
+  pointer-events: none;
+
+  /* Button sits first in the DOM for tab order; reverse puts the menu on top. */
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  /* Same breakpoint that hides .main-nav — the FAB takes over from there. */
+  .home-nav-fab {
+    display: flex;
+  }
+}
+
+.home-nav-fab__toggle {
+  position: relative;
+  display: inline-flex;
+  pointer-events: auto;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition:
+    transform var(--dur-move) var(--ease),
+    background-color var(--transition);
+}
+
+.home-nav-fab__toggle:active {
+  transform: scale(0.92);
+}
+
+.home-nav-fab.is-open .home-nav-fab__toggle {
+  background: var(--accent-hover);
+}
+
+/* Open and close glyphs sit on top of each other and cross-fade with a
+   quarter turn instead of swapping instantly. */
+.home-nav-fab__icon {
+  position: absolute;
+  transition:
+    opacity var(--dur-color) var(--ease),
+    transform var(--dur-move) var(--ease);
+}
+
+.home-nav-fab__icon--close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+.home-nav-fab.is-open .home-nav-fab__icon--open,
+.subpage-toc-toggle[aria-expanded='true'] .home-nav-fab__icon--open {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+
+.home-nav-fab.is-open .home-nav-fab__icon--close,
+.subpage-toc-toggle[aria-expanded='true'] .home-nav-fab__icon--close {
+  opacity: 1;
+  transform: none;
+}
+
+.home-nav-menu {
+  width: max-content;
+  min-width: 160px;
+  max-width: min(72vw, 260px);
+  max-height: calc(100vh - 160px);
+  max-height: calc(100dvh - 160px);
+  overflow-y: auto;
+
+  /* The closed menu keeps its box over the page (visibility: hidden is enough
+     for a click, but iOS Safari still routes touches to a hidden scrollable
+     layer), so it only becomes a hit target once open. Dropping the deprecated
+     -webkit-overflow-scrolling: touch removes that native layer as well;
+     momentum scrolling is the default on iOS 13+. */
+  pointer-events: none;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom left;
+  transition:
+    opacity var(--dur-color) var(--ease),
+    transform var(--dur-move) var(--ease),
+    visibility var(--dur-color) var(--ease),
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.home-nav-fab.is-open .home-nav-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.home-nav-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Links arrive one after another in reading order; main.js sets --i on each
+   item (top of the menu first), 50ms apart so seven items finish under 400ms. */
+.home-nav-menu li {
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity var(--dur-color) var(--ease),
+    transform var(--dur-move) var(--ease);
+}
+
+.home-nav-fab.is-open .home-nav-menu li {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * 50ms);
+}
+
+.home-nav-menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.home-nav-menu a:hover {
+  color: var(--text);
+  background: var(--bg-alt);
+  text-decoration: none;
+}
+
+.home-nav-menu a.active {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-soft);
+}
+
+.home-nav-menu__icon {
+  font-size: 1.125rem;
+}
+
+.home-nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  opacity: 0;
+  visibility: hidden;
+
+  /* Covers the whole viewport while closed; only take taps once it is open. */
+  pointer-events: none;
+  transition:
+    opacity var(--dur-color) var(--ease),
+    visibility var(--dur-color) var(--ease);
+}
+
+.home-nav-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (min-width: 721px) {
+  /* Belt and braces: never let a stale overlay block the desktop layout. */
+  .home-nav-overlay {
+    display: none;
+  }
+}
+
+/* ── Research / Publications ──────────────────────────── */
+.section-subtitle {
+  max-width: 65ch;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: -8px;
+  margin-bottom: 24px;
+}
+.section-subtitle a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.section-subtitle a:hover {
+  text-decoration: underline;
+}
+
+.publication-card .card-body h3 {
+  margin-bottom: 8px;
+}
+.pub-authors {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text);
+  margin-bottom: 2px !important;
+}
+.pub-authors strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+.pub-venue {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text-muted);
+}
+
+/* ── Publication Toggle ────────────────────────────────── */
+.pub-toggle-btn {
+  display: block;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent-line);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    transform var(--dur-move) var(--ease);
+}
+.pub-toggle-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.pub-toggle-btn:active {
+  transform: scale(0.98);
+}
+
+/* Collapsed state: hide the entire card */
+.publication-card.collapsed {
+  display: none;
+}
+
+/* ── Utility helpers ────────────────────────────────────── */
+
+/* Spacing helpers used across detail pages to replace repeated
+   inline `style="margin-top: …"` attributes (see no-inline-style). */
+.mt-sm {
+  margin-top: 12px;
+}
+.mt-md {
+  margin-top: 16px;
+}
+.mt-lg {
+  margin-top: 24px;
+}
+.mt-xl {
+  margin-top: 32px;
+}
+
+/* Small caption / footnote text under figures or cards. */
+.caption {
+  max-width: 65ch;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-top: 8px;
+}
+
+/* ── Lightbox (shared by marriage.html & pcv page) ──────── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: var(--z-lightbox);
+  align-items: center;
+  justify-content: center;
+}
+#lightbox.active {
+  display: flex;
+}
+#lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  cursor: grab;
+  transition: transform var(--dur-color) var(--ease);
+  transform-origin: center;
+
+  /* ⚡ Bolt Performance Optimization: Hint browser to put image on own compositor layer for smoother zoom */
+  will-change: transform;
+}
+#lightbox img:active {
+  cursor: grabbing;
+}
+#lightbox-close {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  font-size: 2.25rem;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  user-select: none;
+}
+#lb-controls {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+#lb-controls button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--transition),
+    transform var(--dur-move) var(--ease);
+}
+#lb-controls button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+#lb-controls button:active {
+  transform: scale(0.98);
+}
+#lb-controls button.lb-zoom-reset {
+  font-size: 0.875rem;
+  width: auto;
+  padding: 0 12px;
+  border-radius: 9999px;
+}
+#lb-zoom-label {
+  color: #fff;
+  font-size: 0.875rem;
+  min-width: 48px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Marriage page ──────────────────────────────────────── */
+.marriage-gallery {
+  display: grid;
+  grid-template-columns: 0.91fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+.marriage-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.marriage-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  transition: transform var(--dur-move) var(--ease);
+  cursor: zoom-in;
+}
+.marriage-img.fill {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  object-fit: cover;
+}
+.marriage-img:hover {
+  transform: scale(1.01);
+}
+
+@media (max-width: 768px) {
+  .marriage-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── PCV project page ───────────────────────────────────── */
+.section-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 12px auto;
+  cursor: zoom-in;
+}
+
+/* Small source images (archived news thumbnails) keep their natural size rather
+   than being upscaled to the column width, which would blur them. */
+.section-img.natural {
+  width: auto;
+  max-width: 100%;
+}
+.video-card {
+  padding: 0 !important;
+  overflow: hidden;
+}
+.video-card h3 {
+  padding: 16px 24px 8px;
+}
+.video-wrap {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  width: 100%;
+}
+.video-wrap video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+.pdf-link,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  margin: 8px 0;
+  transition:
+    background-color var(--transition),
+    transform var(--dur-move) var(--ease);
+}
+.pdf-link:hover,
+.btn:hover {
+  background: var(--accent-hover);
+  color: var(--on-accent);
+  text-decoration: none;
+}
+.pdf-link:active,
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* ── PCV video card inner layout ────────────────────────── */
+.video-card .card-body {
+  width: 100%;
+  padding: 0;
+}
+.video-card-title {
+  padding: 16px 24px 8px;
+}
+.video-card-caption {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0 24px 16px;
+}
+
+/* ── Subpage detail layout + sticky TOC (Robotics_Notebooks detail.html pattern) ─
+   From 1200px up: main column uses the same width and horizontal padding as .container /
+   .header-inner (960px max, 24px side padding) so text aligns with the header controls.
+   TOC sits in the left margin (zero-width grid track + negative margin) and does not
+   shrink the article column. */
+
+.container.subpage-detail-layout {
+  overflow: visible;
+}
+
+.page-toc {
+  padding: 16px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+@media (min-width: 1201px) {
+  .container.subpage-detail-layout {
+    display: grid;
+    grid-template-columns: 0 minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0;
+  }
+
+  .page-toc {
+    grid-column: 1;
+    grid-row: 1;
+    width: 260px;
+    margin-left: calc(-260px - 40px);
+    place-self: start;
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    z-index: var(--z-toc);
+  }
+
+  .subpage-detail-main {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+}
+
+.page-toc-title {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.page-toc nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-toc nav li {
+  margin-bottom: 8px;
+}
+
+.page-toc nav li:last-child {
+  margin-bottom: 0;
+}
+
+.page-toc nav a {
+  display: block;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 2px 0;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.page-toc nav a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* 12px panel radius − 8px horizontal inset = 4px, so the highlight sits
+   concentric with the panel corner. */
+.page-toc nav a.active {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-soft);
+  padding: 2px 8px;
+  margin: -2px -8px;
+  border-radius: 4px;
+}
+
+/* Mobile: TOC drawer + FAB (toggle/overlay injected by main.js on subpages with TOC) */
+.subpage-toc-toggle {
+  display: none;
+  position: fixed;
+
+  /* --fab-footer-lift is set by main.js so the button steps above the footer
+     instead of covering it once the page is scrolled to the end. */
+  bottom: calc(24px + var(--fab-footer-lift, 0px));
+  left: 16px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  z-index: var(--z-fab);
+  transition:
+    transform var(--dur-move) var(--ease),
+    background-color var(--transition);
+}
+
+.subpage-toc-toggle[aria-expanded='true'] {
+  background: var(--accent-hover);
+}
+
+.subpage-toc-toggle[hidden] {
+  display: none !important;
+}
+
+.subpage-toc-toggle:active {
+  transform: scale(0.92);
+}
+
+.subpage-toc-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  opacity: 0;
+  visibility: hidden;
+
+  /* Covers the whole viewport while closed; only take taps once it is open. */
+  pointer-events: none;
+  transition:
+    opacity var(--dur-color) var(--ease),
+    visibility var(--dur-color) var(--ease);
+}
+
+.subpage-toc-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (max-width: 1200px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+
+  .container,
+  .container.subpage-detail-layout,
+  .subpage-detail-main {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  body:has(.subpage-detail-layout) .site-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: var(--z-header-fixed);
+  }
+
+  body:has(.subpage-detail-layout) main {
+    padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  }
+
+  .container.subpage-detail-layout {
+    display: block;
+  }
+}
+
+/* TOC drawer + FAB: narrow viewports */
+@media (max-width: 1200px) {
+  /* content-visibility: auto on .section traps position:fixed descendants inside
+     the section box (overlay then paints above the drawer). */
+  .section:has(.subpage-detail-layout) {
+    content-visibility: visible;
+    contain: none;
+  }
+
+  .subpage-toc-toggle {
+    display: flex;
+  }
+
+  .page-toc {
+    position: fixed;
+
+    /* Popup above the bottom-left button, like the homepage jump menu:
+       24px edge + 48px button + 12px gap. */
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px) + var(--fab-footer-lift, 0px));
+    left: 16px;
+    top: auto;
+    width: min(72vw, 280px);
+    height: auto;
+    max-height: calc(100vh - 160px);
+    max-height: calc(100dvh - 160px);
+    margin: 0;
+    max-width: none;
+    z-index: var(--z-drawer);
+    overflow-y: auto;
+    border-radius: 16px;
+
+    /* Closed: invisible and not a hit target (iOS routes touches to hidden scrollers). */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(8px) scale(0.96);
+    transform-origin: bottom left;
+    transition:
+      opacity var(--dur-color) var(--ease),
+      transform var(--dur-move) var(--ease),
+      visibility var(--dur-color) var(--ease),
+      background-color var(--transition),
+      border-color var(--transition);
+  }
+
+  .page-toc.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Same drawer treatment when the left-margin TOC is clipped on wider viewports */
+body.subpage-toc-drawer-mode .section:has(.subpage-detail-layout) {
+  content-visibility: visible;
+  contain: none;
+}
+
+body.subpage-toc-drawer-mode .subpage-toc-toggle {
+  display: flex;
+}
+
+body.subpage-toc-drawer-mode .page-toc {
+  position: fixed;
+
+  /* Popup above the bottom-left button, like the homepage jump menu:
+     24px edge + 48px button + 12px gap. */
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px) + var(--fab-footer-lift, 0px));
+  left: 16px;
+  top: auto;
+  width: min(72vw, 280px);
+  height: auto;
+  max-height: calc(100vh - 160px);
+  max-height: calc(100dvh - 160px);
+  margin: 0;
+  max-width: none;
+  z-index: var(--z-drawer);
+  overflow-y: auto;
+  border-radius: 16px;
+
+  /* Closed: invisible and not a hit target (iOS routes touches to hidden scrollers). */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: bottom left;
+  transition:
+    opacity var(--dur-color) var(--ease),
+    transform var(--dur-move) var(--ease),
+    visibility var(--dur-color) var(--ease),
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+body.subpage-toc-drawer-mode .page-toc.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* ── Scroll Reveal ──────────────────────────────────────── */
+
+/* js/scroll-reveal.js only adds .scroll-reveal to blocks below the fold, then
+   .is-revealed once they enter the viewport, and drops both when done. Content
+   stays visible if JS fails, under reduced motion, and in print. */
+.scroll-reveal:not(.is-revealed) {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
+.scroll-reveal.is-revealed {
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal:not(.is-revealed) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media print {
+  .scroll-reveal:not(.is-revealed) {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Cross-link between related experience / project pages */
+.related-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color var(--transition),
+    transform var(--dur-move) var(--ease);
+}
+.related-link:hover {
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+.related-link-label {
+  flex: none;
+  color: var(--accent);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.related-link-title {
+  flex: 1;
+  color: var(--text);
+  font-weight: 600;
+}
+.related-link-arrow {
+  color: var(--accent);
+  transition: transform var(--dur-move) var(--ease);
+}
+.related-link:hover .related-link-arrow {
+  transform: translateX(4px);
+}
+.card-body .related-link,
+.card-body .related-link:hover,
+.detail-meta .related-link {
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  .related-link {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    align-items: center;
+    padding: 12px 16px;
+  }
+  .related-link-label {
+    grid-column: 1 / -1;
+  }
+  .related-link-title {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+/* ── 404 ────────────────────────────────────────────────── */
+.not-found {
+  padding: 96px 0;
+}
+.not-found-code {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 12px;
+}
+.not-found .hero-name {
+  margin-bottom: 16px;
+}
+.not-found p {
+  max-width: 65ch;
+  color: var(--text-muted);
+}
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+/* ── Theme switch reveal ────────────────────────────────────
+   js/main.js grows the new theme out of the toggle with a View Transition
+   clip-path. While it runs, drop the default cross-fade and every colour
+   transition so the new snapshot is the final palette, not a mid-fade grey. */
+html.is-theme-switching::view-transition-old(root),
+html.is-theme-switching::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.is-theme-switching *,
+html.is-theme-switching *::before,
+html.is-theme-switching *::after {
+  transition: none !important;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────
+   Movement becomes a plain fade or an instant change; colour transitions stay. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .card:hover,
+  .card:hover .project-preview img,
+  .related-link:hover,
+  .related-link:hover .related-link-arrow,
+  .marriage-img:hover,
+  .theme-toggle:active,
+  .lang-toggle:active,
+  .pub-toggle-btn:active,
+  .pdf-link:active,
+  .btn:active,
+  .home-nav-fab__toggle:active,
+  .subpage-toc-toggle:active,
+  #lb-controls button:active {
+    transform: none;
+  }
+
+  .home-nav-menu,
+  .home-nav-menu li,
+  .home-nav-fab__icon,
+  .home-nav-fab.is-open .home-nav-fab__icon--open,
+  .subpage-toc-toggle[aria-expanded='true'] .home-nav-fab__icon--open,
+  .home-nav-fab__icon--close {
+    transform: none;
+  }
+
+  /* The skip link hides by its transform alone, so it keeps it and only drops
+     the slide (the TOC popup hides by opacity / visibility). */
+  .skip-link {
+    transition-duration: 0.01ms;
+  }
+
+  .page-toc,
+  body.subpage-toc-drawer-mode .page-toc {
+    transition-duration: 0.01ms;
+    transform: none;
+  }
+
+  .home-nav-fab.is-open .home-nav-menu li {
+    transition-delay: 0ms;
+  }
+}

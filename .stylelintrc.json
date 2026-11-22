@@ -12,6 +12,21 @@
     "media-feature-range-notation": null,
     "color-hex-length": null,
     "color-function-alias-notation": null,
-    "value-keyword-case": null
+    "value-keyword-case": null,
+    "import-notation": null,
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "theme",
+          "source",
+          "utility",
+          "variant",
+          "custom-variant",
+          "apply",
+          "reference"
+        ]
+      }
+    ]
   }
 }
