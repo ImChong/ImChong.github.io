@@ -788,17 +788,8 @@ body:has(.subpage-detail-layout) .header-inner, body:has(.not-found) .header-inn
 .hero-line-inner {
   display: block;
 }
-.hero-meta-line {
-  margin-top: 16px;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  letter-spacing: 0.03em;
-  color: var(--ink-muted);
-  text-transform: uppercase;
-}
 .hero-bio {
-  margin-top: 20px;
+  margin-top: 24px;
   max-width: 56ch;
   font-size: 1rem;
   line-height: 1.6;
