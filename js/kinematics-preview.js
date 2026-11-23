@@ -453,7 +453,7 @@
     const pauseBtns = [...document.querySelectorAll('[data-kin-pause]')];
     const resetBtns = [...document.querySelectorAll('[data-kin-reset]')];
     const progressBars = [...document.querySelectorAll('[data-kin-progress]')];
-    const clipNameEls = [...document.querySelectorAll('[data-kin-clip-name]')];
+    const zRootEls = [...document.querySelectorAll('[data-kin-zroot]')];
     const qKneeEls = [...document.querySelectorAll('[data-kin-qknee]')];
     const vxEls = [...document.querySelectorAll('[data-kin-vx]')];
 
@@ -478,10 +478,6 @@
       pauseBtns.forEach((btn) => {
         btn.setAttribute('aria-pressed', String(userPaused));
         btn.textContent = userPaused ? '▶' : '‖';
-      });
-      clipNameEls.forEach((el) => {
-        const inZh = Boolean(el.closest('#lang-zh'));
-        el.textContent = inZh ? clips[clipIdx].meta.zh : clips[clipIdx].meta.en;
       });
     }
 
@@ -534,6 +530,11 @@
 
       if (!nowTs || nowTs - lastUiTs >= 85) {
         lastUiTs = nowTs || 0;
+        const zRootTxt = `${frameQpos[2].toFixed(2)} m`;
+        zRootEls.forEach((el) => {
+          el.textContent = zRootTxt;
+        });
+
         const qKnee = frameQpos[modelMeta.kneeQposIndex];
         const kneeTxt = `${qKnee >= 0 ? '+' : ''}${qKnee.toFixed(2)} rad`;
         qKneeEls.forEach((el) => {
