@@ -713,3 +713,109 @@ setupPubToggle('pubToggleBtnZh', 'zh');
     zhOthers.forEach((c) => c.classList.remove('collapsed'));
   }
 })();
+
+/* ─── Hover-to-Play Video Previews (Desktop Mouse / Fine Pointer) ─── */
+(function initHoverVideoPreviews() {
+  const frames = document.querySelectorAll('[data-preview-video]');
+  if (!frames.length) return;
+
+  const reduceMotion =
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarseOnly =
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(pointer: coarse)').matches &&
+    !window.matchMedia('(any-pointer: fine)').matches;
+  const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+
+  if (reduceMotion || coarseOnly || saveData) return;
+
+  const ALLOWED_VIDEO_SRC = /^img\/projects\/[a-z0-9-]+\.mp4$/;
+  const instances = [];
+
+  function ensureVideo(state) {
+    if (state.video || state.failed) return state.video;
+    const rawSrc = state.frame.getAttribute('data-preview-video') || '';
+    if (!ALLOWED_VIDEO_SRC.test(rawSrc)) {
+      state.failed = true;
+      return null;
+    }
+
+    const video = document.createElement('video');
+    video.className = 'preview-video';
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.setAttribute('aria-hidden', 'true');
+    video.setAttribute('tabindex', '-1');
+    video.src = rawSrc;
+
+    video.addEventListener('playing', () => {
+      if (state.active) {
+        state.frame.classList.add('is-video-playing');
+      }
+    });
+
+    video.addEventListener('error', () => {
+      state.failed = true;
+      state.frame.classList.remove('is-video-playing');
+    });
+
+    state.frame.appendChild(video);
+    state.video = video;
+    return video;
+  }
+
+  function startPreview(state) {
+    state.active = true;
+    const video = ensureVideo(state);
+    if (!video) return;
+
+    const playResult = video.play();
+    if (playResult && typeof playResult.catch === 'function') {
+      playResult.catch(() => {});
+    }
+    if (video.readyState >= 2 && !video.paused) {
+      state.frame.classList.add('is-video-playing');
+    }
+  }
+
+  function stopPreview(state) {
+    state.active = false;
+    state.frame.classList.remove('is-video-playing');
+    if (state.video) {
+      state.video.pause();
+    }
+  }
+
+  function stopAllPreviewVideos() {
+    instances.forEach(stopPreview);
+  }
+
+  frames.forEach((frame) => {
+    const trigger = frame.closest('.flagship-item') || frame.closest('a.ledger-row-thumb') || frame;
+    const state = { frame, trigger, video: null, active: false, failed: false };
+    instances.push(state);
+
+    trigger.addEventListener('pointerenter', (e) => {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      startPreview(state);
+    });
+    trigger.addEventListener('pointerleave', (e) => {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      stopPreview(state);
+    });
+    trigger.addEventListener('focusin', () => startPreview(state));
+    trigger.addEventListener('focusout', (e) => {
+      if (e.relatedTarget && trigger.contains(e.relatedTarget)) return;
+      stopPreview(state);
+    });
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopAllPreviewVideos();
+  });
+  window.addEventListener('cl:langchange', stopAllPreviewVideos);
+})();
