@@ -1341,6 +1341,7 @@ main > .band:last-child {
 }
 
 .flagship-media {
+  position: relative;
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -1365,8 +1366,8 @@ main > .band:last-child {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .flagship-item:hover .flagship-media img,
-  .flagship-media:hover img {
+  .flagship-item:hover .flagship-media:not([data-preview-video]) img,
+  .flagship-media:not([data-preview-video]):hover img {
     transform: scale(1.025);
   }
 }
@@ -1543,6 +1544,7 @@ a.ledger-row:hover {
 }
 
 .ledger-thumb-frame {
+  position: relative;
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -1576,8 +1578,69 @@ a.ledger-row-thumb:focus-visible .ledger-thumb-frame {
     border-color: var(--accent);
   }
 
-  a.ledger-row-thumb:hover .ledger-thumb-frame img {
+  a.ledger-row-thumb:hover .ledger-thumb-frame:not([data-preview-video]) img {
     transform: scale(1.03);
+  }
+
+  .flagship-item:hover .preview-motion-badge,
+  a.ledger-row-thumb:hover .preview-motion-badge {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+.preview-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms var(--ease);
+}
+
+.is-video-playing > .preview-video {
+  opacity: 1;
+}
+
+.preview-motion-badge {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  padding: 3px 7px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  color: #efeff1;
+  background: rgba(10, 11, 13, 0.78);
+  border: 1px solid rgba(239, 239, 241, 0.24);
+  border-radius: var(--radius);
+  pointer-events: none;
+  transition:
+    opacity var(--m-in) var(--ease),
+    border-color var(--m-in) var(--ease),
+    color var(--m-in) var(--ease);
+}
+
+.preview-motion-badge-sm {
+  right: 6px;
+  bottom: 6px;
+  padding: 2px 5px;
+  font-size: 0.625rem;
+}
+
+.is-video-playing > .preview-motion-badge {
+  opacity: 0;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .preview-video,
+  .preview-motion-badge {
+    display: none;
   }
 }
 
