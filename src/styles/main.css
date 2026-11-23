@@ -1179,9 +1179,8 @@ html.m-enter:not(.m-enter-done) .hero-stagger {
 }
 
 .hero-portrait-id {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  line-height: 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.35rem;
   color: var(--ink);
   font-weight: 500;
 }
